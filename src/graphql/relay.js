@@ -2,8 +2,10 @@
 
 import { Environment, Network, RecordSource, Store } from 'relay-runtime';
 import RelayQueryResponseCache from 'relay-runtime/lib/RelayQueryResponseCache';
+import nullthrows from 'nullthrows';
 
-const SERVER_URL = 'http://PLACEHOLDER-TEXT.com';
+const { SERVER_URL } = process.env;
+
 const oneMinute = 60 * 1000;
 const cache = new RelayQueryResponseCache({ size: 250, ttl: oneMinute });
 
@@ -15,16 +17,19 @@ async function fetchQuery(operation, variables, cacheConfig) {
   if (isQuery && fromCache !== null) {
     return fromCache;
   }
-  const response = await fetch(SERVER_URL, {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json'
-    },
-    body: JSON.stringify({
-      query: operation.text,
-      variables
-    })
-  });
+  const response = await fetch(
+    nullthrows(SERVER_URL, 'SERVER_URL not found in the environment'),
+    {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        query: operation.text,
+        variables
+      })
+    }
+  );
   const json = await response.json();
   isQuery && json != null && cache.set(queryID, variables, json);
   isMutation && cache.clear();
