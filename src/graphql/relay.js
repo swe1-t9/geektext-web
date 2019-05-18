@@ -1,8 +1,8 @@
 // @flow strict-local
 
+import nullthrows from 'nullthrows';
 import { Environment, Network, RecordSource, Store } from 'relay-runtime';
 import RelayQueryResponseCache from 'relay-runtime/lib/RelayQueryResponseCache';
-import nullthrows from 'nullthrows';
 
 const { SERVER_URL } = process.env;
 
@@ -31,8 +31,11 @@ async function fetchQuery(operation, variables, cacheConfig) {
     }
   );
   const json = await response.json();
-  isQuery && json != null && cache.set(queryID, variables, json);
-  isMutation && cache.clear();
+  if (isQuery && json != null) {
+    cache.set(queryID, variables, json);
+  } else if (isMutation) {
+    cache.clear();
+  }
   return json;
 }
 
