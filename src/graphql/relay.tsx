@@ -1,15 +1,23 @@
 // @flow strict-local
 
 import nullthrows from 'nullthrows';
-import { Environment, Network, RecordSource, Store } from 'relay-runtime';
-import RelayQueryResponseCache from 'relay-runtime/lib/RelayQueryResponseCache';
+import {
+  Environment,
+  Network,
+  RecordSource,
+  Store,
+  QueryResponseCache
+} from 'relay-runtime';
 
 const { SERVER_URL } = process.env;
 
 const oneMinute = 60 * 1000;
-const cache = new RelayQueryResponseCache({ size: 250, ttl: oneMinute });
+const cache = new QueryResponseCache({ size: 250, ttl: oneMinute });
 
-async function fetchQuery(operation, variables, cacheConfig) {
+async function fetchQuery(
+  operation: { text: string; operationKind: string },
+  variables: Object
+) {
   const queryID = operation.text;
   const isMutation = operation.operationKind === 'mutation';
   const isQuery = operation.operationKind === 'query';
