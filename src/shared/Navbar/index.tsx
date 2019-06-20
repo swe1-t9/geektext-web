@@ -29,7 +29,9 @@ const withNavbar = (Component: React.FC): React.FC => () => (
         <Typography variant="h6" color="inherit">
           GeekText
         </Typography>
-        {/* Adds shopping cart button */}
+        {/* Adds shopping cart button.
+            For any other buttons that need to be right-aligned on the navbar,
+            place them in this div. */}
         <div className={useStyles().menuButton}>
           <IconButton 
             color="default" 
