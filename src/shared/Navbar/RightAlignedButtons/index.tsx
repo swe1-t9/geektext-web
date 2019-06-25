@@ -4,6 +4,7 @@ import CartButton from "./CartButton";
 
 const RightAlignedButtons = () => {
   const classes = styles();
+  // Add any right-aligned navbar buttons into the following div
   return (
     <div className={classes.menuButton}>
       <CartButton />
