@@ -14,6 +14,7 @@ const RightAlignedButtons = () => {
 
 const styles = makeStyles(theme => ({
   menuButton: {
+    // Ensures buttons are right-aligned
     marginLeft: "auto"
   }
 }));
