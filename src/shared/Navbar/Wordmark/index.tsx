@@ -7,7 +7,9 @@ const Wordmark = () => {
   const classes = styles();
   return (
     <Typography variant="h6" color="inherit">
-      <Link to="/" className={classes.wordmark}>GeekText</Link>
+      <Link to="/" className={classes.wordmark}>
+        GeekText
+      </Link>
     </Typography>
   );
 };
