@@ -18,6 +18,8 @@
     "react-router-dom": "^5.0.1",
     "react-scripts": "3.0.1",
     "relay-runtime": "^4.0.0",
+    "request": "^2.88.0",
+    "request-promise-native": "^1.0.7",
     "typescript": "^3.5.1"
   },
   "scripts": {
@@ -42,6 +44,7 @@
     ]
   },
   "devDependencies": {
+    "@types/request-promise-native": "^1.0.16",
     "graphql": "^14.3.1",
     "graphql-compiler": "^1.7.0",
     "husky": "^2.4.0",
