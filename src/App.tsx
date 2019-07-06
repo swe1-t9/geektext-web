@@ -8,6 +8,7 @@ import Home from './screens/Home';
 import Login from './screens/Login';
 import Cart from './screens/Cart';
 import { withNavbar } from './shared/Navbar';
+import Signup from './screens/Signup';
 
 const App: React.FC = () => (
   <ThemeProvider theme={theme}>
@@ -16,6 +17,7 @@ const App: React.FC = () => (
         <Route exact={true} path="/" component={withNavbar(Home)} />
         <Route exact={true} path="/login" component={withNavbar(Login)} />
         <Route exact={true} path="/cart" component={withNavbar(Cart)} />
+        <Route exact={true} path="/signup" component={withNavbar(Signup)} />
       </Switch>
     </Router>
   </ThemeProvider>
