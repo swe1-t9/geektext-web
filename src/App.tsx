@@ -7,6 +7,7 @@ import React from 'react';
 import Home from './screens/Home';
 import Login from './screens/Login';
 import Cart from './screens/Cart';
+import Book from './screens/Book';
 import { withNavbar } from './shared/Navbar';
 import Signup from './screens/Signup';
 
@@ -18,6 +19,7 @@ const App: React.FC = () => (
         <Route exact={true} path="/login" component={withNavbar(Login)} />
         <Route exact={true} path="/cart" component={withNavbar(Cart)} />
         <Route exact={true} path="/signup" component={withNavbar(Signup)} />
+        <Route exact={true} path="/book" component={withNavbar(Book)} />
       </Switch>
     </Router>
   </ThemeProvider>
