@@ -2,6 +2,7 @@ import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import CartButton from "./CartButton";
 import LoginButton from "./LoginButton";
+import BookButton from "./BookButton";
 
 const RightAlignedButtons = () => {
   const classes = styles();
@@ -10,6 +11,7 @@ const RightAlignedButtons = () => {
     <div className={classes.menuBar}>
       <LoginButton />
       <CartButton />
+      <BookButton />
     </div>
   );
 };
