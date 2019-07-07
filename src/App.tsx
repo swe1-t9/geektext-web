@@ -4,11 +4,11 @@ import { blue } from '@material-ui/core/colors';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import React from 'react';
 
+import { withNavbar } from './shared/Navbar';
 import Home from './screens/Home';
 import Login from './screens/Login';
 import Cart from './screens/Cart';
 import Book from './screens/Book';
-import { withNavbar } from './shared/Navbar';
 import Signup from './screens/Signup';
 
 const App: React.FC = () => (
