@@ -75,7 +75,6 @@ type BookProps = {
 // export const BookCard: FunctionComponent<BookProps> = ({ title, price }) => <
   
 
-
 // export default function book() {
 
 //   return(<BookCard title="Harry Pooter" price="$100" />)

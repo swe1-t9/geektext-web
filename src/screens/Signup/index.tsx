@@ -1,19 +1,54 @@
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import TextField from '@material-ui/core/TextField';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
-import Checkbox from '@material-ui/core/Checkbox';
 import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid';
 import Avatar from '@material-ui/core/Avatar';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
-import { Link } from 'react-router-dom';
 import * as React from 'react';
 
-const Login = () => {
+import { commit as commitSignUpMutation } from '../../graphql/mutations/SignUpMutation';
+
+const Signup = () => {
   const classes = styles();
+
+  const [email, setEmail] = React.useState('');
+  const [firstName, setFirstName] = React.useState('');
+  const [lastName, setLastName] = React.useState('');
+  const [password, setPassword] = React.useState('');
+
+  const handleTextChange = (
+    e: React.ChangeEvent<
+      HTMLTextAreaElement | HTMLInputElement | HTMLSelectElement
+    >,
+    setStateFn: React.Dispatch<React.SetStateAction<string>>
+  ) => setStateFn(e.target.value);
+
+  const onSignUpSuccess = () => console.log('success');
+  const onSignUpFailure = (error: Error) => console.log(error);
+
+  const submit = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+    e.preventDefault();
+    console.log({
+      email,
+      first_name: firstName,
+      last_name: lastName,
+      password
+    });
+    commitSignUpMutation(
+      {
+        email,
+        first_name: firstName,
+        last_name: lastName,
+        password
+      },
+      onSignUpSuccess,
+      onSignUpFailure
+    );
+  };
+
   return (
     <Grid container component="main" className={classes.root}>
       <CssBaseline />
@@ -24,7 +59,7 @@ const Login = () => {
             <LockOutlinedIcon />
           </Avatar>
           <Typography component="h1" variant="h5">
-            Log in
+            Sign up
           </Typography>
           <form className={classes.form} noValidate>
             <TextField
@@ -36,6 +71,29 @@ const Login = () => {
               label="Email Address"
               name="email"
               autoComplete="email"
+              onChange={e => handleTextChange(e, setEmail)}
+              autoFocus
+            />
+            <TextField
+              variant="outlined"
+              margin="normal"
+              required={true}
+              fullWidth={true}
+              id="first-name"
+              label="First Name"
+              name="first-name"
+              onChange={e => handleTextChange(e, setFirstName)}
+              autoFocus
+            />
+            <TextField
+              variant="outlined"
+              margin="normal"
+              required={true}
+              fullWidth={true}
+              id="last-name"
+              label="Last Name"
+              name="last-name"
+              onChange={e => handleTextChange(e, setLastName)}
               autoFocus
             />
             <TextField
@@ -48,10 +106,7 @@ const Login = () => {
               type="password"
               id="password"
               autoComplete="current-password"
-            />
-            <FormControlLabel
-              control={<Checkbox value="remember" color="primary" />}
-              label="Remember me"
+              onChange={e => handleTextChange(e, setPassword)}
             />
             <Button
               type="submit"
@@ -59,18 +114,10 @@ const Login = () => {
               variant="contained"
               color="primary"
               className={classes.submit}
+              onClick={submit}
             >
-              Log In
+              Sign Up
             </Button>
-            <Grid container>
-              <Grid item>
-                <Typography variant="body2">
-                  <Link to="/signup" className={classes.link}>
-                    {'Create an account'}
-                  </Link>
-                </Typography>
-              </Grid>
-            </Grid>
           </form>
         </div>
       </Grid>
@@ -105,11 +152,7 @@ const styles = makeStyles(theme => ({
   avatar: {
     margin: theme.spacing(1),
     backgroundColor: theme.palette.secondary.main
-  },
-  link: {
-    textDecoration: 'none',
-    color: 'inherit'
   }
 }));
 
-export default Login;
+export default Signup;
