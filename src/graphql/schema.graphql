@@ -13,6 +13,21 @@ type Address {
   region: String
 }
 
+"""The details of a book."""
+type Book {
+  author_id: String!
+  book_id: String!
+  genre: String!
+  isbn: String!
+  price: String!
+  publish_year: Int!
+  title: String!
+}
+
+input BookDetailsInput {
+  id: ID!
+}
+
 """
 A field whose value conforms to the standard internet email address format as
 specified in RFC822: https://www.w3.org/Protocols/rfc822/.
@@ -22,13 +37,7 @@ scalar EmailAddress
 """JWT token pre-signed by server when sent out"""
 scalar JWT
 
-input LogInInput {
-  email: EmailAddress!
-  password: SensitiveString!
-}
-
 type Mutation {
-  log_in(input: LogInInput!): JWT!
   sign_up(input: SignUpInput!): JWT!
 }
 
@@ -40,12 +49,11 @@ Spain, Denmark, Sweden, Belgium or India.
 scalar PostalCode
 
 type Query {
+  book_details(input: BookDetailsInput!): Book!
   hello_world: String!
 }
 
-"""
-A string whose value is sensitive and should not be stored in plaintext.
-"""
+"""A string whose value is sensitive and should not be exposed."""
 scalar SensitiveString
 
 """The shipping information of a user"""
