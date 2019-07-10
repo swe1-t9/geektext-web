@@ -1,4 +1,5 @@
 /*custom variables*/
+
 :root 
 {
   --left_align: 20%;
@@ -11,6 +12,19 @@
 
   --boxtitle_top:84%;
   --boxtitle_horizon: 40%;
+
+  --star_left: 20%;
+  --star_top: 75%;
+}
+
+.starRating
+{
+  left: var(--star_left);
+  top: var(--star_top);
+  position:absolute;
+  display: inline-block;
+  padding: 3px;
+  vertical-align: middle;
 }
 
 /*string position for "remain anonymous" to be placed next to checkbox*/
@@ -55,11 +69,10 @@ textarea
   }
 
   /*post review button*/
-  input[type=submit] {
+ .post {
     position:absolute;
     top: var(--submit_top);
     left: var(--left_align);
-    background-color: grey;
     padding: 12px 20px;
     border: none;
     border-radius: 4px;

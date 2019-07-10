@@ -21,7 +21,8 @@ interface CommentStates
 	placeholder_title: 	string,
 	submitbutton_title: string,
 	clicks:				number,
-	hasPurchased:		boolean
+	hasPurchased:		boolean,
+	reaminAnonymous:	boolean
 };
 
 
@@ -43,10 +44,16 @@ export default class CommentComponent extends React.Component
 		   placeholder_title: "What do you think about this book?",
 		   submitbutton_title: "Post Rating & Review",
 		   clicks: 0,
-		   hasPurchased: false
+		   hasPurchased: false,
+		   reaminAnonymous: false
 		};
 	}
 
+	/*Submit button for comment and star rating have been clicked.
+	  Add the following to the database: 
+			  -Nickname OR Anonymous
+			  -Comment 
+			  -Star rating given (numeric) out of 5  */
 	rating_posted()
 	{
 		
@@ -64,10 +71,12 @@ export default class CommentComponent extends React.Component
 			if( this.state.clicks % 2 == 0) /*user wants to show nickname on rating. hide icon*/
 			{
 				icon.style.visibility = "visible";
+				this.setState({ reaminAnonymous: false });
 			}
 			else/*user wants to be anonymous. show anon icon*/
 			{
 				icon.style.visibility = "hidden";	
+				this.setState({ reaminAnonymous: true });
 			}
 		}
 		this.setState({ clicks: this.state.clicks + 1 });
@@ -78,8 +87,7 @@ export default class CommentComponent extends React.Component
 		return (
 			<div>
 			<form action="#Home">
-			    <Rater total={5} rating={0}/>
-				
+			<div className="starRating"><Rater total={5} /></div>
 				<label className="label">
 					Review "{this.state.book_title}"
 				</label> 
@@ -92,7 +100,7 @@ export default class CommentComponent extends React.Component
 								    rows={this.state.commentbox_rows}
 								    cols={this.state.commentbox_cols}
 								    placeholder={this.state.placeholder_title} />
-				<SubmitButton />				
+				<div className="post"><SubmitButton submit=""/></div>				
 			</form>
 			</div>
 		)

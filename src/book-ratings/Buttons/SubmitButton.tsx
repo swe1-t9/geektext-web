@@ -20,13 +20,13 @@ const useStyles = makeStyles((theme: Theme) =>
   }),
 );
 
-export default function SubmitButton()
+export default function SubmitButton(props: any)
 {
     const classes = useStyles();
 
     return(
-        <Button variant="contained" color="primary" className={classes.button}>
-        Post Rating ✒
-      </Button>
+        <Button variant="contained" color="secondary" className={classes.button} onClick={props.submit}>
+          Post Rating ✒
+        </Button>
     );
 }

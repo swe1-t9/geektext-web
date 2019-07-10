@@ -1,6 +1,8 @@
 import React from 'react';
 import bookCover from './Images/it.png';
 import './BookInfoComponent.css';
+import Rater from 'react-rater'
+import 'react-rater/lib/react-rater.css'
 
 interface InfoProps
 {
@@ -8,7 +10,8 @@ interface InfoProps
 }
 interface InfoStates
 {
-    author: string
+    author: string,
+    userRating: number
 }
 
 export default class BookInfoComponent extends React.Component 
@@ -16,7 +19,13 @@ export default class BookInfoComponent extends React.Component
 {
     state = 
     {
-        author: 'Stephen King'
+        author: 'Stephen King',
+        userRating: 4 
+    }
+
+    calculateRating()
+    {
+        
     }
    
     //render function for rendering JSX
@@ -24,11 +33,14 @@ export default class BookInfoComponent extends React.Component
     {
         return(
             <div>
+
                 <img src={bookCover} className="hvr-bob" /> 
-                <div className="bar">
-                    <div className="fill5">
-                    </div>
-                </div> 
+                <div className="bookRating">
+                    <Rater total = {5} rating={this.state.userRating } interactive={false}/>
+                    <br></br>
+                    This book has been rated a {this.state.userRating} / 5 
+                </div>
+                
             </div> )
     }
 
