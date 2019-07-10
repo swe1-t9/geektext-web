@@ -4,12 +4,8 @@
 import React from 'react';
 import './RatePage.css';
 
-import Home from '../screens/Home';
-import Login from '../screens/Login';
-import { withNavbar } from '../shared/Navbar/index';
-
-import { Button } from '@material-ui/core';
-import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+import CommentBox from './CommentComponent';
+import BookInfo from './BookInfoComponent';
 
 interface myStates
 {
@@ -31,10 +27,15 @@ export default class RatePage extends React.Component
     render()
     {
         return(
-            <div className="topnav">
-                <a className="active" href="#rate a book here!">Book Rating & Commenting</a>>
-                <a>Hello {this.state.userName}! Review favorite books that you have purchased!</a>
-            </div> )
+            <div>
+                <div className="topnav">
+                    <a className="active" href="#rate a book here!">Book Rating & Commenting</a>>
+                    <a>Hello {this.state.userName}! Review favorite books that you have purchased!</a>
+                </div>
+                <BookInfo />
+                <CommentBox />
+            </div> 
+            )
     }
 
     //custom functions 

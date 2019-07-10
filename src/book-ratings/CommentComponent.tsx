@@ -1,9 +1,10 @@
 import React from 'react';
 import './CommentComponent.css';
-import Stars from './StarRateComponent';
 import anon from './Images/anon.png';
-import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
-import Button from '@material-ui/core/Button';
+import SubmitButton from './Buttons/SubmitButton';
+import Rater from 'react-rater'
+import 'react-rater/lib/react-rater.css'
+
 
 interface CommentProps
 {
@@ -19,25 +20,11 @@ interface CommentStates
 	submit_pressed: 	boolean,
 	placeholder_title: 	string,
 	submitbutton_title: string,
-	clicks:				number
+	clicks:				number,
+	hasPurchased:		boolean
 };
 
-const useStyles = makeStyles((theme: Theme) =>
-  createStyles({
-    button: {
-      margin: theme.spacing(1),
-    },
-    leftIcon: {
-      marginRight: theme.spacing(1),
-    },
-    rightIcon: {
-      marginLeft: theme.spacing(1),
-    },
-    iconSmall: {
-      fontSize: 20,
-    },
-  }),
-);
+
 
 export default class CommentComponent extends React.Component 
 <CommentProps,CommentStates>
@@ -55,9 +42,9 @@ export default class CommentComponent extends React.Component
 		   submit_pressed: false,
 		   placeholder_title: "What do you think about this book?",
 		   submitbutton_title: "Post Rating & Review",
-		   clicks: 0
+		   clicks: 0,
+		   hasPurchased: false
 		};
-	//	const classes = useStyles();
 	}
 
 	rating_posted()
@@ -86,13 +73,13 @@ export default class CommentComponent extends React.Component
 		this.setState({ clicks: this.state.clicks + 1 });
 	}
 
-
 	render() 
 	{
 		return (
 			<div>
 			<form action="#Home">
-				<Stars ratingSubmited="false" />
+			    <Rater total={5} rating={0}/>
+				
 				<label className="label">
 					Review "{this.state.book_title}"
 				</label> 
@@ -105,10 +92,7 @@ export default class CommentComponent extends React.Component
 								    rows={this.state.commentbox_rows}
 								    cols={this.state.commentbox_cols}
 								    placeholder={this.state.placeholder_title} />
-				<input type="submit" className="hvr-float-shadow" 
-									 value={this.state.submitbutton_title}
-									 onClick={this.rating_posted.bind(this)}  />
-				
+				<SubmitButton />				
 			</form>
 			</div>
 		)

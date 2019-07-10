@@ -1,14 +1,11 @@
 
 import React from 'react';
-import RatePage from './book-ratings/RatePage';
-import CommentBox from './book-ratings/CommentComponent';
-import BookInfo from './book-ratings/BookInfoComponent';
+import RatePage from './book-ratings/RatePage'; //vanessa's rate page
+
 
 const App: React.FC = () => (
   <> 
     <RatePage />  
-    <BookInfo />
-    <CommentBox />
   </>
 );
 
