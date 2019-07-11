@@ -3,6 +3,7 @@ import { QueryRenderer } from 'react-relay';
 import graphql from 'babel-plugin-relay/macro';
 import React from 'react';
 
+
 import { environment } from '../../graphql/relay';
 import BookDetailsView from './BookDetailsView';
 import { BookDetailsView_bookDetails$ref } from './__generated__/BookDetailsView_bookDetails.graphql';
@@ -32,5 +33,7 @@ const Book: React.FC = () => (
     }}
   />
 );
+
+
 
 export default Book;
