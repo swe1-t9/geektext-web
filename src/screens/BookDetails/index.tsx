@@ -21,7 +21,7 @@ const Book: React.FC = () => (
   <QueryRenderer
     environment={environment}
     query={BookDetailsQuery}
-    variables={{input: {id: '1'}}}
+    variables={{input: {id: '00000000-0000-0000-0000-000000000001'}}}
     render={({ props, error }) => {
       if (error) return <div>{error.message}</div>;
       else if (props) {

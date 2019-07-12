@@ -59,7 +59,7 @@ const useStyles = makeStyles(
 export default createFragmentContainer(BookDetailsView, {
   bookDetails: graphql`
     fragment BookDetailsView_bookDetails on Book {
-      book_id
+      id
       author_id
       title
       isbn

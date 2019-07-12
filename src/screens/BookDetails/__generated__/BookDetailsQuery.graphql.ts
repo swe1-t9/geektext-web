@@ -26,12 +26,18 @@ query BookDetailsQuery(
 ) {
   bookDetails: book_details(input: $input) {
     ...BookDetailsView_bookDetails
+    id
   }
 }
 
 fragment BookDetailsView_bookDetails on Book {
+  id
   author_id
   title
+  isbn
+  genre
+  publish_year
+  price
 }
 */
 
@@ -95,6 +101,13 @@ return {
           {
             "kind": "ScalarField",
             "alias": null,
+            "name": "id",
+            "args": null,
+            "storageKey": null
+          },
+          {
+            "kind": "ScalarField",
+            "alias": null,
             "name": "author_id",
             "args": null,
             "storageKey": null
@@ -103,6 +116,34 @@ return {
             "kind": "ScalarField",
             "alias": null,
             "name": "title",
+            "args": null,
+            "storageKey": null
+          },
+          {
+            "kind": "ScalarField",
+            "alias": null,
+            "name": "isbn",
+            "args": null,
+            "storageKey": null
+          },
+          {
+            "kind": "ScalarField",
+            "alias": null,
+            "name": "genre",
+            "args": null,
+            "storageKey": null
+          },
+          {
+            "kind": "ScalarField",
+            "alias": null,
+            "name": "publish_year",
+            "args": null,
+            "storageKey": null
+          },
+          {
+            "kind": "ScalarField",
+            "alias": null,
+            "name": "price",
             "args": null,
             "storageKey": null
           }
@@ -114,7 +155,7 @@ return {
     "operationKind": "query",
     "name": "BookDetailsQuery",
     "id": null,
-    "text": "query BookDetailsQuery(\n  $input: BookDetailsInput!\n) {\n  bookDetails: book_details(input: $input) {\n    ...BookDetailsView_bookDetails\n  }\n}\n\nfragment BookDetailsView_bookDetails on Book {\n  author_id\n  title\n}\n",
+    "text": "query BookDetailsQuery(\n  $input: BookDetailsInput!\n) {\n  bookDetails: book_details(input: $input) {\n    ...BookDetailsView_bookDetails\n    id\n  }\n}\n\nfragment BookDetailsView_bookDetails on Book {\n  id\n  author_id\n  title\n  isbn\n  genre\n  publish_year\n  price\n}\n",
     "metadata": {}
   }
 };
