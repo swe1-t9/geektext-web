@@ -10,6 +10,8 @@ export type BookDetailsView_bookDetails = {
     readonly genre: string;
     readonly publish_year: number;
     readonly price: number;
+    readonly description: string;
+    readonly cover: string;
     readonly " $refType": BookDetailsView_bookDetails$ref;
 };
 
@@ -70,8 +72,22 @@ const node: ReaderFragment = {
       "name": "price",
       "args": null,
       "storageKey": null
+    },
+    {
+      "kind": "ScalarField",
+      "alias": null,
+      "name": "description",
+      "args": null,
+      "storageKey": null
+    },
+    {
+      "kind": "ScalarField",
+      "alias": null,
+      "name": "cover",
+      "args": null,
+      "storageKey": null
     }
   ]
 };
-(node as any).hash = 'f2f7df3f6f668df67288f1c8ab043e8c';
+(node as any).hash = 'e754cd48bcc449fc11b1624fda28c21f';
 export default node;

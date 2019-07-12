@@ -38,6 +38,8 @@ fragment BookDetailsView_bookDetails on Book {
   genre
   publish_year
   price
+  description
+  cover
 }
 */
 
@@ -146,6 +148,20 @@ return {
             "name": "price",
             "args": null,
             "storageKey": null
+          },
+          {
+            "kind": "ScalarField",
+            "alias": null,
+            "name": "description",
+            "args": null,
+            "storageKey": null
+          },
+          {
+            "kind": "ScalarField",
+            "alias": null,
+            "name": "cover",
+            "args": null,
+            "storageKey": null
           }
         ]
       }
@@ -155,7 +171,7 @@ return {
     "operationKind": "query",
     "name": "BookDetailsQuery",
     "id": null,
-    "text": "query BookDetailsQuery(\n  $input: BookDetailsInput!\n) {\n  bookDetails: book_details(input: $input) {\n    ...BookDetailsView_bookDetails\n    id\n  }\n}\n\nfragment BookDetailsView_bookDetails on Book {\n  id\n  author_id\n  title\n  isbn\n  genre\n  publish_year\n  price\n}\n",
+    "text": "query BookDetailsQuery(\n  $input: BookDetailsInput!\n) {\n  bookDetails: book_details(input: $input) {\n    ...BookDetailsView_bookDetails\n    id\n  }\n}\n\nfragment BookDetailsView_bookDetails on Book {\n  id\n  author_id\n  title\n  isbn\n  genre\n  publish_year\n  price\n  description\n  cover\n}\n",
     "metadata": {}
   }
 };

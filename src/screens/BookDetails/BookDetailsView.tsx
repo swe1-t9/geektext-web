@@ -35,7 +35,8 @@ function handleExpandClick() {
         <CardActionArea>
           <CardMedia
             className={classes.media}
-            image="https://cdn.britannica.com/s:500x350/21/182021-004-532121B3.jpg"
+            //image="https://cdn.britannica.com/s:500x350/21/182021-004-532121B3.jpg"
+            image={props.bookDetails.cover}
             // className={classes.expandImage}
             // onClick={expandImage}
           />
@@ -44,7 +45,7 @@ function handleExpandClick() {
               {props.bookDetails.title}
             </Typography>
             <Typography variant="body2" color="textSecondary" component="p">
-              {props.bookDetails.title}
+              {props.bookDetails.description}
             </Typography>
           </CardContent>
         </CardActionArea>
@@ -118,6 +119,9 @@ export default createFragmentContainer(BookDetailsView, {
       genre
       publish_year
       price
+      title
+      description
+      cover
     }
   `
 });

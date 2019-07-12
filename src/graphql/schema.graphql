@@ -15,7 +15,9 @@ type Address {
 
 """The details of a book."""
 type Book {
-  author_id: String!
+  author_id: ID!
+  cover: String!
+  description: String!
   genre: String!
   id: ID!
   isbn: String!
@@ -68,6 +70,11 @@ input SignUpInput {
   last_name: String!
   password: SensitiveString!
 }
+
+"""
+A field whose value conforms to the standard URL format as specified in RFC3986: https://www.ietf.org/rfc/rfc3986.txt.
+"""
+scalar URL
 
 """A Geektext user."""
 type User {
