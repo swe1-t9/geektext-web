@@ -10,6 +10,9 @@ import { makeStyles } from '@material-ui/core/styles';
 import * as React from 'react';
 
 import { commit as commitSignUpMutation } from '../../graphql/mutations/SignUpMutation';
+import { SignUpMutationResponse } from '../../graphql/mutations/__generated__/SignUpMutation.graphql';
+import { handleTextChange } from '../../util/text';
+import { setToken } from '../../util/token';
 
 const Signup = () => {
   const classes = styles();
@@ -19,24 +22,11 @@ const Signup = () => {
   const [lastName, setLastName] = React.useState('');
   const [password, setPassword] = React.useState('');
 
-  const handleTextChange = (
-    e: React.ChangeEvent<
-      HTMLTextAreaElement | HTMLInputElement | HTMLSelectElement
-    >,
-    setStateFn: React.Dispatch<React.SetStateAction<string>>
-  ) => setStateFn(e.target.value);
-
-  const onSignUpSuccess = () => console.log('success');
-  const onSignUpFailure = (error: Error) => console.log(error);
+  const onSignUpSuccess = (response: SignUpMutationResponse) =>
+    setToken(response.signUp);
+  const onSignUpFailure = (error: Error) => console.warn(error);
 
   const submit = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
-    e.preventDefault();
-    console.log({
-      email,
-      first_name: firstName,
-      last_name: lastName,
-      password
-    });
     commitSignUpMutation(
       {
         email,

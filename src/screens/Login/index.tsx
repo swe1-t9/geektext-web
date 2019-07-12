@@ -12,8 +12,31 @@ import { makeStyles } from '@material-ui/core/styles';
 import { Link } from 'react-router-dom';
 import * as React from 'react';
 
+import { commit as commitLogInMutation } from '../../graphql/mutations/LogInMutation';
+import { LogInMutationResponse } from '../../graphql/mutations/__generated__/LogInMutation.graphql';
+import { handleTextChange } from '../../util/text';
+import { setToken } from '../../util/token';
+
 const Login = () => {
   const classes = styles();
+
+  const [email, setEmail] = React.useState('');
+  const [password, setPassword] = React.useState('');
+
+  const onLogInSuccess = (response: LogInMutationResponse) =>
+    setToken(response.logIn);
+  const onLogInFailure = (error: Error) => console.warn(error);
+
+  const submit = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) =>
+    commitLogInMutation(
+      {
+        email,
+        password
+      },
+      onLogInSuccess,
+      onLogInFailure
+    );
+
   return (
     <Grid container component="main" className={classes.root}>
       <CssBaseline />
@@ -36,6 +59,7 @@ const Login = () => {
               label="Email Address"
               name="email"
               autoComplete="email"
+              onChange={e => handleTextChange(e, setEmail)}
               autoFocus
             />
             <TextField
@@ -47,6 +71,7 @@ const Login = () => {
               label="Password"
               type="password"
               id="password"
+              onChange={e => handleTextChange(e, setPassword)}
               autoComplete="current-password"
             />
             <FormControlLabel
@@ -59,6 +84,7 @@ const Login = () => {
               variant="contained"
               color="primary"
               className={classes.submit}
+              onClick={submit}
             >
               Log In
             </Button>
