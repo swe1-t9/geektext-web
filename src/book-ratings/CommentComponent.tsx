@@ -82,6 +82,8 @@ export default class CommentComponent extends React.Component
 		this.setState({ clicks: this.state.clicks + 1 });
 	}
 
+	
+
 	render() 
 	{
 		return (
