@@ -3,6 +3,9 @@ import './CommentComponent.css';
 import anon from './Images/anon.png';
 import SubmitButton from './Buttons/SubmitButton';
 import Rater from 'react-rater'
+import Avatar from './Items/LetterAvatar';
+import CommentBox from './Items/CommentBox';
+import Anon from '@material-ui/icons/AccountCircle';
 import 'react-rater/lib/react-rater.css'
 
 
@@ -83,25 +86,25 @@ export default class CommentComponent extends React.Component
 	}
 
 	
-
+//<Avatar initial='V' />
 	render() 
 	{
 		return (
 			<div>
 			<form action="#Home">
 			<div className="starRating"><Rater total={5} /></div>
-				<label className="label">
-					Review "{this.state.book_title}"
-				</label> 
+			<label className="label">
+				Review "{this.state.book_title}"
+			</label> 
 				<input type="checkbox" onClick={this.showAnonIcon.bind(this)} />
 				<label className="checkbox_title">Remain Anonymous</label>
 				<img id="anon" className="anon" src={anon} />
-				<textarea id="text" 
-									maxLength={this.state.max_words} 
-								    minLength={this.state.min_words} 
-								    rows={this.state.commentbox_rows}
-								    cols={this.state.commentbox_cols}
-								    placeholder={this.state.placeholder_title} />
+				
+				<div className="commentArea">
+					<Anon />
+					<CommentBox />
+				</div>
+				
 				<div className="post"><SubmitButton submit=""/></div>				
 			</form>
 			</div>

@@ -2,10 +2,13 @@
 
 :root 
 {
-  --left_align: 20%;
-  --label_top: 80%; 
+  --left_align: 20%; /*general left align for book position*/
+
+  --label_top: 30%; 
+  --label_left: 42%;
+
   --submit_top: 130%;
-  --comment_top: 90%;
+  --comment_top: 85%;
 
   --box_top: 86%;
   --box_horizon: 38%;
@@ -15,6 +18,16 @@
 
   --star_left: 20%;
   --star_top: 75%;
+}
+
+/*area for comment box and the icon (anon or initials)*/
+.commentArea
+{
+  position: absolute;
+  width: 500px;
+  height: 200px;
+  top: var(--comment_top);
+  left: var(--star_left);
 }
 
 .starRating
@@ -55,19 +68,6 @@ input[type=checkbox]
   left: var(--box_horizon);
 }
 
-/*comment box*/
-textarea 
-{
-    position: absolute;
-    top: var(--comment_top);
-    left: var(--left_align);
-    height: 200px;
-    width: 500px;
-    border: 2px solid #ccc;
-    border-radius: 4px;
-    resize: none;
-  }
-
   /*post review button*/
  .post {
     position:absolute;
@@ -87,7 +87,7 @@ textarea
     top: var(--label_top);
     font-family: "Rockwell";
     font-size: 20px;
-    left: var(--left_align);
+    left: var(--label_left);
     padding: 12px 12px 12px 0;
     display: inline-block;
     font: bold;
