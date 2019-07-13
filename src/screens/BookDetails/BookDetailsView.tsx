@@ -3,12 +3,11 @@ import { createFragmentContainer } from 'react-relay';
 import graphql from 'babel-plugin-relay/macro';
 import { BookDetailsView_bookDetails } from './__generated__/BookDetailsView_bookDetails.graphql';
 import React from 'react';
-import { Card, CardActionArea, CardMedia, CardContent, Button, Typography, CardActions, Grid, Theme, IconButton, Collapse } from '@material-ui/core';
+import { Card, CardActionArea, CardMedia, CardContent, Button, Typography, CardActions, Grid, Theme, IconButton, Collapse, CardHeader, Avatar, Link } from '@material-ui/core';
 import { createStyles, makeStyles } from '@material-ui/core/styles';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import clsx from 'clsx';
-
-
+import { red } from '@material-ui/core/colors';
 
 type Props = {
   bookDetails: BookDetailsView_bookDetails;
@@ -18,11 +17,14 @@ const BookDetailsView: React.FC<Props> = (props: Props) => {
   const classes = useStyles();
   const [expanded, setExpanded] = React.useState(false);
 
-function handleExpandClick() {
-  setExpanded(!expanded);
-}
+  function handleExpandClick() {
+    setExpanded(!expanded);
+  }
+
+  function expandImage() {
+
+  }
   return (
-    // <div>{props.bookDetails.title}</div>
     <Grid
       container
       spacing={0}
@@ -35,9 +37,7 @@ function handleExpandClick() {
         <CardActionArea>
           <CardMedia
             className={classes.media}
-            //image="https://cdn.britannica.com/s:500x350/21/182021-004-532121B3.jpg"
             image={props.bookDetails.cover}
-            // className={classes.expandImage}
             // onClick={expandImage}
           />
           <CardContent>
@@ -52,10 +52,10 @@ function handleExpandClick() {
         <CardActions>
           <Button size="small" color="primary">
             Add To Cart
-        </Button>
-          <Button size="small" color="primary">
+          </Button>
+          {/* <Button size="small" color="primary">
             More
-        </Button>
+          </Button> */}
           <IconButton
             className={clsx(classes.expand, {
               [classes.expandOpen]: expanded,
@@ -69,10 +69,15 @@ function handleExpandClick() {
         </CardActions>
         <Collapse in={expanded} timeout="auto" unmountOnExit>
           <CardContent>
-            <Typography paragraph>About the Author</Typography>
+            <Typography variant="h5" align="center"> About the Author </Typography>
+            <Typography paragraph align="center">
+              <Link href={"https://www.amazon.com/s?k=jk+rowling&ref=nb_sb_noss_2"}>J.K. Rowling</Link>
+            </Typography>
             <Typography paragraph>
-              Author Description
-          </Typography>
+              J.K. Rowling is the creator of the 'Harry Potter' fantasy series, one of the most popular book and film franchises in history
+            </Typography>
+            <Typography paragraph> Genre: {props.bookDetails.genre}</Typography>
+            <Typography paragraph> Publish Year: {props.bookDetails.publish_year}</Typography>
           </CardContent>
         </Collapse>
       </Card>
@@ -85,12 +90,13 @@ const useStyles = makeStyles((theme: Theme) =>
     card: {
       marginTop: 10,
       marginLeft: 10,
-      maxWidth: 600,
-      maxHeight: 600,
+      maxWidth: 500,
       background: '#000000'
     },
     media: {
-      height: 400
+      height: 200,
+      paddingTop: '56.25%', // 16:9
+
     },
     expand: {
       transform: 'rotate(0deg)',
@@ -102,9 +108,12 @@ const useStyles = makeStyles((theme: Theme) =>
     expandOpen: {
       transform: 'rotate(180deg)',
     },
-    expandImage:{
+    expandImage: {
       height: 700,
       width: 900
+    },
+    avatar: {
+      backgroundColor: red[500]
     }
   })
 );
