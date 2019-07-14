@@ -10,8 +10,9 @@
   --submit_top: 130%;
   --comment_top: 85%;
 
-  --box_top: 86%;
-  --box_horizon: 38%;
+  /*chheckbox position*/
+  --box_top: 80%;
+  --box_horizon: 30%;
 
   --boxtitle_top:84%;
   --boxtitle_horizon: 40%;
@@ -46,7 +47,6 @@
   position: absolute;
   top: var(--boxtitle_top);
   left: var(--boxtitle_horizon);
-  font:italic;
 }
 
 /*anonymous icon*/

@@ -1,9 +1,9 @@
 import React from 'react';
 import './CommentComponent.css';
-import anon from './Images/anon.png';
 import SubmitButton from './Buttons/SubmitButton';
 import Rater from 'react-rater'
 import Avatar from './Items/LetterAvatar';
+import Checkbox from './Buttons/Checkbox';
 import CommentBox from './Items/CommentBox';
 import Anon from '@material-ui/icons/AccountCircle';
 import 'react-rater/lib/react-rater.css'
@@ -68,21 +68,21 @@ export default class CommentComponent extends React.Component
 		if the counter is an even number, switch to visible
 		if counter is odd, switch to hidden*/
 		var icon = document.getElementById("anon");
-
+/* 
 		if(icon != null)
 		{
-			if( this.state.clicks % 2 == 0) /*user wants to show nickname on rating. hide icon*/
+			if( this.state.clicks % 2 == 0) /*user wants to show nickname on rating. hide icon
 			{
 				icon.style.visibility = "visible";
 				this.setState({ reaminAnonymous: false });
 			}
-			else/*user wants to be anonymous. show anon icon*/
+			else/*user wants to be anonymous. show anon icon
 			{
 				icon.style.visibility = "hidden";	
 				this.setState({ reaminAnonymous: true });
 			}
-		}
-		this.setState({ clicks: this.state.clicks + 1 });
+		} */
+		this.setState({ clicks: this.state.clicks + 1 }); 
 	}
 
 	
@@ -91,22 +91,18 @@ export default class CommentComponent extends React.Component
 	{
 		return (
 			<div>
-			<form action="#Home">
+			
 			<div className="starRating"><Rater total={5} /></div>
 			<label className="label">
 				Review "{this.state.book_title}"
 			</label> 
-				<input type="checkbox" onClick={this.showAnonIcon.bind(this)} />
-				<label className="checkbox_title">Remain Anonymous</label>
-				<img id="anon" className="anon" src={anon} />
-				
+				<div className="checkbox_title"><Checkbox /></div>
 				<div className="commentArea">
 					<Anon />
 					<CommentBox />
 				</div>
-				
+	
 				<div className="post"><SubmitButton submit=""/></div>				
-			</form>
 			</div>
 		)
 	}
