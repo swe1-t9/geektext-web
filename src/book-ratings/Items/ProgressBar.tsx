@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import { lighten, makeStyles, createStyles, withStyles, Theme } from '@material-ui/core/styles';
 import LinearProgress from '@material-ui/core/LinearProgress';
 
@@ -10,7 +10,7 @@ const BorderLinearProgress = withStyles({
   },
   bar: {
     borderRadius: 20,
-    backgroundColor: '#8bc34a' //color of bar progress. change depending on rating
+    backgroundColor: '#8bc34a', //color of bar progress. change depending on rating
   },
 })(LinearProgress);
 

@@ -3,9 +3,9 @@ import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Checkbox from '@material-ui/core/Checkbox';
 
 
-export default function CheckboxLabels() {
+export default function CheckboxLabels(props:any) {
   const [state, setState] = React.useState({
-    checkedA: true,
+    checkedA: false,
     checkedB: false,
     checkedF: true,
     checkedG: true,
