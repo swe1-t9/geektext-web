@@ -23,6 +23,7 @@ input AddToShoppingCartInput {
 type Book {
   author_id: ID!
   cover: URL!
+
   description: String!
   genre: String!
   id: ID!
@@ -50,11 +51,6 @@ scalar EmailAddress
 
 """JWT token pre-signed by server when sent out"""
 scalar JWT
-
-input LogInInput {
-  email: EmailAddress!
-  password: SensitiveString!
-}
 
 type Mutation {
   add_to_shopping_cart(input: AddToShoppingCartInput!): ShoppingCartItem!
