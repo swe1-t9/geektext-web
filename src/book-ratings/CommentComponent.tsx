@@ -1,13 +1,13 @@
-import React from 'react';
-import './CommentComponent.css';
-import SubmitButton from './Buttons/SubmitButton';
-import Rater from 'react-rater'
-import Avatar from './Items/LetterAvatar';
-import Checkbox from './Buttons/Checkbox';
-import CommentBox from './Items/CommentBox';
 import Anon from '@material-ui/icons/AccountCircle';
-import 'react-rater/lib/react-rater.css'
-
+import React from 'react';
+import Rater from 'react-rater';
+import 'react-rater/lib/react-rater.css';
+import Checkbox from './Buttons/Checkbox';
+import SubmitButton from './Buttons/SubmitButton';
+import './CommentComponent.css';
+import CommentBox from './Items/CommentBox';
+import Avatar from './Items/LetterAvatar';
+import UserComment from './Items/UserComment';
 
 interface CommentProps
 {
@@ -26,6 +26,8 @@ interface CommentStates
 	clicks:				number,
 	hasPurchased:		boolean,
 	reaminAnonymous:	boolean
+	commentboxDisabled: boolean,
+	nickname:			string,
 };
 
 
@@ -48,7 +50,9 @@ export default class CommentComponent extends React.Component
 		   submitbutton_title: "Post Rating & Review",
 		   clicks: 0,
 		   hasPurchased: false,
-		   reaminAnonymous: false
+		   commentboxDisabled: false,
+		   reaminAnonymous: true,
+		   nickname:		"Vanessa",
 		};
 	}
 
@@ -89,20 +93,43 @@ export default class CommentComponent extends React.Component
 //<Avatar initial='V' />
 	render() 
 	{
+		var ava = <Anon />;
+		if(this.state.reaminAnonymous)
+		{
+			ava = <Anon />;
+		//	this.setState({ nickname: "Anonymous" });
+		}
+		else
+		{
+			ava = <Avatar initial={ this.state.nickname.charAt(0) }/>;
+		}
+
 		return (
 			<div>
 			
 			<div className="starRating"><Rater total={5} /></div>
+
 			<label className="label">
 				Review "{this.state.book_title}"
 			</label> 
+
 				<div className="checkbox_title"><Checkbox /></div>
+				<div className="avatar">{ava}</div>
 				<div className="commentArea">
-					<Anon />
-					<CommentBox />
+					<CommentBox disabled={this.state.commentboxDisabled}/>
 				</div>
 	
-				<div className="post"><SubmitButton submit=""/></div>				
+				<div className="post"><SubmitButton submit=""/></div>	
+				
+				<div className="commentColumn">
+					<UserComment icon={ava} 
+								 userName={this.state.nickname} 
+								 date = "July 17, 2018" 
+								 comment="I really loved this book!!"/>
+					<UserComment icon={ava}/>
+					<UserComment icon={ava}/>
+				</div>
+				
 			</div>
 		)
 	}

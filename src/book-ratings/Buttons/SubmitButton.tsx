@@ -25,8 +25,13 @@ export default function SubmitButton(props: any)
 {
     const classes = useStyles();
 
+    function handleClick()
+    {
+
+    }
+
     return(
-        <Button variant="contained" className={classes.button} onClick={props.submit}>
+        <Button variant="contained" className={classes.button} onClick={handleClick}>
           Post Rating ✒
         </Button>
     );

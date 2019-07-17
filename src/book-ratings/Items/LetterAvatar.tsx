@@ -1,7 +1,7 @@
-import React from 'react';
-import { makeStyles, createStyles } from '@material-ui/core/styles';
+import React from 'react'; 
+import { makeStyles, createStyles, Theme } from '@material-ui/core/styles';
 import Avatar from '@material-ui/core/Avatar';
-import { deepOrange} from '@material-ui/core/colors';
+import { indigo } from '@material-ui/core/colors';
 
 const useStyles = makeStyles(
   createStyles({
@@ -11,7 +11,7 @@ const useStyles = makeStyles(
     orangeAvatar: {
       margin: 10,
       color: '#fff',
-      backgroundColor: deepOrange[500],
+      backgroundColor: indigo[900],
     },
   }),
 );
@@ -20,6 +20,6 @@ export default function LetterAvatar(props: any) {
   const classes = useStyles();
 
   return (
-      <Avatar className={classes.orangeAvatar}>{props.initial}</Avatar>
+      <Avatar className={classes.orangeAvatar} color="primary">{props.initial}</Avatar>
   );
 }

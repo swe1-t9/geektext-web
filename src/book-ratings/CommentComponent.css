@@ -10,15 +10,15 @@
   --submit_top: 130%;
   --comment_top: 85%;
 
-  /*chheckbox position*/
-  --box_top: 80%;
-  --box_horizon: 30%;
+  --avatar_top:84%;
 
-  --boxtitle_top:84%;
-  --boxtitle_horizon: 40%;
+  --boxtitle_top:75%;
+  --boxtitle_horizon: 50%;
 
   --star_left: 20%;
   --star_top: 75%;
+
+  --comments_top: 30%;
 }
 
 /*area for comment box and the icon (anon or initials)*/
@@ -49,24 +49,16 @@
   left: var(--boxtitle_horizon);
 }
 
-/*anonymous icon*/
-.anon
+/*for avatar location next to comment box*/
+.avatar
 {
   position:absolute;
-  top: var(--boxtitle_top);
-  left: 55%;
+  top: var(--avatar_top);
+  left: 15%;
   width: 20px;
   border-radius: 50%;
-  visibility: hidden; 
 }
 
-/*checkbox for anon*/
-input[type=checkbox]
-{
-  position: absolute;
-  top: var(--box_top);
-  left: var(--box_horizon);
-}
 
   /*post review button*/
  .post {
@@ -92,6 +84,14 @@ input[type=checkbox]
     display: inline-block;
     font: bold;
     color: grey;
+  }
+
+  .commentColumn
+  {
+    position: absolute;
+    top: var(--comments_top);
+    right: 5%;
+    width: 350px;
   }
 
   /* Float shadow effect

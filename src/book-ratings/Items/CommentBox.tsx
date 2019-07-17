@@ -23,28 +23,32 @@ const useStyles = makeStyles((theme: Theme) =>
 );
 
 interface State {
-  name: string;
-  age: string;
-  multiline: string;
-  currency: string;
+  maxWords: number,
+  minWords: number
 }
 
-export default function OutlinedTextFields() {
+
+export default function OutlinedTextFields(props:any) {
   const classes = useStyles();
+  var wordCountError = false;
+
 
   return (
     <form className={classes.container} noValidate autoComplete="off">
 
       <TextField
-        id="outlined-multiline-static"
+        id="user comment"
+        error = {wordCountError}
+        disabled = {props.disabled}
         label="Comment on this book!"
-        multiline
+        multiline 
         rows="10"
         defaultValue=" "
         className={classes.textField}
         margin="normal"
         fullWidth
         variant="outlined"
+    
       />
      
     </form>

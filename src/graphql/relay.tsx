@@ -6,7 +6,8 @@ import {
   Network,
   RecordSource,
   Store,
-  QueryResponseCache
+  QueryResponseCache,
+  FetchFunction
 } from 'relay-runtime';
 
 const { SERVER_URL } = process.env;
@@ -14,11 +15,8 @@ const { SERVER_URL } = process.env;
 const oneMinute = 60 * 1000;
 const cache = new QueryResponseCache({ size: 250, ttl: oneMinute });
 
-async function fetchQuery(
-  operation: { text: string; operationKind: string },
-  variables: Object
-) {
-  const queryID = operation.text;
+const fetchQuery: FetchFunction = async (operation, variables) => {
+  const queryID = nullthrows(operation.text);
   const isMutation = operation.operationKind === 'mutation';
   const isQuery = operation.operationKind === 'query';
   const fromCache = cache.get(queryID, variables);
@@ -26,7 +24,10 @@ async function fetchQuery(
     return fromCache;
   }
   const response = await fetch(
-    nullthrows(SERVER_URL, 'SERVER_URL not found in the environment'),
+    nullthrows(
+      'http://localhost:3000/graphql',
+      'SERVER_URL not found in the environment'
+    ),
     {
       method: 'POST',
       headers: {
@@ -45,7 +46,7 @@ async function fetchQuery(
     cache.clear();
   }
   return json;
-}
+};
 
 const environment = new Environment({
   network: Network.create(fetchQuery),

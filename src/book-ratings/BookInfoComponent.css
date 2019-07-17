@@ -15,12 +15,19 @@ img {
 
     margin: 0 auto;
   }
+
+  .rateLabels
+  {
+    position:absolute;
+    top: 37%;
+    left: 60%;
+  }
   
   .scoreboard
   {
     position:absolute;
     left: 35%;
-    top: 40%;
+    top: 36%;
   }
 
   .bookRating
