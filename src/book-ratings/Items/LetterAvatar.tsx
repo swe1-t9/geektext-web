@@ -5,9 +5,6 @@ import { indigo } from '@material-ui/core/colors';
 
 const useStyles = makeStyles(
   createStyles({
-    avatar: {
-      margin: 10,
-    },
     orangeAvatar: {
       margin: 10,
       color: '#fff',

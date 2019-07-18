@@ -9,6 +9,8 @@ import CommentBox from './Items/CommentBox';
 import Avatar from './Items/LetterAvatar';
 import UserComment from './Items/UserComment';
 
+
+
 interface CommentProps
 {
 
@@ -28,6 +30,7 @@ interface CommentStates
 	reaminAnonymous:	boolean
 	commentboxDisabled: boolean,
 	nickname:			string,
+	ava:				any
 };
 
 
@@ -51,20 +54,13 @@ export default class CommentComponent extends React.Component
 		   clicks: 0,
 		   hasPurchased: false,
 		   commentboxDisabled: false,
-		   reaminAnonymous: true,
+		   reaminAnonymous: false,
 		   nickname:		"Vanessa",
+		   ava:				<Anon />,
 		};
 	}
 
-	/*Submit button for comment and star rating have been clicked.
-	  Add the following to the database: 
-			  -Nickname OR Anonymous
-			  -Comment 
-			  -Star rating given (numeric) out of 5  */
-	rating_posted()
-	{
-		
-	}
+
 
 	showAnonIcon()
 	{
@@ -89,21 +85,21 @@ export default class CommentComponent extends React.Component
 		this.setState({ clicks: this.state.clicks + 1 }); 
 	}
 
-	
-//<Avatar initial='V' />
-	render() 
+	showAvatar(ava: any)
 	{
-		var ava = <Anon />;
 		if(this.state.reaminAnonymous)
 		{
+			this.setState({ nickname: "Anonymous" });
 			ava = <Anon />;
-		//	this.setState({ nickname: "Anonymous" });
 		}
 		else
 		{
 			ava = <Avatar initial={ this.state.nickname.charAt(0) }/>;
 		}
+	}
 
+	render() 
+	{
 		return (
 			<div>
 			
@@ -113,8 +109,8 @@ export default class CommentComponent extends React.Component
 				Review "{this.state.book_title}"
 			</label> 
 
-				<div className="checkbox_title"><Checkbox /></div>
-				<div className="avatar">{ava}</div>
+				<div className="checkbox_title"><Checkbox onChange={this.showAvatar.bind(this,this.state.ava)}/></div>
+				<div className="avatar">{this.state.ava}</div>
 				<div className="commentArea">
 					<CommentBox disabled={this.state.commentboxDisabled}/>
 				</div>
@@ -122,12 +118,15 @@ export default class CommentComponent extends React.Component
 				<div className="post"><SubmitButton submit=""/></div>	
 				
 				<div className="commentColumn">
-					<UserComment icon={ava} 
-								 userName={this.state.nickname} 
-								 date = "July 17, 2018" 
-								 comment="I really loved this book!!"/>
-					<UserComment icon={ava}/>
-					<UserComment icon={ava}/>
+					<UserComment icon={this.state.ava} 
+								userName={this.state.nickname} 
+								date = "July 17, 2018" 
+								ratingGiven = {3}
+								comment="How many pages is 500 words? The answer is one page single spaced or two pages double spaced. Now, depending on how you've setup your document your page count may vary slightly, but with Arial or Times New Roman 12 point font and conventional margins you should see similar results. 500 word essays are very common throughout middle and high school English curriculums, especially as book reports, or summaries of current events. You can easily check page count in word processors like Microsoft Word and Google Docs, but for a quick reference use our table below.
+
+								Answer: 500 words is 1 page single spaced or 2 pages double spaced."/>
+					<UserComment icon={<Avatar initial="S"/>}/>
+					<UserComment icon={<Avatar initial="V"/>}/>
 				</div>
 				
 			</div>

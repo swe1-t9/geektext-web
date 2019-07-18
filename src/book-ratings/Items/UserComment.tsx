@@ -4,22 +4,22 @@ import { makeStyles, Theme, createStyles } from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
 import CardHeader from '@material-ui/core/CardHeader';
 import CardContent from '@material-ui/core/CardContent';
+import Rater from 'react-rater';
 import Typography from '@material-ui/core/Typography';
-import { red } from '@material-ui/core/colors';
-
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
+    root: {
+      flexGrow: 1,
+    },
+    margin: {
+      margin: theme.spacing(1),
+    },
     card: {
       maxWidth: 450,
+      margin:  theme.spacing(2),
     },
-    media: {
-      height: 0,
-      paddingTop: '56.25%', // 16:9
-    },
-    avatar: {
-      backgroundColor: red[500],
-    },
+    
   }),
 );
 
@@ -27,17 +27,19 @@ export default function CommentCard(props:any) {
   const classes = useStyles();
 
   return (
-    <Card className={classes.card}>
+    <Card className={classes.card} raised={true} >
       <CardHeader
         avatar={props.icon}
         title={props.userName}
         subheader={props.date}
+        action={<Rater total = {5} rating={props.ratingGiven} interactive={false}/>}
       />
       <CardContent>
         <Typography variant="body2" color="textSecondary" component="p">
           {props.comment}
         </Typography>
       </CardContent>
+
     </Card>
   );
 }
