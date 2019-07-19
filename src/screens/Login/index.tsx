@@ -9,25 +9,31 @@ import Avatar from '@material-ui/core/Avatar';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
-import { Link } from 'react-router-dom';
+import { Link, Redirect } from 'react-router-dom';
 import * as React from 'react';
 
 import { commit as commitLogInMutation } from '../../graphql/mutations/LogInMutation';
 import { LogInMutationResponse } from '../../graphql/mutations/__generated__/LogInMutation.graphql';
-import { handleTextChange } from '../../util/text';
-import { setToken } from '../../util/token';
+import { handleTextChange } from '../../shared/text';
+import { setToken } from '../../shared/token';
+import { isLoggedIn } from '../../shared/auth';
 
 const Login = () => {
   const classes = styles();
 
+  const [, forceUpdate] = React.useState(false);
   const [email, setEmail] = React.useState('');
   const [password, setPassword] = React.useState('');
 
-  const onLogInSuccess = (response: LogInMutationResponse) =>
+  const onLogInSuccess = (response: LogInMutationResponse) => {
     setToken(response.logIn);
+    forceUpdate(n => !n);
+  };
+
   const onLogInFailure = (error: Error) => console.warn(error);
 
-  const submit = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) =>
+  const submit = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+    e.preventDefault();
     commitLogInMutation(
       {
         email,
@@ -36,8 +42,11 @@ const Login = () => {
       onLogInSuccess,
       onLogInFailure
     );
+  };
 
-  return (
+  return isLoggedIn() ? (
+    <Redirect to="/" />
+  ) : (
     <Grid container component="main" className={classes.root}>
       <CssBaseline />
       <Grid item xs={false} sm={4} md={7} className={classes.image} />

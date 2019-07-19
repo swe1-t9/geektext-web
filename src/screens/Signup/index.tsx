@@ -7,12 +7,14 @@ import Avatar from '@material-ui/core/Avatar';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
+import { Redirect } from 'react-router';
 import * as React from 'react';
 
 import { commit as commitSignUpMutation } from '../../graphql/mutations/SignUpMutation';
 import { SignUpMutationResponse } from '../../graphql/mutations/__generated__/SignUpMutation.graphql';
-import { handleTextChange } from '../../util/text';
-import { setToken } from '../../util/token';
+import { handleTextChange } from '../../shared/text';
+import { setToken } from '../../shared/token';
+import { isLoggedIn } from '../../shared/auth';
 
 const Signup = () => {
   const classes = styles();
@@ -27,6 +29,7 @@ const Signup = () => {
   const onSignUpFailure = (error: Error) => console.warn(error);
 
   const submit = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+    e.preventDefault();
     commitSignUpMutation(
       {
         email,
@@ -39,7 +42,9 @@ const Signup = () => {
     );
   };
 
-  return (
+  return isLoggedIn() ? (
+    <Redirect to="/" />
+  ) : (
     <Grid container component="main" className={classes.root}>
       <CssBaseline />
       <Grid item xs={false} sm={4} md={7} className={classes.image} />
