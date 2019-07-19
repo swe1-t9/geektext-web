@@ -22,7 +22,7 @@ const BookDetailsView: React.FC<Props> = (props: Props) => {
   }
 
   function expandImage() {
-
+    //TODO
   }
   return (
     <Grid
