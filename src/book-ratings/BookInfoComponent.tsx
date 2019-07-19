@@ -32,7 +32,7 @@ export default class BookInfoComponent extends React.Component
         fourstar_total: 50,
         threestar_total: 50,
         twostar_total: 60,
-        onestar_total: 80
+        onestar_total: 80,
     }
    
     //render function for rendering JSX

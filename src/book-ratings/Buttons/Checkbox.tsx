@@ -8,8 +8,18 @@ export default function CheckboxLabels(props:any) {
     checkedA: false,
   });
 
+  /*when checkbox is clicked, change to anon. when unchecked, change to user*/
   const handleChange = (name: string) => (event: React.ChangeEvent<HTMLInputElement>) => {
     setState({ ...state, [name]: event.target.checked });
+    
+    if(state.checkedA)
+    {
+      alert("Checkmark!");
+    }
+    else
+    {
+      alert("Unchecked");
+    }
   };
 
   return ( 

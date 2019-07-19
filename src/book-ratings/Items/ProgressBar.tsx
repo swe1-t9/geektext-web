@@ -122,6 +122,6 @@ export default function CustomizedProgressBars(props:any) {
   }
 
   return (
-    <div className={classes.root}> {bar} </div>
+    <div className={classes.root}>{bar}</div>
   );
 }
