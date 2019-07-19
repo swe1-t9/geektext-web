@@ -4,8 +4,8 @@
 import React from 'react';
 import './RatePage.css';
 
-import CommentBox from './CommentComponent';
-import BookInfo from './BookInfoComponent';
+import CommentBox from './Components/CommentComponent';
+import BookInfo from './Components/BookInfoComponent';
 
 interface myStates
 {

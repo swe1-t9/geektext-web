@@ -2,12 +2,12 @@ import Anon from '@material-ui/icons/AccountCircle';
 import React from 'react';
 import Rater from 'react-rater';
 import 'react-rater/lib/react-rater.css';
-import Checkbox from './Buttons/Checkbox';
-import SubmitButton from './Buttons/SubmitButton';
+import Checkbox from '../Buttons/Checkbox';
+import SubmitButton from '../Buttons/SubmitButton';
 import './CommentComponent.css';
-import CommentBox from './Items/CommentBox';
-import Avatar from './Items/LetterAvatar';
-import UserComment from './Items/UserComment';
+import CommentBox from '../Items/CommentBox';
+import Avatar from '../Items/LetterAvatar';
+import UserComment from '../Items/UserComment';
 
 
 

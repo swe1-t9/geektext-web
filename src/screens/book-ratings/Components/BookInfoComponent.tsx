@@ -1,7 +1,7 @@
 import React from 'react';
-import bookCover from './Images/it.png';
+import bookCover from '../Images/it.png';
 import './BookInfoComponent.css';
-import Bar from './Items/ProgressBar';
+import Bar from '../Items/ProgressBar';
 import Rater from 'react-rater'
 import 'react-rater/lib/react-rater.css'
 import Typography from '@material-ui/core/Typography';
