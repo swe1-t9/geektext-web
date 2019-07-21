@@ -8,7 +8,7 @@ import CommentBox from '../Items/CommentBox';
 import Avatar from '../Items/LetterAvatar';
 import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
 import NewComment from '../Items/PostedComment';
-import Typography from '@material-ui/core/Typography';
+import Grid from '@material-ui/core/Grid';
 
 const CommentComponent = (props:any) => {
 	const classes = useStyles();
@@ -16,9 +16,7 @@ const CommentComponent = (props:any) => {
 	//states
 	const [nickname, setNickname] = 	React.useState("Vanessa");
 	const [ava, setAva] = 				React.useState(<Anon />);
-
 	const [userComment,setUserComment] = React.useState("This book was interesting");
-	const [book_title,setTitle] = 		React.useState('It');
 	const [userStars,setStars] =		React.useState(0);
 	const [postRating, setPR] =			React.useState(false);
 	const [datePosted, setDate] = 		React.useState("ERROR MESSAGE. SOMETHING WENT WRONG");
@@ -79,64 +77,44 @@ const CommentComponent = (props:any) => {
 
 
 	return (
-		<div>
+		<div className={classes.yourComment}>
+			<Grid container spacing={3}>
+				<Grid item xs>
+					{/* stores the rating the user gives the current book*/}
+					<Rater total={5} 
+						   onRate={ ({rating}) => {setStars(rating)} } />
+				</Grid>
+				<Grid item xs={6}>
+					{ava}
+					<Checkbox  />
+				</Grid>
+			</Grid>
 
-		{/* stores the rating the user gives the current book*/}
-		<div className={classes.starRating}><Rater total={5} 
-		onRate={ ({rating}) => {setStars(rating)} } /></div>
+			<Grid container spacing={3}>
+				<Grid item xs={12}>
+					<CommentBox  commentText={userComment}/> 
+				</Grid>
+			</Grid>
+			<Grid container spacing={3}>
+				<Grid item xs={12} alignItems="center">
+					<SubmitButton  onPress={commentingAllowed()} />
+				</Grid>
+			</Grid>
 
-		<div className={classes.label}>
-			<Typography>Review "{book_title}"</Typography>
-		</div> 
-
-			<div className={classes.anonbox}>
-				<Checkbox  />
-			</div>
-
-			<div className={classes.avatar}>{ava}</div>
-			<div className={classes.commentbox}>
-				<CommentBox  commentText={userComment}/> 
-			</div>
-
-			<div className={classes.post}><SubmitButton  onPress={commentingAllowed()} /></div>	
-			
-			<div className={classes.postedComments}>
+			<Grid container spacing={3}>
+			<Grid item xs={12}>
 				{newComment}
-			</div>
-			
-		</div>
+			</Grid>
+		</Grid>
+    	</div>
 	)
 };
 
 /*positioning for all the smaller components*/
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
-    starRating: {
+    yourComment: {
 		marginTop: theme.spacing(15),
-        marginLeft: theme.spacing(35),
-	},
-	label: {
-		marginTop: theme.spacing(-10),
-        marginLeft: theme.spacing(5),
-	},
-	post: {
-		marginTop: theme.spacing(30),
-        marginLeft: theme.spacing(60),
-	},
-	postedComments: {
-		marginTop: theme.spacing(-90),
-        marginLeft: theme.spacing(110),
-	},
-	anonbox: {
-		marginTop: theme.spacing(80),
-        marginLeft: theme.spacing(110),
-	},
-	avatar: {
-		marginTop: theme.spacing(-60),
-        marginLeft: theme.spacing(20),
-	},
-	commentbox: {
-		marginTop: theme.spacing(-10),
 		marginLeft: theme.spacing(35),
 		width: 500,
 	},

@@ -4,6 +4,8 @@ import Rater from 'react-rater'
 import 'react-rater/lib/react-rater.css'
 import Typography from '@material-ui/core/Typography';
 import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
+import Grid from '@material-ui/core/Grid';
+import Paper from '@material-ui/core/Paper';
 
 
 const BookInfoComponent = (props:any) => {
@@ -18,49 +20,77 @@ const BookInfoComponent = (props:any) => {
       });
 
         return(
-            <div>
-                 
-                <div className={classes.ratingInfo}>
-                    <Rater total = {5} rating={state.userRating} interactive={false}/>
-                    <br></br>
-                    This book has been rated a {state.userRating} / 5 
-                </div>
-
-                <div className={classes.scoreboard}> 
-                    <Bar rating= {state.fivestar_total} star = {5} />
-                    <Bar rating= {state.fourstar_total} star = {4} />
-                    <Bar rating= {state.threestar_total} star = {3} />
-                    <Bar rating= {state.twostar_total} star={2} />
-                    <Bar rating= {state.onestar_total} star={1}/>
-                </div>
-                
-                <div className={classes.rateLabels}>
-                    <Typography variant="body2" color="textSecondary" component="p">
-                        5 Stars <p></p>
-                        4 Stars <p></p>
-                        3 Stars <p></p>
-                        2 Stars <p></p>
-                        1 Stars
-                    </Typography>
-                </div>
+            <div className={classes.scoreboard}>
+            <Grid container spacing={2}>
+            <Grid item xs={6}>
+                <Bar rating= {state.fivestar_total} star = {5} />
+            </Grid>
+            <Grid item xs={3}>
+                <Typography variant="subtitle2" color="textSecondary">
+                5 Stars </Typography>
+            </Grid>
+          </Grid>
+    
+          <Grid container spacing={2}>
+            <Grid item xs={6}>
+                <Bar rating= {state.fourstar_total} star = {4} />
+            </Grid>
+            <Grid item xs={3}>
+              <Paper className={classes.paper} elevation={0}>4 stars</Paper>
+            </Grid>
+          </Grid>
+    
+          <Grid container spacing={2}>
+            <Grid item xs={6}>
+                <Bar rating= {state.threestar_total} star = {3} />
+            </Grid>
+            <Grid item xs={3}>
+              <Paper className={classes.paper} elevation={0}>3 stars</Paper>
+            </Grid>
+          </Grid>
+    
+          <Grid container spacing={2}>
+            <Grid item xs={6}>
+                <Bar rating= {state.twostar_total} star={2} />
+            </Grid>
+            <Grid item xs={3}>
+              <Paper className={classes.paper} elevation={0}>2 stars</Paper>
+            </Grid>
+          </Grid>
+    
+          <Grid container spacing={2}>
+            <Grid item xs={6}>
+                <Bar rating= {state.onestar_total} star={1}/>
+            </Grid>
+            <Grid item xs={3}>
+              <Paper className={classes.paper} elevation={0}>1 star</Paper>
+            </Grid>
+          </Grid>
+    
+          <Grid container spacing={2}>
+            <Grid item xs={6}>
+                <Paper className={classes.paper} >
+                <Rater total = {5} rating={state.userRating} interactive={false}/>
+                <br></br>
+                This book has been rated a {state.userRating} / 5 </Paper>
+            </Grid>
+          </Grid>
             </div> )
     
 };
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
-    ratingInfo: {
-        marginTop: theme.spacing(40),
-        marginLeft: theme.spacing(55),
-    },
     scoreboard: {
-        marginTop: theme.spacing(-25),
+        marginTop: theme.spacing(10),
         marginLeft: theme.spacing(55),
+        width:600,
+        height: 300,
     },
-    rateLabels: {
-        marginTop: theme.spacing(-18),
-        marginLeft: theme.spacing(95),
-    }
+    paper: {
+        textAlign: 'center',
+        color: theme.palette.text.secondary,
+      },
   }),
 );
 
