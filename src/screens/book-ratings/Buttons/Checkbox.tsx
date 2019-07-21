@@ -3,7 +3,8 @@ import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Checkbox from '@material-ui/core/Checkbox';
 
 
-export default function CheckboxLabels(props:any) {
+const CheckBox = (props:any) => {
+  
   const [state, setState] = React.useState({
     checkedA: false,
   });
@@ -14,11 +15,11 @@ export default function CheckboxLabels(props:any) {
     
     if(state.checkedA)
     {
-      alert("Checkmark!");
+      alert("You have unchecked the mark");
     }
     else
     {
-      alert("Unchecked");
+      alert("You have checked to be anon!");
     }
   };
 
@@ -35,4 +36,6 @@ export default function CheckboxLabels(props:any) {
         label="Remain Anonymous"
       />
   );
-}
+};
+
+export default CheckBox;

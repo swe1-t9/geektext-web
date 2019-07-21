@@ -1,5 +1,6 @@
 /* Main Page for book rating
-   Will bring together all other components here
+   THIS PAGE IS TO BE DELETED. just used for vanessa to test all components together.
+   when caro adds components, this will all be deleted.
 */
 import React from 'react';
 import './RatePage.css';
@@ -18,20 +19,12 @@ export default class RatePage extends React.Component
     constructor(props:any)
     {
         super(props);
-        this.state = 
-        {
-            userName: "Vanessa"
-        };
     }
     //render function for rendering JSX
     render()
     {
         return(
             <div>
-                <div className="topnav">
-                    <a className="active" href="#rate a book here!">Book Rating & Commenting</a>>
-                    <a>Hello {this.state.userName}! Review favorite books that you have purchased!</a>
-                </div>
                 <BookInfo />
                 <CommentBox />
             </div> 

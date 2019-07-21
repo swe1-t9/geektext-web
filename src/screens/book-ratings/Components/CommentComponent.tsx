@@ -1,123 +1,146 @@
 import Anon from '@material-ui/icons/AccountCircle';
-import React from 'react';
+import React, {useState} from 'react';
 import Rater from 'react-rater';
 import 'react-rater/lib/react-rater.css';
 import Checkbox from '../Buttons/Checkbox';
 import SubmitButton from '../Buttons/SubmitButton';
-import './CommentComponent.css';
 import CommentBox from '../Items/CommentBox';
 import Avatar from '../Items/LetterAvatar';
-import UserComment from '../Items/UserComment';
+import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
+import NewComment from '../Items/PostedComment';
+import Typography from '@material-ui/core/Typography';
 
+const CommentComponent = (props:any) => {
+	const classes = useStyles();
 
+	//states
+	const [nickname, setNickname] = 	React.useState("Vanessa");
+	const [ava, setAva] = 				React.useState(<Anon />);
 
-interface CommentProps
-{
+	const [userComment,setUserComment] = React.useState("This book was interesting");
+	const [book_title,setTitle] = 		React.useState('It');
+	const [userStars,setStars] =		React.useState(0);
+	const [postRating, setPR] =			React.useState(false);
+	const [datePosted, setDate] = 		React.useState("ERROR MESSAGE. SOMETHING WENT WRONG");
+	const [newComment, setNewComment] =	React.useState(  );
+	const [bookPurchased,setBookPurchased] = React.useState(true);
+	const [alreadyRated, setAlreadyRated] = React.useState(false);
+	const [anonChecked,setAnonCheck]  = React.useState(false);
 
-}
-interface CommentStates
-{
-	max_words:			number,
-	min_words: 			number,
-	book_title: 		string,
-	submit_pressed: 	boolean,
-	placeholder_title: 	string,
-	submitbutton_title: string,
-	hasPurchased:		boolean,
-	reaminAnonymous:	boolean
-	commentboxDisabled: boolean,
-	nickname:			string,
-	ava:				any,
-	postRatingClicked:  boolean,
-	newComment:			any,
-};
-
-
-
-export default class CommentComponent extends React.Component 
-<CommentProps,CommentStates>
-{
-	constructor (props:any) 
+	  /*
+	const showAvatar = () => (event: React.ChangeEvent<HTMLInputElement>) => {
 	{
-		super(props)
-		this.state = 
+		if(state.reaminAnonymous)
 		{
-		   max_words: 500,
-		   min_words: 10,
-		   book_title: 'It',
-		   submit_pressed: false,
-		   placeholder_title: "What do you think about this book?",
-		   submitbutton_title: "Post Rating & Review",
-		   hasPurchased: false,
-		   commentboxDisabled: false,
-		   reaminAnonymous: false,
-		   nickname:		"Vanessa",
-		   ava:				<Anon />,
-		   postRatingClicked: false,
-		   newComment:		  null,
-		};
-	}
-
-	showAvatar()
-	{
-		if(this.state.reaminAnonymous)
-		{
-			this.setState({ nickname: "Anonymous" });
-			this.setState( {ava: <Anon/> } );
+			alert("Nickname to anon set");
+			setNickname("Anonymous");
+			setAva(<Anon/>);
 		}
 		else
 		{
-			this.setState( { ava: <Avatar initial={ this.state.nickname.charAt(0) }/>} );
+			alert("Using initials");
+			setAva( <Avatar initial={nickname.charAt(0)}/> );
 		}
-	}
+	};*/
 
-	/*what happens when user clicks to submit rating FIXME. NOT WORKING*/
-	handleEvent()
-	{
-		alert("Rating was submitted. (nothing actually happened)");
-		this.setState({ postRatingClicked: true });
-		const comment =	<UserComment icon={<Avatar initial="S"/>}/>
-	}
 
-	addComment()
-	{
-		if(this.state.postRatingClicked)
+	/*User can only comment if the following conditions are true:
+	 1. book has been purchased. 
+	 2. they haven't already commented before.
+	 */
+	const commentingAllowed = () => (event: React.ChangeEvent<HTMLInputElement>) => {
+		//fetch from database if book is purchased and has already been rated.
+		if(bookPurchased && !alreadyRated) //post the rating 
 		{
-			this.setState( { newComment: <UserComment icon={<Avatar initial="S"/>}/> } );
+			/*get date of posting */
+			var dateObj = new Date();
+			var month = dateObj.getUTCMonth() + 1; //months from 1-12
+			var day = dateObj.getUTCDate();
+			var year = dateObj.getUTCFullYear();
+			var formatdate = month + "/" + day + "/" + year;
+			setDate(formatdate);
+
+			alert(userComment);
+			setNewComment(<NewComment icon={ava} 
+				userName={nickname} 
+				date = {datePosted} 
+				ratingGiven = {userStars}
+				comment={userComment}/>);
+			//setUserComment(event.target.value);
 		}
-	}
+		else //do not post the rating and show alert
+		{
+			if(!bookPurchased)
+				alert("You have not bought this book, so you can't leave a review");
+			else
+				alert("You have already rated this book!");
+		}
+	};
 
-	render() 
-	{
-		return (
-			<div>
-			
-			<div className="starRating"><Rater total={5} /></div>
 
-			<label className="label">
-				Review "{this.state.book_title}"
-			</label> 
+	return (
+		<div>
 
-				<div className="checkbox_title"><Checkbox onChange={this.showAvatar.bind(this)}/></div>
-				<div className="avatar">{this.state.ava}</div>
-				<div className="commentArea">
-					<CommentBox disabled={this.state.commentboxDisabled}/>
-				</div>
-	
-				<div className="post"><SubmitButton onPress={this.handleEvent.bind(this)} /></div>	
-				
-				<div className="commentColumn">
-					<UserComment icon={this.state.ava} 
-								userName={this.state.nickname} 
-								date = "July 17, 2018" 
-								ratingGiven = {3}
-								comment="How many pages is 500 words? The answer is one page single spaced or two pages double spaced. Now, depending on how you've setup your document your page count may vary slightly, but with Arial or Times New Roman 12 point font and conventional margins you should see similar results. 500 word essays are very common throughout middle and high school English curriculums, especially as book reports, or summaries of current events. You can easily check page count in word processors like Microsoft Word and Google Docs, but for a quick reference use our table below.
+		{/* stores the rating the user gives the current book*/}
+		<div className={classes.starRating}><Rater total={5} 
+		onRate={ ({rating}) => {setStars(rating)} } /></div>
 
-								Answer: 500 words is 1 page single spaced or 2 pages double spaced."/>
-				</div>
-				
+		<div className={classes.label}>
+			<Typography>Review "{book_title}"</Typography>
+		</div> 
+
+			<div className={classes.anonbox}>
+				<Checkbox  />
 			</div>
-		)
-	}
-} 
 
+			<div className={classes.avatar}>{ava}</div>
+			<div className={classes.commentbox}>
+				<CommentBox  commentText={userComment}/> 
+			</div>
+
+			<div className={classes.post}><SubmitButton  onPress={commentingAllowed()} /></div>	
+			
+			<div className={classes.postedComments}>
+				{newComment}
+			</div>
+			
+		</div>
+	)
+};
+
+/*positioning for all the smaller components*/
+const useStyles = makeStyles((theme: Theme) =>
+  createStyles({
+    starRating: {
+		marginTop: theme.spacing(15),
+        marginLeft: theme.spacing(35),
+	},
+	label: {
+		marginTop: theme.spacing(-10),
+        marginLeft: theme.spacing(5),
+	},
+	post: {
+		marginTop: theme.spacing(30),
+        marginLeft: theme.spacing(60),
+	},
+	postedComments: {
+		marginTop: theme.spacing(-90),
+        marginLeft: theme.spacing(110),
+	},
+	anonbox: {
+		marginTop: theme.spacing(80),
+        marginLeft: theme.spacing(110),
+	},
+	avatar: {
+		marginTop: theme.spacing(-60),
+        marginLeft: theme.spacing(20),
+	},
+	commentbox: {
+		marginTop: theme.spacing(-10),
+		marginLeft: theme.spacing(35),
+		width: 500,
+	},
+  }),
+);
+
+export default CommentComponent;

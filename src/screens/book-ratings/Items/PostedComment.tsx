@@ -7,23 +7,7 @@ import CardContent from '@material-ui/core/CardContent';
 import Rater from 'react-rater';
 import Typography from '@material-ui/core/Typography';
 
-const useStyles = makeStyles((theme: Theme) =>
-  createStyles({
-    root: {
-      flexGrow: 1,
-    },
-    margin: {
-      margin: theme.spacing(1),
-    },
-    card: {
-      maxWidth: 450,
-      margin:  theme.spacing(2),
-    },
-    
-  }),
-);
-
-export default function CommentCard(props:any) {
+const CommentCard = (props:any) => {
   const classes = useStyles();
 
   return (
@@ -42,4 +26,22 @@ export default function CommentCard(props:any) {
 
     </Card>
   );
-}
+};
+
+const useStyles = makeStyles((theme: Theme) =>
+  createStyles({
+    root: {
+      flexGrow: 1,
+    },
+    margin: {
+      margin: theme.spacing(1),
+    },
+    card: {
+      maxWidth: 450,
+      margin:  theme.spacing(2),
+    },
+    
+  }),
+);
+
+export default CommentCard;

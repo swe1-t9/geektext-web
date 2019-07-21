@@ -3,6 +3,16 @@ import React from 'react';
 import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
 
+const SubmitButton = (props:any) => {
+    const classes = useStyles();
+
+    return(
+        <Button variant="contained" className={classes.button} onClick={props.onPress} disabled={props.disabled}>
+          Create Customer Review
+        </Button>
+    );
+};
+
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     
@@ -21,14 +31,4 @@ const useStyles = makeStyles((theme: Theme) =>
   }),
 );
 
-
-export default function SubmitButton(props: any)
-{
-    const classes = useStyles();
-
-    return(
-        <Button variant="contained" className={classes.button} onClick={props.onPress}>
-          Create Customer Review
-        </Button>
-    );
-}
+export default SubmitButton;
