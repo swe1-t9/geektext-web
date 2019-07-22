@@ -10,7 +10,8 @@ import {
   FetchFunction
 } from 'relay-runtime';
 
-const { SERVER_URL } = process.env;
+import { getToken } from '../shared/token';
+import { isLoggedIn } from '../shared/auth';
 
 const oneMinute = 60 * 1000;
 const cache = new QueryResponseCache({ size: 250, ttl: oneMinute });
@@ -23,6 +24,14 @@ const fetchQuery: FetchFunction = async (operation, variables) => {
   if (isQuery && fromCache !== null) {
     return fromCache;
   }
+  const headers = isLoggedIn()
+    ? new Headers({
+        Authorization: `Bearer ${getToken()}`,
+        'Content-Type': 'application/json'
+      })
+    : new Headers({
+        'Content-Type': 'application/json'
+      });
   const response = await fetch(
     nullthrows(
       'http://localhost:3000/graphql',
@@ -30,9 +39,7 @@ const fetchQuery: FetchFunction = async (operation, variables) => {
     ),
     {
       method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
+      headers,
       body: JSON.stringify({
         query: operation.text,
         variables
