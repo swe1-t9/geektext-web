@@ -10,6 +10,7 @@ import Home from './screens/Home';
 import Login from './screens/Login';
 import Cart from './screens/Cart';
 import Book from './screens/Book';
+import BookDetails from './screens/BookDetails';
 import Signup from './screens/Signup';
 import User from './screens/Profile';
 
@@ -25,6 +26,12 @@ const App: React.FC = () => (
           component={withNavbar(Cart)}
         />
         <ProtectedRoute exact={true} path="/me" component={withNavbar(User)} />
+        <Route exact={true} path="/cart" component={withNavbar(Cart)} />
+        <Route
+          exact={true}
+          path="/book-details"
+          component={withNavbar(BookDetails)}
+        />
         <Route exact={true} path="/signup" component={withNavbar(Signup)} />
         <Route exact={true} path="/book" component={withNavbar(Book)} />
       </Switch>

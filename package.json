@@ -11,7 +11,7 @@
     "@types/react-dom": "16.8.4",
     "@types/react-relay": "^5.0.0",
     "@types/react-router-dom": "^4.3.3",
-    "@types/relay-runtime": "^5.0.0",
+    "@types/relay-runtime": "^5.0.1",
     "babel-plugin-relay": "^5.0.0",
     "babel-plugin-transform-export-extensions": "^6.22.0",
     "nullthrows": "^1.1.1",
@@ -47,7 +47,8 @@
     ]
   },
   "devDependencies": {
-    "graphql": "^14.3.1",
+    "@types/request-promise-native": "^1.0.16",
+    "graphql": "^14.4.2",
     "graphql-compiler": "^1.7.0",
     "husky": "^2.4.0",
     "relay-compiler-language-typescript": "^4.3.0"
