@@ -6,6 +6,7 @@ import * as serviceWorker from './serviceWorker';
 
 import RatePage from './screens/book-ratings/RatePage'; //to be deleted after merged with book details
 
+
 ReactDOM.render(<RatePage />, document.getElementById('root'));
 
 // If you want your app to work offline and load faster, you can change

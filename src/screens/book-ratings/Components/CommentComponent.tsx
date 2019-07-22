@@ -4,11 +4,12 @@ import Rater from 'react-rater';
 import 'react-rater/lib/react-rater.css';
 import Checkbox from '../Buttons/Checkbox';
 import SubmitButton from '../Buttons/SubmitButton';
-import CommentBox from '../Items/CommentBox';
 import Avatar from '../Items/LetterAvatar';
 import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
 import NewComment from '../Items/PostedComment';
 import Grid from '@material-ui/core/Grid';
+
+import TextField from '@material-ui/core/TextField';
 
 const CommentComponent = (props:any) => {
 	const classes = useStyles();
@@ -19,11 +20,35 @@ const CommentComponent = (props:any) => {
 	const [userComment,setUserComment] = React.useState("This book was interesting");
 	const [userStars,setStars] =		React.useState(0);
 	const [postRating, setPR] =			React.useState(false);
-	const [datePosted, setDate] = 		React.useState("ERROR MESSAGE. SOMETHING WENT WRONG");
-	const [newComment, setNewComment] =	React.useState(  );
+	const [datePosted, setDate] = 		React.useState("ERROR MESSAGE");
 	const [bookPurchased,setBookPurchased] = React.useState(true);
 	const [alreadyRated, setAlreadyRated] = React.useState(false);
 	const [anonChecked,setAnonCheck]  = React.useState(false);
+	const allComments = [<NewComment />];
+	const countAr = [1];
+	const [max_words] = 				React.useState(500);
+	const [min_words] = 				React.useState(10);
+	const [wordcountError,setError] = 	React.useState(false);
+
+	/*The actual comment box where the user can write*/
+	const CommentBox = () => {
+		return (
+		 
+			<TextField
+			  id="user comment"
+			  error = {wordcountError}
+			  label="What are your thoughts on this book?"
+			  multiline 
+			  rows="10"
+			  defaultValue=" "
+			  className={classes.textField}
+			  margin="normal"
+			  fullWidth
+			  variant="filled"
+			  onChange={event => setUserComment(event.target.value) }
+			/>
+		);
+	  };
 
 	  /*
 	const showAvatar = () => (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -58,12 +83,15 @@ const CommentComponent = (props:any) => {
 			var formatdate = month + "/" + day + "/" + year;
 			setDate(formatdate);
 
-			alert(userComment);
-			setNewComment(<NewComment icon={ava} 
+			countAr.push(2);
+		
+			/*add the new comment to the array*/
+			allComments.push(<NewComment icon={ava} 
 				userName={nickname} 
 				date = {datePosted} 
 				ratingGiven = {userStars}
 				comment={userComment}/>);
+	
 			//setUserComment(event.target.value);
 		}
 		else //do not post the rating and show alert
@@ -74,7 +102,6 @@ const CommentComponent = (props:any) => {
 				alert("You have already rated this book!");
 		}
 	};
-
 
 	return (
 		<div className={classes.yourComment}>
@@ -92,7 +119,7 @@ const CommentComponent = (props:any) => {
 
 			<Grid container spacing={3}>
 				<Grid item xs={12}>
-					<CommentBox  commentText={userComment}/> 
+					{CommentBox()}
 				</Grid>
 			</Grid>
 			<Grid container spacing={3}>
@@ -103,7 +130,14 @@ const CommentComponent = (props:any) => {
 
 			<Grid container spacing={3}>
 			<Grid item xs={12}>
-				{newComment}
+				{allComments.map(item => (
+					<ul>{item}</ul>
+				))}
+				<NewComment icon={ava} 
+				userName={nickname} 
+				date = {datePosted} 
+				ratingGiven = {userStars}
+				comment={userComment}/>
 			</Grid>
 		</Grid>
     	</div>
@@ -118,6 +152,20 @@ const useStyles = makeStyles((theme: Theme) =>
 		marginLeft: theme.spacing(35),
 		width: 500,
 	},
+	container: {
+		display: 'flex',
+		flexWrap: 'wrap',
+	  },
+	  textField: {
+		marginLeft: theme.spacing(1),
+		marginRight: theme.spacing(1),
+	  },
+	  dense: {
+		marginTop: theme.spacing(2),
+	  },
+	  menu: {
+		width: 200,
+	  },
   }),
 );
 
