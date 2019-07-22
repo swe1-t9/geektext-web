@@ -2,13 +2,13 @@ import Anon from '@material-ui/icons/AccountCircle';
 import React, {useState} from 'react';
 import Rater from 'react-rater';
 import 'react-rater/lib/react-rater.css';
-import Checkbox from '../Buttons/Checkbox';
 import SubmitButton from '../Buttons/SubmitButton';
 import Avatar from '../Items/LetterAvatar';
 import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
 import NewComment from '../Items/PostedComment';
 import Grid from '@material-ui/core/Grid';
-
+import FormControlLabel from '@material-ui/core/FormControlLabel';
+import Checkbox from '@material-ui/core/Checkbox';
 import TextField from '@material-ui/core/TextField';
 
 const CommentComponent = (props:any) => {
@@ -16,19 +16,20 @@ const CommentComponent = (props:any) => {
 
 	//states
 	const [nickname, setNickname] = 	React.useState("Vanessa");
-	const [ava, setAva] = 				React.useState(<Anon />);
-	const [userComment,setUserComment] = React.useState("This book was interesting");
+	const [ava, setAva] = 				React.useState(<Avatar initial={nickname.charAt(0)}/>);
+	const [userComment,setUserComment] = React.useState("");
 	const [userStars,setStars] =		React.useState(0);
 	const [postRating, setPR] =			React.useState(false);
-	const [datePosted, setDate] = 		React.useState("ERROR MESSAGE");
+	const [datePosted, setDate] = 		React.useState("");
 	const [bookPurchased,setBookPurchased] = React.useState(true);
 	const [alreadyRated, setAlreadyRated] = React.useState(false);
 	const [anonChecked,setAnonCheck]  = React.useState(false);
-	const allComments = [<NewComment />];
-	const countAr = [1];
-	const [max_words] = 				React.useState(500);
+	var allComments: Object[];
+	allComments = [""];
+	const [max_words] = 				React.useState(1000);
 	const [min_words] = 				React.useState(10);
 	const [wordcountError,setError] = 	React.useState(false);
+	const [state, setState] = 			React.useState({checkedA: false,});
 
 	/*The actual comment box where the user can write*/
 	const CommentBox = () => {
@@ -50,22 +51,39 @@ const CommentComponent = (props:any) => {
 		);
 	  };
 
-	  /*
-	const showAvatar = () => (event: React.ChangeEvent<HTMLInputElement>) => {
-	{
-		if(state.reaminAnonymous)
-		{
-			alert("Nickname to anon set");
+	  /*checkbox to remain anonymous or with nickname*/
+	  const CheckBox = () => {
+  
+		/*when checkbox is clicked, change to anon. when unchecked, change to user*/
+		const handleChange = (name: string) => (event: React.ChangeEvent<HTMLInputElement>) => {
+		  setState({ ...state, [name]: event.target.checked });
+		  
+		  if(state.checkedA)
+		  {
+			setNickname("Vanesa");
+			setAva(<Avatar initial={nickname.charAt(0)}/>);
+		  }
+		  else
+		  {
 			setNickname("Anonymous");
-			setAva(<Anon/>);
-		}
-		else
-		{
-			alert("Using initials");
-			setAva( <Avatar initial={nickname.charAt(0)}/> );
-		}
-	};*/
-
+			setAva(<Anon />);
+		  }
+		};
+	  
+		return ( 
+			<FormControlLabel
+			  control={
+				<Checkbox
+				  checked={state.checkedA}
+				  onChange={handleChange('checkedA')}
+				  value="checkedA"
+				  color="primary"
+				/>
+			  }
+			  label="Remain Anonymous"
+			/>
+		);
+	  };
 
 	/*User can only comment if the following conditions are true:
 	 1. book has been purchased. 
@@ -73,26 +91,32 @@ const CommentComponent = (props:any) => {
 	 */
 	const commentingAllowed = () => (event: React.ChangeEvent<HTMLInputElement>) => {
 		//fetch from database if book is purchased and has already been rated.
-		if(bookPurchased && !alreadyRated) //post the rating 
+		if(bookPurchased && !alreadyRated) 
 		{
-			/*get date of posting */
-			var dateObj = new Date();
-			var month = dateObj.getUTCMonth() + 1; //months from 1-12
-			var day = dateObj.getUTCDate();
-			var year = dateObj.getUTCFullYear();
-			var formatdate = month + "/" + day + "/" + year;
-			setDate(formatdate);
-
-			countAr.push(2);
-		
-			/*add the new comment to the array*/
-			allComments.push(<NewComment icon={ava} 
-				userName={nickname} 
-				date = {datePosted} 
-				ratingGiven = {userStars}
-				comment={userComment}/>);
-	
-			//setUserComment(event.target.value);
+			if(userComment.length >= min_words && userComment.length <= max_words) //check word amount of comment before posting
+			{
+				/*get date of posting */
+				var dateObj = new Date();
+				var month = dateObj.getUTCMonth() + 1; //months from 1-12
+				var day = dateObj.getUTCDate();
+				var year = dateObj.getUTCFullYear();
+				var formatdate = month + "/" + day + "/" + year;
+				setDate(formatdate);
+			
+				/*add the new comment to the array*/
+				allComments.push(<NewComment icon={ava} 
+					userName={nickname} 
+					date = {datePosted} 
+					ratingGiven = {userStars}
+					comment={userComment}/>);
+					alert(allComments);
+			}
+			else
+			{
+				let message = "Your comment must be more than " + min_words 
+								+ " and less than " + max_words;
+				alert(message);
+			}
 		}
 		else //do not post the rating and show alert
 		{
@@ -111,9 +135,11 @@ const CommentComponent = (props:any) => {
 					<Rater total={5} 
 						   onRate={ ({rating}) => {setStars(rating)} } />
 				</Grid>
-				<Grid item xs={6}>
+				<Grid item xs={3}>
 					{ava}
-					<Checkbox  />
+				</Grid>
+				<Grid item xs={3}>
+					{CheckBox()}
 				</Grid>
 			</Grid>
 
@@ -130,27 +156,19 @@ const CommentComponent = (props:any) => {
 
 			<Grid container spacing={3}>
 			<Grid item xs={12}>
-				{allComments.map(item => (
-					<ul>{item}</ul>
-				))}
-				<NewComment icon={ava} 
-				userName={nickname} 
-				date = {datePosted} 
-				ratingGiven = {userStars}
-				comment={userComment}/>
+				{allComments} {/*array not displaying */}
 			</Grid>
 		</Grid>
     	</div>
 	)
 };
 
-/*positioning for all the smaller components*/
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     yourComment: {
-		marginTop: theme.spacing(15),
-		marginLeft: theme.spacing(35),
-		width: 500,
+		marginTop: theme.spacing(15), //positions top for entire component
+		marginLeft: theme.spacing(35), //left for entire component
+		width: 600,
 	},
 	container: {
 		display: 'flex',

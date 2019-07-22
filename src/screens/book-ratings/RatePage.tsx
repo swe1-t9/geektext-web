@@ -4,7 +4,7 @@
 */
 import React from 'react';
 import './RatePage.css';
-
+//import RatePage from './screens/book-ratings/RatePage'; //to be deleted after merged with book details
 import CommentBox from './Components/CommentComponent';
 import BookInfo from './Components/BookInfoComponent';
 

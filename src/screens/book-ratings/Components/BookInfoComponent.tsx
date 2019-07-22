@@ -1,8 +1,7 @@
 import React from 'react';
 import Bar from '../Items/ProgressBar';
-import Rater from 'react-rater'
-import 'react-rater/lib/react-rater.css'
-import Typography from '@material-ui/core/Typography';
+import Rater from 'react-rater';
+import 'react-rater/lib/react-rater.css';
 import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
 import Paper from '@material-ui/core/Paper';
@@ -26,8 +25,7 @@ const BookInfoComponent = (props:any) => {
                 <Bar rating= {state.fivestar_total} star = {5} />
             </Grid>
             <Grid item xs={3}>
-                <Typography variant="subtitle2" color="textSecondary">
-                5 Stars </Typography>
+                <Rater total = {5} rating={5} interactive={false}/> 
             </Grid>
           </Grid>
     
@@ -36,7 +34,7 @@ const BookInfoComponent = (props:any) => {
                 <Bar rating= {state.fourstar_total} star = {4} />
             </Grid>
             <Grid item xs={3}>
-              <Paper className={classes.paper} elevation={0}>4 stars</Paper>
+              <Rater total = {4} rating={4} interactive={false}/> 
             </Grid>
           </Grid>
     
@@ -45,7 +43,7 @@ const BookInfoComponent = (props:any) => {
                 <Bar rating= {state.threestar_total} star = {3} />
             </Grid>
             <Grid item xs={3}>
-              <Paper className={classes.paper} elevation={0}>3 stars</Paper>
+              <Rater total = {3} rating={3} interactive={false}/> 
             </Grid>
           </Grid>
     
@@ -54,7 +52,7 @@ const BookInfoComponent = (props:any) => {
                 <Bar rating= {state.twostar_total} star={2} />
             </Grid>
             <Grid item xs={3}>
-              <Paper className={classes.paper} elevation={0}>2 stars</Paper>
+              <Rater total = {2} rating={2} interactive={false}/> 
             </Grid>
           </Grid>
     
@@ -63,7 +61,7 @@ const BookInfoComponent = (props:any) => {
                 <Bar rating= {state.onestar_total} star={1}/>
             </Grid>
             <Grid item xs={3}>
-              <Paper className={classes.paper} elevation={0}>1 star</Paper>
+              <Rater total = {1} rating={1} interactive={false}/> 
             </Grid>
           </Grid>
     
