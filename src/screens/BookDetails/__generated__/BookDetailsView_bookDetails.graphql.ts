@@ -11,7 +11,7 @@ export type BookDetailsView_bookDetails = {
     readonly publish_year: number;
     readonly price: number;
     readonly description: string;
-    readonly cover: string;
+    readonly cover: any;
     readonly " $refType": BookDetailsView_bookDetails$ref;
 };
 
