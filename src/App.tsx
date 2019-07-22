@@ -26,7 +26,6 @@ const App: React.FC = () => (
           component={withNavbar(Cart)}
         />
         <ProtectedRoute exact={true} path="/me" component={withNavbar(User)} />
-        <Route exact={true} path="/cart" component={withNavbar(Cart)} />
         <Route
           exact={true}
           path="/book-details"
