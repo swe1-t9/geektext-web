@@ -8,6 +8,8 @@ import { createStyles, makeStyles } from '@material-ui/core/styles';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import clsx from 'clsx';
 import { red } from '@material-ui/core/colors';
+import { commit as commitAddToShoppingCartMutation } from '../../graphql/mutations/AddToShoppingCartMutation';
+import { AddToShoppingCartMutationResponse } from '../../graphql/mutations/__generated__/AddToShoppingCartMutation.graphql';
 
 type Props = {
   bookDetails: BookDetailsView_bookDetails;
@@ -16,10 +18,35 @@ type Props = {
 const BookDetailsView: React.FC<Props> = (props: Props) => {
   const classes = useStyles();
   const [expanded, setExpanded] = React.useState(false);
+  const [added, setAdded] = React.useState(false);
 
   function handleExpandClick() {
     setExpanded(!expanded);
   }
+
+  const onAddToShoppingCartSuccess = (response: AddToShoppingCartMutationResponse) => {
+    setAdded(true);
+    window.location.href = '/cart';
+  };
+
+  const onAddToShoppingCartFailure = (error: Error) => {
+    console.warn(error);
+    // if user tries to add to cart when not logged in, redirect to /login
+    window.location.href = '/login';
+  };
+
+  const addToShoppingCart = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+    e.preventDefault();
+    // TODO: add proper mechanism for getting amount of books to add
+    commitAddToShoppingCartMutation(
+      {
+        book_id: props.bookDetails.id,
+        amount: 1
+      },
+      onAddToShoppingCartSuccess,
+      onAddToShoppingCartFailure
+    );
+  };
   
   return (
     <Grid
@@ -47,8 +74,12 @@ const BookDetailsView: React.FC<Props> = (props: Props) => {
           </CardContent>
         </CardActionArea>
         <CardActions>
-          <Button size="small" color="primary">
-            Add To Cart
+          <Button 
+            size="small" 
+            color="primary"
+            onClick={addToShoppingCart}
+          >
+            {added ? 'In Cart' : 'Add to Shopping Cart' /*TODO: make this redirect user to their cart page once they add a book*/}
           </Button>
           {/* <Button size="small" color="primary">
             More

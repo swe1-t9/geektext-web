@@ -4,7 +4,6 @@ import { ConcreteRequest } from "relay-runtime";
 export type AddToShoppingCartInput = {
     readonly amount: number;
     readonly book_id: string;
-    readonly user_id: string;
 };
 export type AddToShoppingCartMutationVariables = {
     readonly input: AddToShoppingCartInput;
