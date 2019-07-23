@@ -3,7 +3,7 @@ import { commitMutation } from 'react-relay';
 import graphql from 'babel-plugin-relay/macro';
 
 import { environment } from '../relay';
-import { AddToSavedCartInput } from './__generated__/AddToShoppingCartMutation.graphql';
+import { AddToSavedCartInput } from './__generated__/AddToSavedCartMutation.graphql';
 
 const mutation = graphql`
   mutation AddToSavedCartMutation($input: AddToSavedCartInput!) {
