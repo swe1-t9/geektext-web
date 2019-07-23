@@ -1,164 +1,125 @@
 import { createFragmentContainer } from 'react-relay';
 // @ts-ignore
 import graphql from 'babel-plugin-relay/macro';
-import { BookDetailsView_bookDetails } from './__generated__/BookDetailsView_bookDetails.graphql';
+import Paper from '@material-ui/core/Paper';
+import IconButton from '@material-ui/core/IconButton';
+import EditIcon from '@material-ui/icons/Edit';
+import Button from '@material-ui/core/Button';
+import Grid from '@material-ui/core/Grid';
+import Typography from '@material-ui/core/Typography';
+import CssBaseline from '@material-ui/core/CssBaseline';
+import TextField from '@material-ui/core/TextField';
+import { makeStyles } from '@material-ui/core';
 import React from 'react';
-import { Card, CardActionArea, CardMedia, CardContent, Button, Typography, CardActions, Grid, Theme, IconButton, Collapse, Link } from '@material-ui/core';
-import { createStyles, makeStyles } from '@material-ui/core/styles';
-import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
-import clsx from 'clsx';
-import { red } from '@material-ui/core/colors';
-import { commit as commitAddToShoppingCartMutation } from '../../graphql/mutations/AddToShoppingCartMutation';
-import { AddToShoppingCartMutationResponse } from '../../graphql/mutations/__generated__/AddToShoppingCartMutation.graphql';
+
+import { ShoppingCartView_user } from './__generated__/ShoppingCartView_user.graphql';
 
 type Props = {
-  bookDetails: BookDetailsView_bookDetails;
+  user: ShoppingCartView_user;
 };
 
 const ShoppingCartView: React.FC<Props> = (props: Props) => {
-  const classes = useStyles();
-  const [expanded, setExpanded] = React.useState(false);
-  const [added, setAdded] = React.useState(false);
+  const classes = styles();
+  console.log(props.user.shoppingCart.items[0].book.title)
 
-  function handleExpandClick() {
-    setExpanded(!expanded);
-  }
+  var subtotal = 0;
 
-  const onAddToShoppingCartSuccess = (response: AddToShoppingCartMutationResponse) => {
-    setAdded(true);
-    window.location.href = '/cart';
-  };
-
-  const onAddToShoppingCartFailure = (error: Error) => {
-    console.warn(error);
-    // if user tries to add to cart when not logged in, redirect to /login
-    window.location.href = '/login';
-  };
-
-  const addToShoppingCart = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
-    e.preventDefault();
-    // TODO: add proper mechanism for getting amount of books to add
-    commitAddToShoppingCartMutation(
-      {
-        book_id: props.bookDetails.id,
-        amount: 1
-      },
-      onAddToShoppingCartSuccess,
-      onAddToShoppingCartFailure
-    );
-  };
-  
   return (
-    <Grid
-      container
-      spacing={0}
-      direction="column"
-      alignItems="center"
-      justify="center"
-      style={{ minHeight: '100vh' }}
-    >
-      <Card className={classes.card}>
-        <CardActionArea>
-          <CardMedia
-            className={classes.media}
-            image={props.bookDetails.cover}
-            // onClick={expandImage}
-          />
-          <CardContent>
-            <Typography gutterBottom variant="h5" component="h2">
-              {props.bookDetails.title}
-            </Typography>
-            <Typography variant="body2" color="textSecondary" component="p">
-              {props.bookDetails.description}
-            </Typography>
-          </CardContent>
-        </CardActionArea>
-        <CardActions>
-          <Button 
-            size="small" 
-            color="primary"
-            onClick={addToShoppingCart}
-          >
-            {added ? 'In Cart' : 'Add to Shopping Cart' /*TODO: make this redirect user to their cart page once they add a book*/}
-          </Button>
-          {/* <Button size="small" color="primary">
-            More
-          </Button> */}
-          <IconButton
-            className={clsx(classes.expand, {
-              [classes.expandOpen]: expanded,
+    <>
+      <CssBaseline />
+      <Grid container spacing={1}>
+        <Grid item xs={9}>
+          <div>
+            {props.user.shoppingCart.items.map(function(item){
+              subtotal += (item.book.price * item.amount)
+              return (
+                <Paper className={classes.bookRow}>
+                  <Grid container spacing={2}>
+                    <Grid item xs={6} sm={3} className={classes.cell}>
+                      <img src={item.book.cover} alt={item.book.title} className={classes.bookImage}></img>
+                    </Grid>
+                    <Grid item xs={6} sm={3} className={classes.cell}>
+                      <Typography>
+                        {item.book.title}
+                      </Typography>
+                    </Grid>
+                    <Grid item xs={6} sm={3}>
+                      <Typography>
+                        {item.amount}
+                      </Typography>
+                    </Grid>
+                    <Grid item xs={6} sm={3}>
+                      <Typography>
+                        {item.book.price}
+                      </Typography>
+                    </Grid>
+                  </Grid>
+                </Paper>
+              )
             })}
-            onClick={handleExpandClick}
-            aria-expanded={expanded}
-            aria-label="Show more"
-          >
-            <ExpandMoreIcon />
-          </IconButton>
-        </CardActions>
-        <Collapse in={expanded} timeout="auto" unmountOnExit>
-          <CardContent>
-            <Typography variant="h5" align="center"> About the Author </Typography>
-            <Typography paragraph align="center">
-              <Link href={"https://www.amazon.com/s?k=jk+rowling&ref=nb_sb_noss_2"}>J.K. Rowling</Link>
+          </div>
+        </Grid>
+        <Grid item xs={3}>
+          <Paper className={classes.bookRow}>
+            <Typography variant='h6'>
+              Subtotal: {subtotal.toFixed(2)}
             </Typography>
-            <Typography paragraph>
-              J.K. Rowling is the creator of the 'Harry Potter' fantasy series, one of the most popular book and film franchises in history
+            <Typography variant='h6'>
+              Tax: {(subtotal * 0.07).toFixed(2)}
             </Typography>
-            <Typography paragraph> Genre: {props.bookDetails.genre}</Typography>
-            <Typography paragraph> Publish Year: {props.bookDetails.publish_year}</Typography>
-          </CardContent>
-        </Collapse>
-      </Card>
-    </Grid>
-  )
+            <Typography variant='h5'>
+              Grand total: {(subtotal + (subtotal * 0.07)).toFixed(2)}
+            </Typography>
+            <Button variant='contained' color='primary' size='large'>
+              Checkout
+            </Button>
+          </Paper>
+        </Grid>
+      </Grid>
+      
+    </>
+  );
 };
 
-const useStyles = makeStyles((theme: Theme) =>
-  createStyles({
-    card: {
-      marginTop: 10,
-      marginLeft: 10,
-      maxWidth: 500,
-      background: '#000000'
-    },
-    media: {
-      height: 200,
-      paddingTop: '56.25%', // 16:9
-
-    },
-    expand: {
-      transform: 'rotate(0deg)',
+const styles = makeStyles(theme => ({
+  bookRow: {
+    width: 'auto',
+    display: 'grid',
+    textAlign: 'center',
+    verticalAlign: 'middle',
+    gridTemplateColumns: 'auto',
+    padding: theme.spacing(1),
+    marginTop: theme.spacing(1),
+    marginLeft: theme.spacing(1),
+    marginRight: theme.spacing(1),
+    [theme.breakpoints.up(600 + theme.spacing(2) * 2)]: {
+      width: '80%',
       marginLeft: 'auto',
-      transition: theme.transitions.create('transform', {
-        duration: theme.transitions.duration.shortest,
-      }),
-    },
-    expandOpen: {
-      transform: 'rotate(180deg)',
-    },
-    expandImage: {
-      height: 700,
-      width: 900
-    },
-    avatar: {
-      backgroundColor: red[500]
+      marginRight: 'auto'
     }
-  })
-);
+  },
+  cell: {
+    textAlign: 'center',
+    verticalAlign: 'middle'
+  },
+  bookImage: {
+    width: '5em'
+  }
+}));
 
 export default createFragmentContainer(ShoppingCartView, {
-  shoppingCart: graphql`
-    fragment BookDetailsView_bookDetails on Book {
-      id
-      author_id
-      title
-      isbn
-      genre
-      publish_year
-      price
-      title
-      description
-      cover
+  user: graphql`
+    fragment ShoppingCartView_user on User {
+      shoppingCart: shopping_cart {
+        items {
+          book {
+            title
+            price
+            cover
+          }
+          amount
+        }
+      }
     }
   `
 });

@@ -3,16 +3,16 @@ import { QueryRenderer } from 'react-relay';
 import graphql from 'babel-plugin-relay/macro';
 import React from 'react';
 
-
 import { environment } from '../../graphql/relay';
-import BookDetailsView from './BookDetailsView';
-import {BookDetailsQueryResponse} from './__generated__/BookDetailsQuery.graphql';
+import ShoppingCartView from './ShoppingCartView';
+import { ShoppingCartQueryResponse } from './__generated__/ShoppingCartQuery.graphql';
+import Loading from '../../shared/Loading';
 
-const BookDetailsQuery = graphql`
-  query BookDetailsQuery ($input: BookDetailsInput!) {
-      bookDetails: book_details (input: $input) {
-        ...BookDetailsView_bookDetails
-      }
+const ShoppingCartQuery = graphql`
+  query ShoppingCartQuery {
+    viewer {
+      ...ShoppingCartView_user
+    }
   }
 `;
 
@@ -20,19 +20,14 @@ const ShoppingCart: React.FC = () => (
   <QueryRenderer
     environment={environment}
     query={ShoppingCartQuery}
-    variables={{input: {id: '00000000-0000-0000-0000-000000000001'}}}
+    variables={{}}
     render={({ props, error }) => {
       if (error) return <div>{error.message}</div>;
       else if (props) {
-        console.log(props);
-        return (
-          <BookDetailsView bookDetails={(props as BookDetailsQueryResponse).bookDetails} />
-        );
-      } else return <div>loading</div>;
+        return <ShoppingCartView user={(props as ShoppingCartQueryResponse).viewer} />;
+      } else return <Loading />;
     }}
   />
 );
-
-
 
 export default ShoppingCart;
