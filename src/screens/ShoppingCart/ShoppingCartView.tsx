@@ -15,7 +15,7 @@ type Props = {
   bookDetails: BookDetailsView_bookDetails;
 };
 
-const BookDetailsView: React.FC<Props> = (props: Props) => {
+const ShoppingCartView: React.FC<Props> = (props: Props) => {
   const classes = useStyles();
   const [expanded, setExpanded] = React.useState(false);
   const [added, setAdded] = React.useState(false);
@@ -26,7 +26,7 @@ const BookDetailsView: React.FC<Props> = (props: Props) => {
 
   const onAddToShoppingCartSuccess = (response: AddToShoppingCartMutationResponse) => {
     setAdded(true);
-    window.location.href = '/shopping-cart';
+    window.location.href = '/cart';
   };
 
   const onAddToShoppingCartFailure = (error: Error) => {
@@ -146,8 +146,8 @@ const useStyles = makeStyles((theme: Theme) =>
   })
 );
 
-export default createFragmentContainer(BookDetailsView, {
-  bookDetails: graphql`
+export default createFragmentContainer(ShoppingCartView, {
+  shoppingCart: graphql`
     fragment BookDetailsView_bookDetails on Book {
       id
       author_id
