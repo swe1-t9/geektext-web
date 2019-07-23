@@ -2,13 +2,10 @@ import { createFragmentContainer } from 'react-relay';
 // @ts-ignore
 import graphql from 'babel-plugin-relay/macro';
 import Paper from '@material-ui/core/Paper';
-import IconButton from '@material-ui/core/IconButton';
-import EditIcon from '@material-ui/icons/Edit';
 import Button from '@material-ui/core/Button';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import CssBaseline from '@material-ui/core/CssBaseline';
-import TextField from '@material-ui/core/TextField';
 import { makeStyles } from '@material-ui/core';
 import React from 'react';
 
