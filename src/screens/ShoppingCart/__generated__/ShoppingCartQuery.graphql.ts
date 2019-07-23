@@ -26,6 +26,7 @@ query ShoppingCartQuery {
 fragment ShoppingCartView_user on User {
   shoppingCart: shopping_cart {
     items {
+      id
       book {
         title
         price
@@ -33,7 +34,19 @@ fragment ShoppingCartView_user on User {
         id
       }
       amount
+    }
+    id
+  }
+  savedCart: saved_cart {
+    items {
       id
+      book {
+        title
+        price
+        cover
+        id
+      }
+      amount
     }
     id
   }
@@ -47,7 +60,50 @@ var v0 = {
   "name": "id",
   "args": null,
   "storageKey": null
-};
+},
+v1 = [
+  (v0/*: any*/),
+  {
+    "kind": "LinkedField",
+    "alias": null,
+    "name": "book",
+    "storageKey": null,
+    "args": null,
+    "concreteType": "Book",
+    "plural": false,
+    "selections": [
+      {
+        "kind": "ScalarField",
+        "alias": null,
+        "name": "title",
+        "args": null,
+        "storageKey": null
+      },
+      {
+        "kind": "ScalarField",
+        "alias": null,
+        "name": "price",
+        "args": null,
+        "storageKey": null
+      },
+      {
+        "kind": "ScalarField",
+        "alias": null,
+        "name": "cover",
+        "args": null,
+        "storageKey": null
+      },
+      (v0/*: any*/)
+    ]
+  },
+  {
+    "kind": "ScalarField",
+    "alias": null,
+    "name": "amount",
+    "args": null,
+    "storageKey": null
+  }
+];
 return {
   "kind": "Request",
   "fragment": {
@@ -106,49 +162,29 @@ return {
                 "args": null,
                 "concreteType": "ShoppingCartItem",
                 "plural": true,
-                "selections": [
-                  {
-                    "kind": "LinkedField",
-                    "alias": null,
-                    "name": "book",
-                    "storageKey": null,
-                    "args": null,
-                    "concreteType": "Book",
-                    "plural": false,
-                    "selections": [
-                      {
-                        "kind": "ScalarField",
-                        "alias": null,
-                        "name": "title",
-                        "args": null,
-                        "storageKey": null
-                      },
-                      {
-                        "kind": "ScalarField",
-                        "alias": null,
-                        "name": "price",
-                        "args": null,
-                        "storageKey": null
-                      },
-                      {
-                        "kind": "ScalarField",
-                        "alias": null,
-                        "name": "cover",
-                        "args": null,
-                        "storageKey": null
-                      },
-                      (v0/*: any*/)
-                    ]
-                  },
-                  {
-                    "kind": "ScalarField",
-                    "alias": null,
-                    "name": "amount",
-                    "args": null,
-                    "storageKey": null
-                  },
-                  (v0/*: any*/)
-                ]
+                "selections": (v1/*: any*/)
+              },
+              (v0/*: any*/)
+            ]
+          },
+          {
+            "kind": "LinkedField",
+            "alias": "savedCart",
+            "name": "saved_cart",
+            "storageKey": null,
+            "args": null,
+            "concreteType": "SavedCart",
+            "plural": false,
+            "selections": [
+              {
+                "kind": "LinkedField",
+                "alias": null,
+                "name": "items",
+                "storageKey": null,
+                "args": null,
+                "concreteType": "SavedCartItem",
+                "plural": true,
+                "selections": (v1/*: any*/)
               },
               (v0/*: any*/)
             ]
@@ -162,7 +198,7 @@ return {
     "operationKind": "query",
     "name": "ShoppingCartQuery",
     "id": null,
-    "text": "query ShoppingCartQuery {\n  viewer {\n    ...ShoppingCartView_user\n    id\n  }\n}\n\nfragment ShoppingCartView_user on User {\n  shoppingCart: shopping_cart {\n    items {\n      book {\n        title\n        price\n        cover\n        id\n      }\n      amount\n      id\n    }\n    id\n  }\n}\n",
+    "text": "query ShoppingCartQuery {\n  viewer {\n    ...ShoppingCartView_user\n    id\n  }\n}\n\nfragment ShoppingCartView_user on User {\n  shoppingCart: shopping_cart {\n    items {\n      id\n      book {\n        title\n        price\n        cover\n        id\n      }\n      amount\n    }\n    id\n  }\n  savedCart: saved_cart {\n    items {\n      id\n      book {\n        title\n        price\n        cover\n        id\n      }\n      amount\n    }\n    id\n  }\n}\n",
     "metadata": {}
   }
 };
