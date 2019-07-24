@@ -9,12 +9,44 @@ import Avatar from '@material-ui/core/Avatar';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
-import { Link } from 'react-router-dom';
+import { Link, Redirect } from 'react-router-dom';
 import * as React from 'react';
+
+import { commit as commitLogInMutation } from '../../graphql/mutations/LogInMutation';
+import { LogInMutationResponse } from '../../graphql/mutations/__generated__/LogInMutation.graphql';
+import { handleTextChange } from '../../shared/text';
+import { setToken } from '../../shared/token';
+import { isLoggedIn } from '../../shared/auth';
 
 const Login = () => {
   const classes = styles();
-  return (
+
+  const [, forceUpdate] = React.useState(false);
+  const [email, setEmail] = React.useState('');
+  const [password, setPassword] = React.useState('');
+
+  const onLogInSuccess = (response: LogInMutationResponse) => {
+    setToken(response.logIn);
+    forceUpdate(n => !n);
+  };
+
+  const onLogInFailure = (error: Error) => console.warn(error);
+
+  const submit = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+    e.preventDefault();
+    commitLogInMutation(
+      {
+        email,
+        password
+      },
+      onLogInSuccess,
+      onLogInFailure
+    );
+  };
+
+  return isLoggedIn() ? (
+    <Redirect to="/" />
+  ) : (
     <Grid container component="main" className={classes.root}>
       <CssBaseline />
       <Grid item xs={false} sm={4} md={7} className={classes.image} />
@@ -36,6 +68,7 @@ const Login = () => {
               label="Email Address"
               name="email"
               autoComplete="email"
+              onChange={e => handleTextChange(e, setEmail)}
               autoFocus
             />
             <TextField
@@ -47,6 +80,7 @@ const Login = () => {
               label="Password"
               type="password"
               id="password"
+              onChange={e => handleTextChange(e, setPassword)}
               autoComplete="current-password"
             />
             <FormControlLabel
@@ -59,6 +93,7 @@ const Login = () => {
               variant="contained"
               color="primary"
               className={classes.submit}
+              onClick={submit}
             >
               Log In
             </Button>

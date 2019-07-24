@@ -6,7 +6,6 @@ import React from 'react';
 
 import { environment } from '../../graphql/relay';
 import BookDetailsView from './BookDetailsView';
-import { BookDetailsView_bookDetails$ref } from './__generated__/BookDetailsView_bookDetails.graphql';
 import {BookDetailsQueryResponse} from './__generated__/BookDetailsQuery.graphql';
 
 const BookDetailsQuery = graphql`
