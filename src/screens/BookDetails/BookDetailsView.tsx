@@ -8,6 +8,9 @@ import { createStyles, makeStyles } from '@material-ui/core/styles';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import clsx from 'clsx';
 import { red } from '@material-ui/core/colors';
+import Commentbox from '../book-ratings/Components/CommentComponent';
+import Scoreboard from '../book-ratings/Components/BookInfoComponent';
+
 
 type Props = {
   bookDetails: BookDetailsView_bookDetails;
@@ -78,6 +81,8 @@ const BookDetailsView: React.FC<Props> = (props: Props) => {
             </Typography>
             <Typography paragraph> Genre: {props.bookDetails.genre}</Typography>
             <Typography paragraph> Publish Year: {props.bookDetails.publish_year}</Typography>
+            <Commentbox />
+            <Scoreboard />
           </CardContent>
         </Collapse>
       </Card>

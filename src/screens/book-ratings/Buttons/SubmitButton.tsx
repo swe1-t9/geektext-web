@@ -18,6 +18,8 @@ const useStyles = makeStyles((theme: Theme) =>
     
     button: {
       margin: theme.spacing(1),
+      fontSize: 15,
+      marginLeft: 10,
     },
     leftIcon: {
       marginRight: theme.spacing(1),
