@@ -8,6 +8,8 @@ import { createStyles, makeStyles } from '@material-ui/core/styles';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import clsx from 'clsx';
 import { red } from '@material-ui/core/colors';
+import { commit as commitAddToShoppingCartMutation } from '../../graphql/mutations/AddToShoppingCartMutation';
+import { commit as commitAddToSavedCartMutation } from '../../graphql/mutations/AddToSavedCartMutation';
 
 type Props = {
   bookDetails: BookDetailsView_bookDetails;
@@ -16,10 +18,54 @@ type Props = {
 const BookDetailsView: React.FC<Props> = (props: Props) => {
   const classes = useStyles();
   const [expanded, setExpanded] = React.useState(false);
+  const [added, setAdded] = React.useState(false);
+  const [saved, setSaved] = React.useState(false);
 
   function handleExpandClick() {
     setExpanded(!expanded);
   }
+
+  const onAddToShoppingCartSuccess = () => {
+    setAdded(true);
+    window.location.href = '/shopping-cart';
+  };
+
+  const onAddToCartFailure = (error: Error) => {
+    console.warn(error);
+    // if user tries to add to cart when not logged in, redirect to /login
+    window.location.href = '/login';
+  };
+
+  const onAddToSavedCartSuccess = () => {
+    setSaved(true);
+    window.location.href = '/shopping-cart';
+  };
+
+  const addToShoppingCart = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+    e.preventDefault();
+    // TODO: add proper mechanism for getting amount of books to add
+    commitAddToShoppingCartMutation(
+      {
+        book_id: props.bookDetails.id,
+        amount: 1
+      },
+      onAddToShoppingCartSuccess,
+      onAddToCartFailure
+    );
+  };
+
+  const addToSavedCart = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+    e.preventDefault();
+    // TODO: add proper mechanism for getting amount of books to add
+    commitAddToSavedCartMutation(
+      {
+        book_id: props.bookDetails.id,
+        amount: 1
+      },
+      onAddToSavedCartSuccess,
+      onAddToCartFailure
+    );
+  };
   
   return (
     <Grid
@@ -47,8 +93,19 @@ const BookDetailsView: React.FC<Props> = (props: Props) => {
           </CardContent>
         </CardActionArea>
         <CardActions>
-          <Button size="small" color="primary">
-            Add To Cart
+          <Button 
+            size="small" 
+            color="primary"
+            onClick={addToShoppingCart}
+          >
+            {added ? 'In Cart' : 'Add to Shopping Cart'}
+          </Button>
+          <Button 
+            size="small" 
+            color="primary"
+            onClick={addToSavedCart}
+          >
+            {saved ? 'Saved' : 'Save for Later'}
           </Button>
           {/* <Button size="small" color="primary">
             More
