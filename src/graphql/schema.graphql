@@ -20,12 +20,11 @@ input AddToShoppingCartInput {
   user_id: String!
 }
 
-"""
-The details of a book.
-"""
+"""The details of a book."""
 type Book {
   author_id: ID!
   cover: URL!
+
   description: String!
   genre: String!
   id: ID!
@@ -94,14 +93,19 @@ type ShippingInformation {
   shipping_addresses: [Address!]!
 }
 
+<<<<<<< HEAD
 """
 A shopping cart, holding items to be purchased later.
 """
+=======
+"""A shopping cart, holding items to be purchased later."""
+>>>>>>> 317df6e2af3e9f0f97db8e9e56e222d273c03b82
 type ShoppingCart {
   id: ID!
   items: [ShoppingCartItem!]!
 }
 
+<<<<<<< HEAD
 """
 An item in a user's shopping cart.
 """
@@ -111,6 +115,13 @@ type ShoppingCartItem {
   """
   The book this item represents.
   """
+=======
+"""An item in a user's shopping cart."""
+type ShoppingCartItem {
+  amount: Int!
+
+  """The book this item represents."""
+>>>>>>> 317df6e2af3e9f0f97db8e9e56e222d273c03b82
   book: Book!
   id: ID!
 }
@@ -141,8 +152,12 @@ type User {
   """
   shipping_information: ShippingInformation!
 
+<<<<<<< HEAD
   """
   The user's shopping cart
   """
+=======
+  """The user's shopping cart"""
+>>>>>>> 317df6e2af3e9f0f97db8e9e56e222d273c03b82
   shopping_cart: ShoppingCart!
 }
