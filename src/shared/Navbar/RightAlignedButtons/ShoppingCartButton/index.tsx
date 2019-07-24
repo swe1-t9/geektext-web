@@ -1,22 +1,22 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { makeStyles } from "@material-ui/core/styles";
-import PersonIcon from "@material-ui/icons/Person";
+import ShoppingCartIcon from "@material-ui/icons/ShoppingCart";
 import IconButton from "@material-ui/core/IconButton";
 
-const LoginButton = () => {
+const ShoppingCartButton = () => {
   const classes = styles();
   return (
     <IconButton
       color="default"
       id="login-button"
-      aria-label="Login/Create Account"
+      aria-label="View Shopping Cart"
       edge="end"
       component={Link}
-      to="/login"
+      to="/shopping-cart"
       className={classes.button}
     >
-      <PersonIcon />
+      <ShoppingCartIcon />
     </IconButton>
   );
 };
@@ -28,4 +28,4 @@ const styles = makeStyles(theme => ({
   }
 }));
 
-export default LoginButton;
+export default ShoppingCartButton;
