@@ -63,12 +63,14 @@ input LogInInput {
 type Mutation {
   add_to_saved_cart(input: AddToSavedCartInput!): SavedCartItem!
   add_to_shopping_cart(input: AddToShoppingCartInput!): ShoppingCartItem!
+  checkout_user: ShoppingCart!
   edit_user(input: EditUserInput!): User!
   log_in(input: LogInInput!): JWT!
   remove_from_saved_cart(input: RemoveFromSavedCartInput!): SavedCart!
   remove_from_shopping_cart(input: RemoveFromShoppingCartInput!): ShoppingCart!
   save_shopping_cart: SavedCart!
   sign_up(input: SignUpInput!): JWT!
+  unsave_saved_cart: ShoppingCart!
 }
 
 """

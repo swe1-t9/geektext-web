@@ -9,7 +9,7 @@ import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import clsx from 'clsx';
 import { red } from '@material-ui/core/colors';
 import { commit as commitAddToShoppingCartMutation } from '../../graphql/mutations/AddToShoppingCartMutation';
-import { AddToShoppingCartMutationResponse } from '../../graphql/mutations/__generated__/AddToShoppingCartMutation.graphql';
+import { commit as commitAddToSavedCartMutation } from '../../graphql/mutations/AddToSavedCartMutation';
 
 type Props = {
   bookDetails: BookDetailsView_bookDetails;
@@ -19,20 +19,26 @@ const BookDetailsView: React.FC<Props> = (props: Props) => {
   const classes = useStyles();
   const [expanded, setExpanded] = React.useState(false);
   const [added, setAdded] = React.useState(false);
+  const [saved, setSaved] = React.useState(false);
 
   function handleExpandClick() {
     setExpanded(!expanded);
   }
 
-  const onAddToShoppingCartSuccess = (response: AddToShoppingCartMutationResponse) => {
+  const onAddToShoppingCartSuccess = () => {
     setAdded(true);
     window.location.href = '/shopping-cart';
   };
 
-  const onAddToShoppingCartFailure = (error: Error) => {
+  const onAddToCartFailure = (error: Error) => {
     console.warn(error);
     // if user tries to add to cart when not logged in, redirect to /login
     window.location.href = '/login';
+  };
+
+  const onAddToSavedCartSuccess = () => {
+    setSaved(true);
+    window.location.href = '/shopping-cart';
   };
 
   const addToShoppingCart = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
@@ -44,7 +50,20 @@ const BookDetailsView: React.FC<Props> = (props: Props) => {
         amount: 1
       },
       onAddToShoppingCartSuccess,
-      onAddToShoppingCartFailure
+      onAddToCartFailure
+    );
+  };
+
+  const addToSavedCart = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+    e.preventDefault();
+    // TODO: add proper mechanism for getting amount of books to add
+    commitAddToSavedCartMutation(
+      {
+        book_id: props.bookDetails.id,
+        amount: 1
+      },
+      onAddToSavedCartSuccess,
+      onAddToCartFailure
     );
   };
   
@@ -79,7 +98,14 @@ const BookDetailsView: React.FC<Props> = (props: Props) => {
             color="primary"
             onClick={addToShoppingCart}
           >
-            {added ? 'In Cart' : 'Add to Shopping Cart' /*TODO: make this redirect user to their cart page once they add a book*/}
+            {added ? 'In Cart' : 'Add to Shopping Cart'}
+          </Button>
+          <Button 
+            size="small" 
+            color="primary"
+            onClick={addToSavedCart}
+          >
+            {saved ? 'Saved' : 'Save for Later'}
           </Button>
           {/* <Button size="small" color="primary">
             More

@@ -10,11 +10,14 @@ import { makeStyles } from '@material-ui/core';
 import React from 'react';
 import IconButton from "@material-ui/core/IconButton";
 import RemoveShoppingCartIcon from "@material-ui/icons/RemoveShoppingCart";
+import TextField from '@material-ui/core/TextField';
 
 import { ShoppingCartView_user } from './__generated__/ShoppingCartView_user.graphql';
 import { commit as commitSaveShoppingCartMutation } from '../../graphql/mutations/SaveShoppingCartMutation';
 import { commit as commitRemoveFromShoppingCartMutation } from '../../graphql/mutations/RemoveFromShoppingCartMutation';
 import { commit as commitRemoveFromSavedCartMutation } from '../../graphql/mutations/RemoveFromSavedCartMutation';
+import { commit as commitUnsaveSavedCartMutation } from '../../graphql/mutations/UnsaveSavedCartMutation';
+import { commit as commitCheckoutUserMutation } from '../../graphql/mutations/CheckoutUserMutation';
 
 type Props = {
   user: ShoppingCartView_user;
@@ -45,11 +48,35 @@ const ShoppingCartView: React.FC<Props> = (props: Props) => {
     // TODO: do something here
   };
 
+  const onCheckoutUserSuccess = () => {
+    // TODO: do something here maybe
+  };
+
+  const onCheckoutUserFailure = (error: Error) => {
+    console.warn(error);
+  };
+
   const saveShoppingCart = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
     e.preventDefault();
     commitSaveShoppingCartMutation(
       onSaveShoppingCartSuccess,
       onSaveShoppingCartFailure
+    );
+  };
+
+  const unsaveSavedCart = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+    e.preventDefault();
+    commitUnsaveSavedCartMutation(
+      onSaveShoppingCartSuccess,
+      onSaveShoppingCartFailure
+    );
+  };
+
+  const checkoutUser = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+    e.preventDefault();
+    commitCheckoutUserMutation(
+      onCheckoutUserSuccess,
+      onCheckoutUserFailure
     );
   };
 
@@ -86,6 +113,8 @@ const ShoppingCartView: React.FC<Props> = (props: Props) => {
     };
     readonly amount: number;
   }>) => {
+    // TODO: figure out the right way to track subtotal
+    if (isShopping) subtotal += item.amount * item.book.price
     return (
       <Paper className={classes.bookBackground}>
         <Grid container spacing={2}>
@@ -98,9 +127,17 @@ const ShoppingCartView: React.FC<Props> = (props: Props) => {
             </Typography>
           </Grid>
           <Grid item xs={2}>
-            <Typography>
-              {item.amount}
-            </Typography>
+            <form className={classes.container} noValidate>
+              <TextField
+                label="Amount"
+                type="number"
+                defaultValue={item.amount}
+                className={classes.textField}
+                InputLabelProps={{
+                  shrink: true,
+                }}
+              />
+            </form>
           </Grid>
           <Grid item xs={2}>
             <Typography>
@@ -123,8 +160,9 @@ const ShoppingCartView: React.FC<Props> = (props: Props) => {
       return (
         <Typography className={classes.bookRow}>Nothing's here yet. Go pick out some good books to buy!</Typography>
       )
-    else
+    else {
       return props.user.shoppingCart.items.map(displayItem(true))
+    }
   }
 
   const displaySavedCart = () => {
@@ -142,14 +180,25 @@ const ShoppingCartView: React.FC<Props> = (props: Props) => {
       <CssBaseline />
       <Grid container spacing={1}>
         <Grid item xs={9}>
-          <Paper>
-            <Typography className={classes.bookRow} variant='h5'>Shopping Cart</Typography>
+          <Paper className={classes.bookRow}>
+            <div>
+              <Typography className={classes.bookRow} variant='h5'>Shopping Cart</Typography>
+            </div>
             <div>
               {displayShoppingCart()}
             </div>
           </Paper>
-          <Paper>
-            <Typography className={classes.bookRow} variant='h5'>Saved Items</Typography>
+          <Paper className={classes.bookRow}>
+            <div>
+              <Typography className={classes.bookRow} variant='h5'>Saved Items</Typography>
+              <Button
+                variant='contained'
+                color='primary'
+                onClick={unsaveSavedCart}
+                className={classes.button}>
+                Move All to Cart
+              </Button>
+            </div>
             <div>
               {displaySavedCart()}
             </div>
@@ -169,15 +218,16 @@ const ShoppingCartView: React.FC<Props> = (props: Props) => {
             <Button
               variant='contained'
               color='primary'
-              size='large'>
+              size='large'
+              onClick={checkoutUser}>
               Checkout
             </Button>
           </Paper>
           <Paper className={classes.bookRow}>
             <Button
               color='primary'
-              size='large'
-              onClick={saveShoppingCart}>
+              onClick={saveShoppingCart}
+              className={classes.button}>
               Save for later
             </Button>
           </Paper>
@@ -219,9 +269,22 @@ const styles = makeStyles(theme => ({
       marginRight: 'auto'
     }
   },
+  container: {
+    display: 'flex',
+    flexWrap: 'wrap',
+  },
+  textField: {
+    marginLeft: theme.spacing(1),
+    marginRight: theme.spacing(1),
+    width: 200,
+  },
   cell: {
     textAlign: 'center',
     verticalAlign: 'middle'
+  },
+  button: {
+    width: '15em',
+    margin: 'auto'
   },
   bookImage: {
     width: '5em'
