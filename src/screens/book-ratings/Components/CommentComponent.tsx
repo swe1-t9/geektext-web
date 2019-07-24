@@ -10,6 +10,7 @@ import Grid from '@material-ui/core/Grid';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Checkbox from '@material-ui/core/Checkbox';
 import TextField from '@material-ui/core/TextField';
+import { Typography } from '@material-ui/core';
 
 const CommentComponent = (props:any) => {
 	const classes = useStyles();
@@ -80,7 +81,7 @@ const CommentComponent = (props:any) => {
 				  color="primary"
 				/>
 			  }
-			  label="Remain Anonymous"
+			  label={<Typography variant="body2">Remain Anonymous</Typography>}
 			  
 			/>
 		);
@@ -168,7 +169,7 @@ const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     yourComment: {
 		marginTop: theme.spacing(15), //positions top for entire component
-        marginLeft: '10%',
+        marginLeft: '9%',
 		width: 375,
 	},
 	container: {
