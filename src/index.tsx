@@ -3,10 +3,10 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
+import RatePage from './screens/book-ratings/RatePage'; //to be deleted after merged with book details
 
 
-
-ReactDOM.render(<App />, document.getElementById('root'));
+ReactDOM.render(<RatePage />, document.getElementById('root'));
 
 // If you want your app to work offline and load faster, you can change
 // unregister() to register() below. Note this comes with some pitfalls.
