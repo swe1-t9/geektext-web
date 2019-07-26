@@ -1,16 +1,17 @@
 import { createFragmentContainer } from 'react-relay';
+import { makeStyles } from '@material-ui/core';
 // @ts-ignore
 import graphql from 'babel-plugin-relay/macro';
+import React from 'react';
+
 import Paper from '@material-ui/core/Paper';
 import Button from '@material-ui/core/Button';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import CssBaseline from '@material-ui/core/CssBaseline';
-import { makeStyles } from '@material-ui/core';
-import React from 'react';
+import TextField from '@material-ui/core/TextField';
 import IconButton from "@material-ui/core/IconButton";
 import RemoveShoppingCartIcon from "@material-ui/icons/RemoveShoppingCart";
-import TextField from '@material-ui/core/TextField';
 
 import { ShoppingCartView_user } from './__generated__/ShoppingCartView_user.graphql';
 import { commit as commitSaveShoppingCartMutation } from '../../graphql/mutations/SaveShoppingCartMutation';
@@ -35,7 +36,6 @@ const ShoppingCartView: React.FC<Props> = (props: Props) => {
 
   const onSaveShoppingCartFailure = (error: Error) => {
     console.warn(error);
-    // TODO: do something here
   };
 
   const onRemoveFromCartSuccess = () => {
@@ -49,7 +49,7 @@ const ShoppingCartView: React.FC<Props> = (props: Props) => {
   };
 
   const onCheckoutUserSuccess = () => {
-    // TODO: do something here maybe
+    window.location.reload();
   };
 
   const onCheckoutUserFailure = (error: Error) => {
@@ -117,11 +117,11 @@ const ShoppingCartView: React.FC<Props> = (props: Props) => {
     if (isShopping) subtotal += item.amount * item.book.price
     return (
       <Paper className={classes.bookBackground}>
-        <Grid container spacing={2}>
-          <Grid item xs={2} className={classes.cell}>
+        <Grid container spacing={2} className={classes.container}>
+          <Grid item xs={2}>
             <img src={item.book.cover} alt={item.book.title} className={classes.bookImage}></img>
           </Grid>
-          <Grid item xs={4} className={classes.cell}>
+          <Grid item xs={4}>
             <Typography>
               {item.book.title}
             </Typography>
@@ -141,7 +141,7 @@ const ShoppingCartView: React.FC<Props> = (props: Props) => {
           </Grid>
           <Grid item xs={2}>
             <Typography>
-              {item.book.price}
+              ${item.book.price}
             </Typography>
           </Grid>
           <Grid item xs={2}>
@@ -207,13 +207,13 @@ const ShoppingCartView: React.FC<Props> = (props: Props) => {
         <Grid item xs={3}>
           <Paper className={classes.bookRow}>
             <Typography variant='h6'>
-              Subtotal: {subtotal.toFixed(2)}
+              Subtotal: ${subtotal.toFixed(2)}
             </Typography>
             <Typography variant='h6'>
-              Tax: {(subtotal * 0.07).toFixed(2)}
+              Tax (7%): ${(subtotal * 0.07).toFixed(2)}
             </Typography>
             <Typography variant='h5'>
-              Grand total: {(subtotal + (subtotal * 0.07)).toFixed(2)}
+              Grand total: ${(subtotal + (subtotal * 0.07)).toFixed(2)}
             </Typography>
             <Button
               variant='contained'
@@ -272,22 +272,21 @@ const styles = makeStyles(theme => ({
   container: {
     display: 'flex',
     flexWrap: 'wrap',
+    justifyItems: 'center',
+    alignItems: 'center'
   },
   textField: {
     marginLeft: theme.spacing(1),
     marginRight: theme.spacing(1),
     width: 200,
   },
-  cell: {
-    textAlign: 'center',
-    verticalAlign: 'middle'
-  },
   button: {
     width: '15em',
     margin: 'auto'
   },
   bookImage: {
-    width: '5em'
+    width: '5em',
+    verticalAlign: 'middle'
   }
 }));
 
