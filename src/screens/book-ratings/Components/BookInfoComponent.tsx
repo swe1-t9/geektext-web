@@ -81,7 +81,7 @@ const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     scoreboard: {
         marginTop: theme.spacing(10),
-        marginLeft: theme.spacing(55),
+        marginLeft: '17%',
         width:600,
         height: 300,
     },
