@@ -1,6 +1,6 @@
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
-import CartButton from './CartButton';
+import ShoppingCartButton from './ShoppingCartButton';
 import ProfileButton from './ProfileButton';
 import BookButton from './BookButton';
 
@@ -10,7 +10,7 @@ const RightAlignedButtons = () => {
   return (
     <div className={classes.menuBar}>
       <ProfileButton />
-      <CartButton />
+      <ShoppingCartButton />
       <BookButton />
     </div>
   );
