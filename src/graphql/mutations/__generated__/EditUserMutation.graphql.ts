@@ -5,6 +5,8 @@ export type EditUserInput = {
     readonly email: any;
     readonly first_name: string;
     readonly last_name: string;
+    readonly selected_shipping_address_id: string;
+    readonly username: string;
 };
 export type EditUserMutationVariables = {
     readonly input: EditUserInput;

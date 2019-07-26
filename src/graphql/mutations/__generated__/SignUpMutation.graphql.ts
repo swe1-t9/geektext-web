@@ -2,10 +2,18 @@
 
 import { ConcreteRequest } from "relay-runtime";
 export type SignUpInput = {
+    readonly address_line_1: string;
+    readonly address_line_2?: string | null;
+    readonly address_line_3?: string | null;
+    readonly city: string;
+    readonly country: string;
     readonly email: any;
     readonly first_name: string;
     readonly last_name: string;
     readonly password: any;
+    readonly postal_code: any;
+    readonly region?: string | null;
+    readonly username: string;
 };
 export type SignUpMutationVariables = {
     readonly input: SignUpInput;
