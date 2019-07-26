@@ -26,7 +26,6 @@ const CommentComponent = (props:any) => {
 	const [anonChecked,setAnonCheck]  = React.useState(false);
 	var allComments: Object[];
 	allComments = [""];
-	
 	const [max_words] = 				React.useState(1000);
 	const [min_words] = 				React.useState(10);
 	const [wordcountError,setError] = 	React.useState(false);
