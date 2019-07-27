@@ -33,6 +33,12 @@ query BookDetailsQuery(
 fragment BookDetailsView_bookDetails on Book {
   id
   title
+  author {
+    id
+    first_name
+    last_name
+    bio
+  }
   isbn
   genre
   publish_year
@@ -57,7 +63,14 @@ v1 = [
     "name": "input",
     "variableName": "input"
   }
-];
+],
+v2 = {
+  "kind": "ScalarField",
+  "alias": null,
+  "name": "id",
+  "args": null,
+  "storageKey": null
+};
 return {
   "kind": "Request",
   "fragment": {
@@ -99,19 +112,46 @@ return {
         "concreteType": "Book",
         "plural": false,
         "selections": [
-          {
-            "kind": "ScalarField",
-            "alias": null,
-            "name": "id",
-            "args": null,
-            "storageKey": null
-          },
+          (v2/*: any*/),
           {
             "kind": "ScalarField",
             "alias": null,
             "name": "title",
             "args": null,
             "storageKey": null
+          },
+          {
+            "kind": "LinkedField",
+            "alias": null,
+            "name": "author",
+            "storageKey": null,
+            "args": null,
+            "concreteType": "Author",
+            "plural": false,
+            "selections": [
+              (v2/*: any*/),
+              {
+                "kind": "ScalarField",
+                "alias": null,
+                "name": "first_name",
+                "args": null,
+                "storageKey": null
+              },
+              {
+                "kind": "ScalarField",
+                "alias": null,
+                "name": "last_name",
+                "args": null,
+                "storageKey": null
+              },
+              {
+                "kind": "ScalarField",
+                "alias": null,
+                "name": "bio",
+                "args": null,
+                "storageKey": null
+              }
+            ]
           },
           {
             "kind": "ScalarField",
@@ -163,7 +203,7 @@ return {
     "operationKind": "query",
     "name": "BookDetailsQuery",
     "id": null,
-    "text": "query BookDetailsQuery(\n  $input: BookDetailsInput!\n) {\n  bookDetails: book_details(input: $input) {\n    ...BookDetailsView_bookDetails\n    id\n  }\n}\n\nfragment BookDetailsView_bookDetails on Book {\n  id\n  title\n  isbn\n  genre\n  publish_year\n  price\n  description\n  cover\n}\n",
+    "text": "query BookDetailsQuery(\n  $input: BookDetailsInput!\n) {\n  bookDetails: book_details(input: $input) {\n    ...BookDetailsView_bookDetails\n    id\n  }\n}\n\nfragment BookDetailsView_bookDetails on Book {\n  id\n  title\n  author {\n    id\n    first_name\n    last_name\n    bio\n  }\n  isbn\n  genre\n  publish_year\n  price\n  description\n  cover\n}\n",
     "metadata": {}
   }
 };

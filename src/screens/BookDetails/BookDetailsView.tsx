@@ -2,7 +2,7 @@ import { createFragmentContainer } from 'react-relay';
 // @ts-ignore
 import graphql from 'babel-plugin-relay/macro';
 import { BookDetailsView_bookDetails } from './__generated__/BookDetailsView_bookDetails.graphql';
-import React, {useState} from 'react';
+import React, { useState } from 'react';
 import { Card, CardActionArea, CardMedia, CardContent, Button, Typography, CardActions, Grid, Theme, IconButton, Collapse, Link } from '@material-ui/core';
 import { createStyles, makeStyles } from '@material-ui/core/styles';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
@@ -13,24 +13,10 @@ import Scoreboard from '../book-ratings/Components/BookInfoComponent';
 
 import { commit as commitAddToShoppingCartMutation } from '../../graphql/mutations/AddToShoppingCartMutation';
 import { commit as commitAddToSavedCartMutation } from '../../graphql/mutations/AddToSavedCartMutation';
-import { any } from 'prop-types';
-import { CardMediaProps } from '@material-ui/core/CardMedia';
-
-// class MyBookCover extends CardMedia<CardMediaProps> {
-//   constructor(props: CardMediaProps) {
-//     super(props)
-//   }
-// }
 
 type Props = {
   bookDetails: BookDetailsView_bookDetails;
 };
-
-// //create your forceUpdate hook
-// function useForceUpdate(){
-//   const [value, set] = useState(true); //boolean state
-//   return () => set(!value); // toggle the state to force render
-// }
 
 const BookDetailsView: React.FC<Props> = (props: Props) => {
   const classes = useStyles();
@@ -43,7 +29,7 @@ const BookDetailsView: React.FC<Props> = (props: Props) => {
   function handleExpandClick() {
     setExpanded(!expanded);
   }
-        
+
   const onAddToShoppingCartSuccess = () => {
     setAdded(true);
     window.location.href = '/shopping-cart';
@@ -89,7 +75,7 @@ const BookDetailsView: React.FC<Props> = (props: Props) => {
       onAddToCartFailure
     );
   };
-  
+
   return (
     <Grid
       container
@@ -116,15 +102,15 @@ const BookDetailsView: React.FC<Props> = (props: Props) => {
           </CardContent>
         </CardActionArea>
         <CardActions>
-          <Button 
-            size="small" 
+          <Button
+            size="small"
             color="primary"
             onClick={addToShoppingCart}
           >
             {added ? 'In Cart' : 'Add to Shopping Cart'}
           </Button>
-          <Button 
-            size="small" 
+          <Button
+            size="small"
             color="primary"
             onClick={addToSavedCart}
           >
@@ -148,10 +134,10 @@ const BookDetailsView: React.FC<Props> = (props: Props) => {
           <CardContent>
             <Typography variant="h5" align="center"> About the Author </Typography>
             <Typography paragraph align="center">
-              <Link href={"https://www.amazon.com/s?k=jk+rowling&ref=nb_sb_noss_2"}>J.K. Rowling</Link>
+              <Link href={"https://www.amazon.com/s?k=jk+rowling&ref=nb_sb_noss_2"}>{props.bookDetails.author.first_name} {props.bookDetails.author.last_name}</Link>
             </Typography>
             <Typography paragraph>
-              J.K. Rowling is the creator of the 'Harry Potter' fantasy series, one of the most popular book and film franchises in history
+              {props.bookDetails.author.bio}
             </Typography>
             <Typography paragraph> Genre: {props.bookDetails.genre}</Typography>
             <Typography paragraph> Publish Year: {props.bookDetails.publish_year}</Typography>
@@ -202,6 +188,12 @@ export default createFragmentContainer(BookDetailsView, {
     fragment BookDetailsView_bookDetails on Book {
       id
       title
+      author{
+        id
+        first_name
+        last_name
+        bio
+      }
       isbn
       genre
       publish_year
