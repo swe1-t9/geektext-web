@@ -75,7 +75,6 @@ const BookDetailsView: React.FC<Props> = (props: Props) => {
       onAddToCartFailure
     );
   };
-
   return (
     <Grid
       container
