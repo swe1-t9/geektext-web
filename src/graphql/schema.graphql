@@ -27,6 +27,7 @@ input AddToShoppingCartInput {
 type Book {
   author_id: ID!
   cover: URL!
+
   description: String!
   genre: String!
   id: ID!

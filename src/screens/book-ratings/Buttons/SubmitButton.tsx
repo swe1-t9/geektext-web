@@ -18,6 +18,9 @@ const useStyles = makeStyles((theme: Theme) =>
     
     button: {
       margin: theme.spacing(1),
+      fontSize: 12,
+      textAlign: 'center',
+      justifyContent: 'center',
     },
     leftIcon: {
       marginRight: theme.spacing(1),

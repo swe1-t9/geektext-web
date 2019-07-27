@@ -10,6 +10,7 @@ import Grid from '@material-ui/core/Grid';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Checkbox from '@material-ui/core/Checkbox';
 import TextField from '@material-ui/core/TextField';
+import { Typography } from '@material-ui/core';
 
 const CommentComponent = (props:any) => {
 	const classes = useStyles();
@@ -71,7 +72,7 @@ const CommentComponent = (props:any) => {
 		};
 	  
 		return ( 
-			<FormControlLabel
+			<FormControlLabel 
 			  control={
 				<Checkbox
 				  checked={state.checkedA}
@@ -80,7 +81,8 @@ const CommentComponent = (props:any) => {
 				  color="primary"
 				/>
 			  }
-			  label="Remain Anonymous"
+			  label={<Typography variant="body2">Remain Anonymous</Typography>}
+			  
 			/>
 		);
 	  };
@@ -135,7 +137,7 @@ const CommentComponent = (props:any) => {
 					<Rater total={5} 
 						   onRate={ ({rating}) => {setStars(rating)} } />
 				</Grid>
-				<Grid item xs={3}>
+				<Grid item xs={4}>
 					{ava}
 				</Grid>
 				<Grid item xs={3}>
@@ -167,8 +169,8 @@ const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     yourComment: {
 		marginTop: theme.spacing(15), //positions top for entire component
-		marginLeft: theme.spacing(35), //left for entire component
-		width: 600,
+        marginLeft: '9%',
+		width: 375,
 	},
 	container: {
 		display: 'flex',
