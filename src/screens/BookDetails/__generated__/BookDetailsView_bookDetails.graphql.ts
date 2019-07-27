@@ -4,7 +4,6 @@ import { ReaderFragment } from "relay-runtime";
 export type BookDetailsView_bookDetails$ref = any;
 export type BookDetailsView_bookDetails = {
     readonly id: string;
-    readonly author_id: string;
     readonly title: string;
     readonly isbn: string;
     readonly genre: string;
@@ -28,13 +27,6 @@ const node: ReaderFragment = {
       "kind": "ScalarField",
       "alias": null,
       "name": "id",
-      "args": null,
-      "storageKey": null
-    },
-    {
-      "kind": "ScalarField",
-      "alias": null,
-      "name": "author_id",
       "args": null,
       "storageKey": null
     },
@@ -89,5 +81,5 @@ const node: ReaderFragment = {
     }
   ]
 };
-(node as any).hash = 'e754cd48bcc449fc11b1624fda28c21f';
+(node as any).hash = '81788097133dc2db5727854890f24b17';
 export default node;

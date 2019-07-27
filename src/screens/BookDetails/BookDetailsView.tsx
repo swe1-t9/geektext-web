@@ -2,7 +2,7 @@ import { createFragmentContainer } from 'react-relay';
 // @ts-ignore
 import graphql from 'babel-plugin-relay/macro';
 import { BookDetailsView_bookDetails } from './__generated__/BookDetailsView_bookDetails.graphql';
-import React from 'react';
+import React, {useState} from 'react';
 import { Card, CardActionArea, CardMedia, CardContent, Button, Typography, CardActions, Grid, Theme, IconButton, Collapse, Link } from '@material-ui/core';
 import { createStyles, makeStyles } from '@material-ui/core/styles';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
@@ -13,23 +13,35 @@ import Scoreboard from '../book-ratings/Components/BookInfoComponent';
 
 import { commit as commitAddToShoppingCartMutation } from '../../graphql/mutations/AddToShoppingCartMutation';
 import { commit as commitAddToSavedCartMutation } from '../../graphql/mutations/AddToSavedCartMutation';
+import { any } from 'prop-types';
+import { CardMediaProps } from '@material-ui/core/CardMedia';
+
+// class MyBookCover extends CardMedia<CardMediaProps> {
+//   constructor(props: CardMediaProps) {
+//     super(props)
+//   }
+// }
 
 type Props = {
   bookDetails: BookDetailsView_bookDetails;
 };
+
+// //create your forceUpdate hook
+// function useForceUpdate(){
+//   const [value, set] = useState(true); //boolean state
+//   return () => set(!value); // toggle the state to force render
+// }
 
 const BookDetailsView: React.FC<Props> = (props: Props) => {
   const classes = useStyles();
   const [expanded, setExpanded] = React.useState(false);
   const [added, setAdded] = React.useState(false);
   const [saved, setSaved] = React.useState(false);
+  const [imageIsExpanded, setImageIsExpanded] = React.useState(false);
+  const [, updateState] = React.useState();
 
   function handleExpandClick() {
     setExpanded(!expanded);
-  }
-
-  function expandImage() {
-    //TODO
   }
         
   const onAddToShoppingCartSuccess = () => {
@@ -61,6 +73,10 @@ const BookDetailsView: React.FC<Props> = (props: Props) => {
     );
   };
 
+  const toggleImage = () => {
+    setImageIsExpanded(!imageIsExpanded);
+  };
+
   const addToSavedCart = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
     e.preventDefault();
     // TODO: add proper mechanism for getting amount of books to add
@@ -85,10 +101,10 @@ const BookDetailsView: React.FC<Props> = (props: Props) => {
     >
       <Card className={classes.card}>
         <CardActionArea>
-          <CardMedia
-            className={classes.media}
+          <CardMedia //Mui-expanded
+            className={imageIsExpanded ? classes.expandImage : classes.media}
             image={props.bookDetails.cover}
-            // onClick={expandImage}
+            onClick={toggleImage}
           />
           <CardContent>
             <Typography gutterBottom variant="h5" component="h2">
@@ -173,7 +189,7 @@ const useStyles = makeStyles((theme: Theme) =>
     },
     expandImage: {
       height: 700,
-      width: 900
+      width: 500
     },
     avatar: {
       backgroundColor: red[500]
@@ -185,7 +201,6 @@ export default createFragmentContainer(BookDetailsView, {
   bookDetails: graphql`
     fragment BookDetailsView_bookDetails on Book {
       id
-      author_id
       title
       isbn
       genre
@@ -198,4 +213,3 @@ export default createFragmentContainer(BookDetailsView, {
   `
 });
 
-//test
