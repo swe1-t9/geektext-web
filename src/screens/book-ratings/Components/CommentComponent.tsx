@@ -152,13 +152,11 @@ const CommentComponent = (props:any) => {
 	return (
 		<div className={classes.yourComment}>
 			<Grid container spacing={3}>
-				<Grid item xs>
-					{/* stores the rating the user gives the current book*/}
-					<Rater total={5} 
-						   onRate={ ({rating}) => {setStars(rating)} } />
-				</Grid>
 				<Grid item xs={4}>
 					{ava}
+				</Grid>
+				<Grid item xs>
+					{/*leave empty space for separating the initial and checkbox*/}
 				</Grid>
 				<Grid item xs={3}>
 					{CheckBox()}
@@ -167,6 +165,9 @@ const CommentComponent = (props:any) => {
 
 			<Grid container spacing={3}>
 				<Grid item xs={12}>
+				{/* stores the rating the user gives the current book*/}
+				<Rater total={5} 
+				onRate={ ({rating}) => {setStars(rating)} } />
 					{TitleBox()}
 					{CommentBox()}
 				</Grid>
