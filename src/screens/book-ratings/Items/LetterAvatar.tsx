@@ -9,13 +9,13 @@ const LetterAva = (props:any) => {
   const classes = useStyles();
 
   return (
-      <Avatar className={classes.orangeAvatar} color="primary">{props.initial}</Avatar>
+      <Avatar className={classes.indigoAvatar} color="primary">{props.initial}</Avatar>
   );
 };
 
 const useStyles = makeStyles(
   createStyles({
-    orangeAvatar: {
+    indigoAvatar: {
       margin: 10,
       color: '#fff',
       backgroundColor: indigo[900],

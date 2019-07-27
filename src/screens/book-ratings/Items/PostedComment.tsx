@@ -19,6 +19,10 @@ const CommentCard = (props:any) => {
         action={<Rater total = {5} rating={props.ratingGiven} interactive={false}/>}
       />
       <CardContent>
+      <Typography gutterBottom variant="h5" component="h2">
+          {props.title}
+        </Typography>
+
         <Typography variant="body2" color="textSecondary" component="p">
           {props.comment}
         </Typography>
@@ -40,7 +44,6 @@ const useStyles = makeStyles((theme: Theme) =>
       maxWidth: 450,
       margin:  theme.spacing(2),
     },
-    
   }),
 );
 

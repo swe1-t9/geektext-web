@@ -25,6 +25,7 @@ const CommentComponent = (props:any) => {
 	const [bookPurchased,setBookPurchased] = React.useState(true);
 	const [alreadyRated, setAlreadyRated] = React.useState(false);
 	const [anonChecked,setAnonCheck]  = React.useState(false);
+	const [commentTitle,setCommentTitle] = React.useState("title");
 	var allComments: Object[];
 	allComments = [""];
 	const [max_words] = 				React.useState(1000);
@@ -52,6 +53,24 @@ const CommentComponent = (props:any) => {
 		);
 	  };
 
+		/*The actual comment box where the user can write*/
+		const TitleBox = () => {
+			return (
+			 
+				<TextField
+				  id="title_box"
+				  label="Review Title"
+				  multiline 
+				  rows="1"
+				  defaultValue=" "
+				  className={classes.textField}
+				  margin="normal"
+				  fullWidth
+				  onChange={event => setCommentTitle(event.target.value) }
+				/>
+			);
+		  };
+
 	  /*checkbox to remain anonymous or with nickname*/
 	  const CheckBox = () => {
   
@@ -67,7 +86,7 @@ const CommentComponent = (props:any) => {
 		  else
 		  {
 			setNickname("Anonymous");
-			setAva(<Anon />);
+			setAva(<Avatar initial={<Anon/>}/>);
 		  }
 		};
 	  
@@ -106,7 +125,8 @@ const CommentComponent = (props:any) => {
 				setDate(formatdate);
 			
 				/*add the new comment to the array*/
-				allComments.push(<NewComment icon={ava} 
+				allComments.push(<NewComment icon={ava}
+					title={commentTitle} 
 					userName={nickname} 
 					date = {datePosted} 
 					ratingGiven = {userStars}
@@ -132,13 +152,11 @@ const CommentComponent = (props:any) => {
 	return (
 		<div className={classes.yourComment}>
 			<Grid container spacing={3}>
-				<Grid item xs>
-					{/* stores the rating the user gives the current book*/}
-					<Rater total={5} 
-						   onRate={ ({rating}) => {setStars(rating)} } />
-				</Grid>
 				<Grid item xs={4}>
 					{ava}
+				</Grid>
+				<Grid item xs>
+					{/*leave empty space for separating the initial and checkbox*/}
 				</Grid>
 				<Grid item xs={3}>
 					{CheckBox()}
@@ -147,6 +165,10 @@ const CommentComponent = (props:any) => {
 
 			<Grid container spacing={3}>
 				<Grid item xs={12}>
+				{/* stores the rating the user gives the current book*/}
+				<Rater total={5} 
+				onRate={ ({rating}) => {setStars(rating)} } />
+					{TitleBox()}
 					{CommentBox()}
 				</Grid>
 			</Grid>

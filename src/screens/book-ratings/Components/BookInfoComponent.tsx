@@ -24,8 +24,9 @@ const BookInfoComponent = (props:any) => {
             <Grid item xs={6}>
                 <Bar rating= {state.fivestar_total} star = {5} />
             </Grid>
-            <Grid item xs={3}>
+            <Grid item xs={2}>
                 <Rater total = {5} rating={5} interactive={false}/> 
+                <Paper className={classes.starNumbers} >{state.fivestar_total} ratings</Paper>
             </Grid>
           </Grid>
     
@@ -33,8 +34,9 @@ const BookInfoComponent = (props:any) => {
             <Grid item xs={6}>
                 <Bar rating= {state.fourstar_total} star = {4} />
             </Grid>
-            <Grid item xs={3}>
-              <Rater total = {4} rating={4} interactive={false}/> 
+            <Grid item xs={2}>
+              <Rater total = {4} rating={4} interactive={false}/>
+              <Paper className={classes.starNumbers} >{state.fourstar_total} ratings</Paper> 
             </Grid>
           </Grid>
     
@@ -42,8 +44,9 @@ const BookInfoComponent = (props:any) => {
             <Grid item xs={6}>
                 <Bar rating= {state.threestar_total} star = {3} />
             </Grid>
-            <Grid item xs={3}>
+            <Grid item xs={2}>
               <Rater total = {3} rating={3} interactive={false}/> 
+              <Paper className={classes.starNumbers} >{state.threestar_total} ratings</Paper>
             </Grid>
           </Grid>
     
@@ -51,8 +54,9 @@ const BookInfoComponent = (props:any) => {
             <Grid item xs={6}>
                 <Bar rating= {state.twostar_total} star={2} />
             </Grid>
-            <Grid item xs={3}>
+            <Grid item xs={2}>
               <Rater total = {2} rating={2} interactive={false}/> 
+              <Paper className={classes.starNumbers} >{state.twostar_total} ratings</Paper>
             </Grid>
           </Grid>
     
@@ -60,8 +64,9 @@ const BookInfoComponent = (props:any) => {
             <Grid item xs={6}>
                 <Bar rating= {state.onestar_total} star={1}/>
             </Grid>
-            <Grid item xs={3}>
-              <Rater total = {1} rating={1} interactive={false}/> 
+            <Grid item xs={2}>
+              <Rater total = {1} rating={1} interactive={false}/>
+              <Paper className={classes.starNumbers} >{state.onestar_total} ratings</Paper> 
             </Grid>
           </Grid>
     
@@ -70,7 +75,7 @@ const BookInfoComponent = (props:any) => {
                 <Paper className={classes.paper} >
                 <Rater total = {5} rating={state.userRating} interactive={false}/>
                 <br></br>
-                This book has been rated a {state.userRating} / 5 </Paper>
+                Customers rating: {state.userRating} / 5 </Paper>
             </Grid>
           </Grid>
             </div> )
@@ -89,6 +94,9 @@ const useStyles = makeStyles((theme: Theme) =>
         textAlign: 'center',
         color: theme.palette.text.secondary,
       },
+    starNumbers: {
+      textAlign: 'center',
+    }
   }),
 );
 
