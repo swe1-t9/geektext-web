@@ -180,12 +180,6 @@ const CommentComponent = (props:any) => {
 			<Grid container spacing={3}>
 			<Grid item xs={12}>
 				{allComments} {/*array not displaying */}
-				<NewComment icon={ava}
-					title={commentTitle} 
-					userName={nickname} 
-					date = {datePosted} 
-					ratingGiven = {userStars}
-					comment={userComment}/>
 			</Grid>
 		</Grid>
     	</div>
