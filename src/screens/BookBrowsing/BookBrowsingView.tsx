@@ -3,12 +3,12 @@ import { createFragmentContainer } from 'react-relay';
 import graphql from 'babel-plugin-relay/macro';
 import { BookBrowsingView_bookBrowsing } from './__generated__/BookBrowsingView_bookBrowsing.graphql';
 import React from 'react';
-import { Card, CardActionArea, CardMedia, CardContent, Button, Typography, CardActions, Grid, Theme, IconButton, Collapse, Link } from '@material-ui/core';
+import {Grid, Theme,} from '@material-ui/core';
 import { makeStyles, createStyles } from '@material-ui/core/styles';
-import { GridSpacing } from '@material-ui/core/Grid';
+
 import Paper from '@material-ui/core/Paper';
 import BookView from './BookView';
-import { BookView_Book } from './__generated__/BookView_Book.graphql';
+
 
 
 type Props = {
@@ -24,15 +24,17 @@ const BookBrowsingView: React.FC<Props> = (props: Props) => {
     return (
 
       <React.Fragment>
+         {props.bookBrowsing.sortedBooks.map(book => <Grid><BookView book={book} /></Grid>)}
         <Grid item xs={4}>
-          {props.bookBrowsing.sortedBooks.map(book => <Grid><BookView book={book} /></Grid>)}
+         
+
           <Paper className={classes.paper}></Paper>
         </Grid>
         <Grid item xs={4}>
-          <Paper className={classes.paper}>item</Paper>
+          <Paper className={classes.paper}></Paper>
         </Grid>
         <Grid item xs={4}>
-          <Paper className={classes.paper}>item</Paper>
+          <Paper className={classes.paper}></Paper>
         </Grid>
       </React.Fragment>
     );
@@ -41,13 +43,13 @@ const BookBrowsingView: React.FC<Props> = (props: Props) => {
   return (
     <div className={classes.root}>
       <Grid container spacing={1}>
-        <Grid container item xs={12} spacing={3}>
+        <Grid container item xs={4} spacing={3}>
           <FormRow />
         </Grid>
-        <Grid container item xs={12} spacing={3}>
+        <Grid container item xs={4} spacing={3}>
           <FormRow />
         </Grid>
-        <Grid container item xs={12} spacing={3}>
+        <Grid container item xs={4} spacing={3}>
           <FormRow />
         </Grid>
       </Grid>
@@ -67,10 +69,10 @@ const useStyles = makeStyles((theme: Theme) =>
     },
     control: {
       padding: theme.spacing(2),
-    },
-    bookImage: {
-      width: '5em',
-      horizontalAlign: 'middle'
+    // },
+    // bookImage: {
+    //   width: '5em',
+    //   horizontalAlign: 'middle'
     }
   }),
 );
