@@ -1,24 +1,22 @@
 import React from 'react';
 import { createStyles, makeStyles } from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
+// @ts-ignore
+import graphql from 'babel-plugin-relay/macro';
 import CardActionArea from '@material-ui/core/CardActionArea';
 import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
 import CardMedia from '@material-ui/core/CardMedia';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
-import BookBrowsingView from './BookBrowsingView';
-import { createFragmentContainer, graphql } from 'react-relay';
+import { createFragmentContainer } from 'react-relay';
+import { BookView_Book } from './__generated__/BookView_Book.graphql';
 
 type Props = {
-  cover: string, 
-  title: string,
-  description: string,
-  authorName: string,
-  price: string,
-
+  book: BookView_Book
 }
-const Book = (props: Props) => {
+
+const BookView = (props: Props) => {
   const classes = useStyles();
 
   return (
@@ -27,15 +25,15 @@ const Book = (props: Props) => {
       <CardActionArea>
         <CardMedia
           className={classes.media}
-          image={props.cover}
-          title={props.title}
+          image={props.book.cover}
+          title={props.book.title}
         />
         <CardContent>
           <Typography gutterBottom variant="h5" component="h2">
-            {props.title}
+            {props.book.title}
           </Typography>
           <Typography variant="body2" color="textSecondary" component="p">
-           {props.description}
+           {props.book.description}
           </Typography>
         </CardContent>
       </CardActionArea>
@@ -65,7 +63,7 @@ const useStyles = makeStyles(
   })
 );
 
-export default createFragmentContainer(BookBrowsingView, {
+export default createFragmentContainer(BookView, {
   Book: graphql`
     fragment BookView_Book on Book {
       id
