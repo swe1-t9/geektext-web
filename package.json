@@ -1,6 +1,9 @@
 {
   "name": "geektext-web",
-  "version": "0.1.0",
+  "repository": "https://github.com/swe1-t9/geektext-web.git",
+  "license": "MIT",
+  "version": "1.0.0",
+  "description": "The website for GeekText.",
   "private": true,
   "dependencies": {
     "@material-ui/core": "^4.2.1",
