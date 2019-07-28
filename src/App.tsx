@@ -32,7 +32,8 @@ const App: React.FC = () => (
           path="/book-details"
           component={withNavbar(BookDetails)}
         />
-        <ProtectedRoute
+      <ProtectedRoute exact={true} path="/" component={withNavbar(Book)} />
+        <Route
           exact={true}
           path="/catalog"
           component={withNavbar(BookBrowsing)}
