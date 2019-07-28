@@ -45,6 +45,25 @@ fragment BookDetailsView_bookDetails on Book {
   price
   description
   cover
+  ...CommentComponent_comments
+}
+
+fragment CommentComponent_comments on Book {
+  reviews {
+    ...Review_review
+    id
+  }
+}
+
+fragment Review_review on Review {
+  title
+  reviewer {
+    first_name
+    id
+  }
+  body
+  rating
+  is_anonymous
 }
 */
 
@@ -68,6 +87,20 @@ v2 = {
   "kind": "ScalarField",
   "alias": null,
   "name": "id",
+  "args": null,
+  "storageKey": null
+},
+v3 = {
+  "kind": "ScalarField",
+  "alias": null,
+  "name": "title",
+  "args": null,
+  "storageKey": null
+},
+v4 = {
+  "kind": "ScalarField",
+  "alias": null,
+  "name": "first_name",
   "args": null,
   "storageKey": null
 };
@@ -113,13 +146,7 @@ return {
         "plural": false,
         "selections": [
           (v2/*: any*/),
-          {
-            "kind": "ScalarField",
-            "alias": null,
-            "name": "title",
-            "args": null,
-            "storageKey": null
-          },
+          (v3/*: any*/),
           {
             "kind": "LinkedField",
             "alias": null,
@@ -130,13 +157,7 @@ return {
             "plural": false,
             "selections": [
               (v2/*: any*/),
-              {
-                "kind": "ScalarField",
-                "alias": null,
-                "name": "first_name",
-                "args": null,
-                "storageKey": null
-              },
+              (v4/*: any*/),
               {
                 "kind": "ScalarField",
                 "alias": null,
@@ -194,6 +215,53 @@ return {
             "name": "cover",
             "args": null,
             "storageKey": null
+          },
+          {
+            "kind": "LinkedField",
+            "alias": null,
+            "name": "reviews",
+            "storageKey": null,
+            "args": null,
+            "concreteType": "Review",
+            "plural": true,
+            "selections": [
+              (v3/*: any*/),
+              {
+                "kind": "LinkedField",
+                "alias": null,
+                "name": "reviewer",
+                "storageKey": null,
+                "args": null,
+                "concreteType": "User",
+                "plural": false,
+                "selections": [
+                  (v4/*: any*/),
+                  (v2/*: any*/)
+                ]
+              },
+              {
+                "kind": "ScalarField",
+                "alias": null,
+                "name": "body",
+                "args": null,
+                "storageKey": null
+              },
+              {
+                "kind": "ScalarField",
+                "alias": null,
+                "name": "rating",
+                "args": null,
+                "storageKey": null
+              },
+              {
+                "kind": "ScalarField",
+                "alias": null,
+                "name": "is_anonymous",
+                "args": null,
+                "storageKey": null
+              },
+              (v2/*: any*/)
+            ]
           }
         ]
       }
@@ -203,7 +271,7 @@ return {
     "operationKind": "query",
     "name": "BookDetailsQuery",
     "id": null,
-    "text": "query BookDetailsQuery(\n  $input: BookDetailsInput!\n) {\n  bookDetails: book_details(input: $input) {\n    ...BookDetailsView_bookDetails\n    id\n  }\n}\n\nfragment BookDetailsView_bookDetails on Book {\n  id\n  title\n  author {\n    id\n    first_name\n    last_name\n    bio\n  }\n  isbn\n  genre\n  publish_year\n  price\n  description\n  cover\n}\n",
+    "text": "query BookDetailsQuery(\n  $input: BookDetailsInput!\n) {\n  bookDetails: book_details(input: $input) {\n    ...BookDetailsView_bookDetails\n    id\n  }\n}\n\nfragment BookDetailsView_bookDetails on Book {\n  id\n  title\n  author {\n    id\n    first_name\n    last_name\n    bio\n  }\n  isbn\n  genre\n  publish_year\n  price\n  description\n  cover\n  ...CommentComponent_comments\n}\n\nfragment CommentComponent_comments on Book {\n  reviews {\n    ...Review_review\n    id\n  }\n}\n\nfragment Review_review on Review {\n  title\n  reviewer {\n    first_name\n    id\n  }\n  body\n  rating\n  is_anonymous\n}\n",
     "metadata": {}
   }
 };

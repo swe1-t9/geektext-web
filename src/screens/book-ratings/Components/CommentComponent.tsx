@@ -5,14 +5,22 @@ import 'react-rater/lib/react-rater.css';
 import SubmitButton from '../Buttons/SubmitButton';
 import Avatar from '../Items/LetterAvatar';
 import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
-import NewComment from '../Items/PostedComment';
+import Review from '../Items/Review';
 import Grid from '@material-ui/core/Grid';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Checkbox from '@material-ui/core/Checkbox';
 import TextField from '@material-ui/core/TextField';
 import { Typography } from '@material-ui/core';
+import { createFragmentContainer } from 'react-relay';
+// @ts-ignore
+import graphql from 'babel-plugin-relay/macro';
+import {CommentComponent_comments} from './__generated__/CommentComponent_comments.graphql'
 
-const CommentComponent = (props:any) => {
+type Props = {
+	comments: CommentComponent_comments;
+  };
+
+const CommentComponent:React.FC<Props> = (props) => {
 	const classes = useStyles();
 
 	//states
@@ -26,9 +34,6 @@ const CommentComponent = (props:any) => {
 	const [alreadyRated, setAlreadyRated] = React.useState(false);
 	const [anonChecked,setAnonCheck]  = React.useState(false);
 	const [commentTitle,setCommentTitle] = React.useState("title");
-	//let allComments: Array<Object> = [""];
-	
-	let numbers: Array<number> = [0];
 	const [max_words] = 				React.useState(1000);
 	const [min_words] = 				React.useState(10);
 	const [wordcountError,setError] = 	React.useState(false);
@@ -113,29 +118,23 @@ const CommentComponent = (props:any) => {
 	 */
 	const commentingAllowed = () => (event: React.ChangeEvent<HTMLInputElement>) => {
 		//fetch from database if book is purchased and has already been rated.
-		if(bookPurchased && !alreadyRated) 
+		/*if(bookPurchased && !alreadyRated) 
 		{
+			
 			if(userComment.length >= min_words && userComment.length <= max_words) //check word amount of comment before posting
 			{
-				/*get date of posting */
+			
 				var dateObj = new Date();
 				var month = dateObj.getUTCMonth() + 1; //months from 1-12
 				var day = dateObj.getUTCDate();
 				var year = dateObj.getUTCFullYear();
 				var formatdate = month + "/" + day + "/" + year;
 				setDate(formatdate);
-				numbers.push(1);
-				alert(numbers);
-				/*add the new comment to the array*/
-				/*
-				allComments.push(<NewComment icon={ava}
-					title={commentTitle} 
-					userName={nickname} 
-					date = {datePosted} 
-					ratingGiven = {userStars}
-					comment={userComment}/>);
-					alert(allComments);
-				*/
+		
+				
+			 
+			
+				
 			}
 			else
 			{
@@ -150,7 +149,7 @@ const CommentComponent = (props:any) => {
 				alert("You have not bought this book, so you can't leave a review");
 			else
 				alert("You have already rated this book!");
-		}
+		}*/
 	};
 
 	return (
@@ -184,10 +183,7 @@ const CommentComponent = (props:any) => {
 
 			<Grid container spacing={3}>
 			<Grid item xs={12}>
-			{numbers}
-			{/*	{allComments.map(allComments => (
-				<div>{allComments.toString}</div>
-			))} */}
+			{props.comments.reviews.map(review => <Review review={review} />) }
 			</Grid>
 		</Grid>
     	</div>
@@ -218,7 +214,12 @@ const useStyles = makeStyles((theme: Theme) =>
   }),
 );
 
-
-  
-
-export default CommentComponent;
+export default createFragmentContainer(CommentComponent, {
+	comments: graphql`
+	  fragment CommentComponent_comments on Book {
+		reviews {
+		  ...Review_review
+		}
+	  }
+	`
+  });

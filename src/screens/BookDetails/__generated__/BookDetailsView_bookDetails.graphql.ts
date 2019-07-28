@@ -1,6 +1,7 @@
 /* tslint:disable */
 
 import { ReaderFragment } from "relay-runtime";
+type CommentComponent_comments$ref = any;
 export type BookDetailsView_bookDetails$ref = any;
 export type BookDetailsView_bookDetails = {
     readonly id: string;
@@ -17,6 +18,7 @@ export type BookDetailsView_bookDetails = {
     readonly price: number;
     readonly description: string;
     readonly cover: any;
+    readonly " $fragmentRefs": CommentComponent_comments$ref;
     readonly " $refType": BookDetailsView_bookDetails$ref;
 };
 
@@ -119,9 +121,14 @@ return {
       "name": "cover",
       "args": null,
       "storageKey": null
+    },
+    {
+      "kind": "FragmentSpread",
+      "name": "CommentComponent_comments",
+      "args": null
     }
   ]
 };
 })();
-(node as any).hash = 'f7a78413da7418f28c4f9e4fed921d68';
+(node as any).hash = '29ebfb683f183a1b10075353acb7b24d';
 export default node;
