@@ -6,15 +6,16 @@ import React from 'react';
 
 import { environment } from '../../graphql/relay';
 import BookBrowsingView from './BookBrowsingView';
-import {BookDetailsQueryResponse} from './__generated__/BookDetailsQuery.graphql';
+import {BookBrowsingQueryResponse} from './__generated__/BookBrowsingQuery.graphql';
 
 const BookBrowsingQuery = graphql`
   query BookBrowsingQuery ($input: SortedBooksInput!) {
     ...BookBrowsingView_bookBrowsing
+    
   }
 `;
 
-const Book: React.FC = () => (
+const Catalog: React.FC = () => (
   <QueryRenderer
     environment={environment}
     query={BookBrowsingQuery}
@@ -24,9 +25,11 @@ const Book: React.FC = () => (
       else if (props) {
         console.log(props);
         return (
-          <BookBrowsingView bookDetails={(props as BookDetailsQueryResponse).bookDetails} />
+          <BookBrowsingView bookBrowsing={(props as BookBrowsingQueryResponse)} />
         );
       } else return <div>loading</div>;
     }}
   />
 );
+
+export default Catalog;

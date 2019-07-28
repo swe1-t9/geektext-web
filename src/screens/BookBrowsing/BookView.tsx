@@ -7,6 +7,8 @@ import CardContent from '@material-ui/core/CardContent';
 import CardMedia from '@material-ui/core/CardMedia';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
+import BookBrowsingView from './BookBrowsingView';
+import { createFragmentContainer, graphql } from 'react-relay';
 
 type Props = {
   cover: string, 
@@ -63,4 +65,25 @@ const useStyles = makeStyles(
   })
 );
 
-export default Book;
+export default createFragmentContainer(BookBrowsingView, {
+  Book: graphql`
+    fragment BookView_Book on Book {
+      id
+      author{
+        id
+        first_name
+        last_name
+      }
+      title
+      isbn
+      genre
+      publish_year
+      price
+      title
+      description
+      cover
+    }
+  `
+});
+
+// export default Book;

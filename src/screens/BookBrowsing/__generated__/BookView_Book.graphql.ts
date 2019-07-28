@@ -1,8 +1,8 @@
 /* tslint:disable */
 
 import { ReaderFragment } from "relay-runtime";
-export type BookDetailsView_bookDetails$ref = any;
-export type BookDetailsView_bookDetails = {
+export type BookView_Book$ref = any;
+export type BookView_Book = {
     readonly id: string;
     readonly author: {
         readonly id: string;
@@ -16,7 +16,7 @@ export type BookDetailsView_bookDetails = {
     readonly price: number;
     readonly description: string;
     readonly cover: any;
-    readonly " $refType": BookDetailsView_bookDetails$ref;
+    readonly " $refType": BookView_Book$ref;
 };
 
 
@@ -31,7 +31,7 @@ var v0 = {
 };
 return {
   "kind": "Fragment",
-  "name": "BookDetailsView_bookDetails",
+  "name": "BookView_Book",
   "type": "Book",
   "metadata": null,
   "argumentDefinitions": [],
@@ -115,5 +115,5 @@ return {
   ]
 };
 })();
-(node as any).hash = 'e7391d88272b09678cfeea1ded89052c';
+(node as any).hash = '0502b8f9a8af1d804ec4417d46af2680';
 export default node;

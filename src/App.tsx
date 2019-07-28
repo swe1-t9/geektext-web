@@ -13,6 +13,7 @@ import Book from './screens/Book';
 import BookDetails from './screens/BookDetails';
 import Signup from './screens/Signup';
 import User from './screens/Profile';
+import BookBrowsing from './screens/BookBrowsing';
 
 const App: React.FC = () => (
   <ThemeProvider theme={theme}>
@@ -30,6 +31,11 @@ const App: React.FC = () => (
           exact={true}
           path="/book-details"
           component={withNavbar(BookDetails)}
+        />
+        <ProtectedRoute
+          exact={true}
+          path="/catalog"
+          component={withNavbar(BookBrowsing)}
         />
         <Route exact={true} path="/signup" component={withNavbar(Signup)} />
         <Route exact={true} path="/book" component={withNavbar(Book)} />

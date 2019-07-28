@@ -132,7 +132,7 @@ const BookDetailsView: React.FC<Props> = (props: Props) => {
           <CardContent>
             <Typography variant="h5" align="center"> About the Author </Typography>
             <Typography paragraph align="center">
-              <Link href={"https://www.amazon.com/s?k=jk+rowling&ref=nb_sb_noss_2"}>J.K. Rowling</Link>
+              <Link href={"https://www.amazon.com/s?k=jk+rowling&ref=nb_sb_noss_2"}>{props.bookDetails.author.first_name} {props.bookDetails.author.last_name}</Link>
             </Typography>
             <Typography paragraph>
               J.K. Rowling is the creator of the 'Harry Potter' fantasy series, one of the most popular book and film franchises in history
@@ -185,7 +185,11 @@ export default createFragmentContainer(BookDetailsView, {
   bookDetails: graphql`
     fragment BookDetailsView_bookDetails on Book {
       id
-      author_id
+      author{
+        id
+        first_name
+        last_name
+      }
       title
       isbn
       genre
@@ -197,5 +201,7 @@ export default createFragmentContainer(BookDetailsView, {
     }
   `
 });
+
+
 
 //test
