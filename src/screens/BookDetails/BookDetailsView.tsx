@@ -98,6 +98,9 @@ const BookDetailsView: React.FC<Props> = (props: Props) => {
             <Typography variant="body2" color="textSecondary" component="p">
               {props.bookDetails.description}
             </Typography>
+            <Typography variant="body2" color="textSecondary" component="p">
+              Price: ${props.bookDetails.price}
+            </Typography>
           </CardContent>
         </CardActionArea>
         <CardActions>
