@@ -32,12 +32,13 @@ query BookDetailsQuery(
 
 fragment BookDetailsView_bookDetails on Book {
   id
+  title
   author {
     id
     first_name
     last_name
+    bio
   }
-  title
   isbn
   genre
   publish_year
@@ -113,6 +114,13 @@ return {
         "selections": [
           (v2/*: any*/),
           {
+            "kind": "ScalarField",
+            "alias": null,
+            "name": "title",
+            "args": null,
+            "storageKey": null
+          },
+          {
             "kind": "LinkedField",
             "alias": null,
             "name": "author",
@@ -135,15 +143,15 @@ return {
                 "name": "last_name",
                 "args": null,
                 "storageKey": null
+              },
+              {
+                "kind": "ScalarField",
+                "alias": null,
+                "name": "bio",
+                "args": null,
+                "storageKey": null
               }
             ]
-          },
-          {
-            "kind": "ScalarField",
-            "alias": null,
-            "name": "title",
-            "args": null,
-            "storageKey": null
           },
           {
             "kind": "ScalarField",
@@ -195,7 +203,7 @@ return {
     "operationKind": "query",
     "name": "BookDetailsQuery",
     "id": null,
-    "text": "query BookDetailsQuery(\n  $input: BookDetailsInput!\n) {\n  bookDetails: book_details(input: $input) {\n    ...BookDetailsView_bookDetails\n    id\n  }\n}\n\nfragment BookDetailsView_bookDetails on Book {\n  id\n  author {\n    id\n    first_name\n    last_name\n  }\n  title\n  isbn\n  genre\n  publish_year\n  price\n  description\n  cover\n}\n",
+    "text": "query BookDetailsQuery(\n  $input: BookDetailsInput!\n) {\n  bookDetails: book_details(input: $input) {\n    ...BookDetailsView_bookDetails\n    id\n  }\n}\n\nfragment BookDetailsView_bookDetails on Book {\n  id\n  title\n  author {\n    id\n    first_name\n    last_name\n    bio\n  }\n  isbn\n  genre\n  publish_year\n  price\n  description\n  cover\n}\n",
     "metadata": {}
   }
 };

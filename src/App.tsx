@@ -14,35 +14,42 @@ import BookDetails from './screens/BookDetails';
 import Signup from './screens/Signup';
 import User from './screens/Profile';
 import BookBrowsing from './screens/BookBrowsing';
+import { StripeProvider } from 'react-stripe-elements';
 
 const App: React.FC = () => (
-  <ThemeProvider theme={theme}>
-    <Router>
-      <Switch>
-        <Route exact={true} path="/" component={withNavbar(BookBrowsing)} />
-        <Route exact={true} path="/login" component={withNavbar(Login)} />
-        <ProtectedRoute
-          exact={true}
-          path="/shopping-cart"
-          component={withNavbar(ShoppingCart)}
-        />
-        <ProtectedRoute exact={true} path="/me" component={withNavbar(User)} />
-        <Route
-          exact={true}
-          path="/book-details"
-          component={withNavbar(BookDetails)}
-        />
-        <ProtectedRoute exact={true} path="/" component={withNavbar(Book)} />
-        <Route
-          exact={true}
-          path="/catalog"
-          component={withNavbar(BookBrowsing)}
-        />
-        <Route exact={true} path="/signup" component={withNavbar(Signup)} />
-        <Route exact={true} path="/book" component={withNavbar(Book)} />
-      </Switch>
-    </Router>
-  </ThemeProvider>
+  <StripeProvider apiKey="pk_test_hkm3zHTM0rvJVKoS2MOvQQKP00DLJJcidK">
+    <ThemeProvider theme={theme}>
+      <Router>
+        <Switch>
+          <Route exact={true} path="/" component={withNavbar(BookBrowsing)} />
+          <Route exact={true} path="/login" component={withNavbar(Login)} />
+          <ProtectedRoute
+            exact={true}
+            path="/shopping-cart"
+            component={withNavbar(ShoppingCart)}
+          />
+          <ProtectedRoute
+            exact={true}
+            path="/me"
+            component={withNavbar(User)}
+          />
+          <Route
+            exact={true}
+            path="/book-details"
+            component={withNavbar(BookDetails)}
+          />
+          <ProtectedRoute exact={true} path="/" component={withNavbar(Book)} />
+          <Route
+            exact={true}
+            path="/catalog"
+            component={withNavbar(BookBrowsing)}
+          />
+          <Route exact={true} path="/signup" component={withNavbar(Signup)} />
+          <Route exact={true} path="/book" component={withNavbar(Book)} />
+        </Switch>
+      </Router>
+    </ThemeProvider>
+  </StripeProvider>
 );
 
 const theme = createMuiTheme({

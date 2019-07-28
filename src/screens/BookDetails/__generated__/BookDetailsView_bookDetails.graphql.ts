@@ -4,12 +4,13 @@ import { ReaderFragment } from "relay-runtime";
 export type BookDetailsView_bookDetails$ref = any;
 export type BookDetailsView_bookDetails = {
     readonly id: string;
+    readonly title: string;
     readonly author: {
         readonly id: string;
         readonly first_name: string;
         readonly last_name: string;
+        readonly bio: string;
     };
-    readonly title: string;
     readonly isbn: string;
     readonly genre: string;
     readonly publish_year: number;
@@ -38,6 +39,13 @@ return {
   "selections": [
     (v0/*: any*/),
     {
+      "kind": "ScalarField",
+      "alias": null,
+      "name": "title",
+      "args": null,
+      "storageKey": null
+    },
+    {
       "kind": "LinkedField",
       "alias": null,
       "name": "author",
@@ -60,15 +68,15 @@ return {
           "name": "last_name",
           "args": null,
           "storageKey": null
+        },
+        {
+          "kind": "ScalarField",
+          "alias": null,
+          "name": "bio",
+          "args": null,
+          "storageKey": null
         }
       ]
-    },
-    {
-      "kind": "ScalarField",
-      "alias": null,
-      "name": "title",
-      "args": null,
-      "storageKey": null
     },
     {
       "kind": "ScalarField",
@@ -115,5 +123,5 @@ return {
   ]
 };
 })();
-(node as any).hash = 'e7391d88272b09678cfeea1ded89052c';
+(node as any).hash = 'f7a78413da7418f28c4f9e4fed921d68';
 export default node;
