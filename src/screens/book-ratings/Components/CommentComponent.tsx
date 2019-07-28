@@ -1,5 +1,5 @@
 import Anon from '@material-ui/icons/AccountCircle';
-import React, {useState} from 'react';
+import React, {useState, Component} from 'react';
 import Rater from 'react-rater';
 import 'react-rater/lib/react-rater.css';
 import SubmitButton from '../Buttons/SubmitButton';
@@ -26,8 +26,9 @@ const CommentComponent = (props:any) => {
 	const [alreadyRated, setAlreadyRated] = React.useState(false);
 	const [anonChecked,setAnonCheck]  = React.useState(false);
 	const [commentTitle,setCommentTitle] = React.useState("title");
-	var allComments: Object[];
-	allComments = [""];
+	//let allComments: Array<Object> = [""];
+	
+	let numbers: Array<number> = [0];
 	const [max_words] = 				React.useState(1000);
 	const [min_words] = 				React.useState(10);
 	const [wordcountError,setError] = 	React.useState(false);
@@ -123,8 +124,10 @@ const CommentComponent = (props:any) => {
 				var year = dateObj.getUTCFullYear();
 				var formatdate = month + "/" + day + "/" + year;
 				setDate(formatdate);
-			
+				numbers.push(1);
+				alert(numbers);
 				/*add the new comment to the array*/
+				/*
 				allComments.push(<NewComment icon={ava}
 					title={commentTitle} 
 					userName={nickname} 
@@ -132,6 +135,7 @@ const CommentComponent = (props:any) => {
 					ratingGiven = {userStars}
 					comment={userComment}/>);
 					alert(allComments);
+				*/
 			}
 			else
 			{
@@ -180,7 +184,10 @@ const CommentComponent = (props:any) => {
 
 			<Grid container spacing={3}>
 			<Grid item xs={12}>
-				{allComments} {/*array not displaying */}
+			{numbers}
+			{/*	{allComments.map(allComments => (
+				<div>{allComments.toString}</div>
+			))} */}
 			</Grid>
 		</Grid>
     	</div>
