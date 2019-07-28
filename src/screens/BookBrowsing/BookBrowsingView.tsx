@@ -3,38 +3,35 @@ import { createFragmentContainer } from 'react-relay';
 import graphql from 'babel-plugin-relay/macro';
 import { BookBrowsingView_bookBrowsing } from './__generated__/BookBrowsingView_bookBrowsing.graphql';
 import React from 'react';
-import {Grid, Theme,} from '@material-ui/core';
+import { Grid, Theme } from '@material-ui/core';
 import { makeStyles, createStyles } from '@material-ui/core/styles';
 
 import Paper from '@material-ui/core/Paper';
 import BookView from './BookView';
 
-
-
 type Props = {
   bookBrowsing: BookBrowsingView_bookBrowsing;
-  // sortedBooks: BookView_Book;
 };
 
 const BookBrowsingView: React.FC<Props> = (props: Props) => {
   const classes = useStyles();
 
-
   function FormRow() {
     return (
-
       <React.Fragment>
-         {props.bookBrowsing.sortedBooks.map(book => <Grid><BookView book={book} /></Grid>)}
+        {props.bookBrowsing.sortedBooks.map(book => (
+          <Grid>
+            <BookView book={book} />
+          </Grid>
+        ))}
         <Grid item xs={4}>
-         
-
-          <Paper className={classes.paper}></Paper>
+          <Paper className={classes.paper} />
         </Grid>
         <Grid item xs={4}>
-          <Paper className={classes.paper}></Paper>
+          <Paper className={classes.paper} />
         </Grid>
         <Grid item xs={4}>
-          <Paper className={classes.paper}></Paper>
+          <Paper className={classes.paper} />
         </Grid>
       </React.Fragment>
     );
@@ -60,28 +57,24 @@ const BookBrowsingView: React.FC<Props> = (props: Props) => {
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     root: {
-      flexGrow: 1,
+      flexGrow: 1
     },
     paper: {
       padding: theme.spacing(1),
       textAlign: 'center',
-      color: theme.palette.text.secondary,
+      color: theme.palette.text.secondary
     },
     control: {
-      padding: theme.spacing(2),
-    // },
-    // bookImage: {
-    //   width: '5em',
-    //   horizontalAlign: 'middle'
+      padding: theme.spacing(2)
     }
-  }),
+  })
 );
 
 export default createFragmentContainer(BookBrowsingView, {
   bookBrowsing: graphql`
     fragment BookBrowsingView_bookBrowsing on Query {
-      sortedBooks: sorted_books(input:$input){
-        ...BookView_Book
+      sortedBooks: sorted_books(input: $input) {
+        ...BookView_book
       }
     }
   `

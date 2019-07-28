@@ -28,12 +28,12 @@ query BookBrowsingQuery(
 
 fragment BookBrowsingView_bookBrowsing on Query {
   sortedBooks: sorted_books(input: $input) {
-    ...BookView_Book
+    ...BookView_book
     id
   }
 }
 
-fragment BookView_Book on Book {
+fragment BookView_book on Book {
   id
   author {
     id
@@ -186,7 +186,7 @@ return {
     "operationKind": "query",
     "name": "BookBrowsingQuery",
     "id": null,
-    "text": "query BookBrowsingQuery(\n  $input: SortedBooksInput!\n) {\n  ...BookBrowsingView_bookBrowsing\n}\n\nfragment BookBrowsingView_bookBrowsing on Query {\n  sortedBooks: sorted_books(input: $input) {\n    ...BookView_Book\n    id\n  }\n}\n\nfragment BookView_Book on Book {\n  id\n  author {\n    id\n    first_name\n    last_name\n  }\n  title\n  isbn\n  genre\n  publish_year\n  price\n  description\n  cover\n}\n",
+    "text": "query BookBrowsingQuery(\n  $input: SortedBooksInput!\n) {\n  ...BookBrowsingView_bookBrowsing\n}\n\nfragment BookBrowsingView_bookBrowsing on Query {\n  sortedBooks: sorted_books(input: $input) {\n    ...BookView_book\n    id\n  }\n}\n\nfragment BookView_book on Book {\n  id\n  author {\n    id\n    first_name\n    last_name\n  }\n  title\n  isbn\n  genre\n  publish_year\n  price\n  description\n  cover\n}\n",
     "metadata": {}
   }
 };

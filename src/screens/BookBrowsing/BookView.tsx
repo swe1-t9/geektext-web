@@ -10,19 +10,16 @@ import CardMedia from '@material-ui/core/CardMedia';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import { createFragmentContainer } from 'react-relay';
-import { BookView_Book } from './__generated__/BookView_Book.graphql';
+import { BookView_book } from './__generated__/BookView_book.graphql';
 import { commit as commitAddToShoppingCartMutation } from '../../graphql/mutations/AddToShoppingCartMutation';
 import { commit as commitAddToSavedCartMutation } from '../../graphql/mutations/AddToSavedCartMutation';
 import Menu from './Menu';
 
 type Props = {
-  book: BookView_Book
+  book: BookView_book;
+};
 
-}
-
-
-const BookView: React.FC<Props>= (props: Props) => {
-
+const BookView: React.FC<Props> = (props: Props) => {
   const classes = useStyles();
   const [added, setAdded] = React.useState(false);
   const [saved, setSaved] = React.useState(false);
@@ -43,7 +40,9 @@ const BookView: React.FC<Props>= (props: Props) => {
     window.location.href = '/shopping-cart';
   };
 
-  const addToShoppingCart = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+  const addToShoppingCart = (
+    e: React.MouseEvent<HTMLButtonElement, MouseEvent>
+  ) => {
     e.preventDefault();
     // TODO: add proper mechanism for getting amount of books to add
     commitAddToShoppingCartMutation(
@@ -56,7 +55,9 @@ const BookView: React.FC<Props>= (props: Props) => {
     );
   };
 
-  const addToSavedCart = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+  const addToSavedCart = (
+    e: React.MouseEvent<HTMLButtonElement, MouseEvent>
+  ) => {
     e.preventDefault();
     // TODO: add proper mechanism for getting amount of books to add
     commitAddToSavedCartMutation(
@@ -70,21 +71,16 @@ const BookView: React.FC<Props>= (props: Props) => {
   };
 
   return (
-   
     <Card className={classes.card}>
       <CardActionArea>
-        <CardMedia
-          className={classes.media}
-          image={props.book.cover}
-      
-        />
-        
+        <CardMedia className={classes.media} image={props.book.cover} />
+
         <CardContent>
           <Typography gutterBottom variant="h5" component="h2">
-          Title: {props.book.title}
+            Title: {props.book.title}
           </Typography>
           <Typography variant="body2" color="textSecondary" component="p">
-           {props.book.description}
+            {props.book.description}
           </Typography>
         </CardContent>
       </CardActionArea>
@@ -98,10 +94,7 @@ const BookView: React.FC<Props>= (props: Props) => {
       </CardActions>
     </Card>
   );
-}
-
-
-
+};
 
 const useStyles = makeStyles(
   createStyles({
@@ -119,10 +112,10 @@ const useStyles = makeStyles(
 );
 
 export default createFragmentContainer(BookView, {
-  Book: graphql`
-    fragment BookView_Book on Book {
+  book: graphql`
+    fragment BookView_book on Book {
       id
-      author{
+      author {
         id
         first_name
         last_name
@@ -137,7 +130,5 @@ export default createFragmentContainer(BookView, {
     }
   `
 });
-
-
 
 // export default Book;

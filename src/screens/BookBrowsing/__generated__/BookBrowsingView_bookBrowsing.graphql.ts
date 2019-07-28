@@ -1,11 +1,11 @@
 /* tslint:disable */
 
 import { ReaderFragment } from "relay-runtime";
-type BookView_Book$ref = any;
+type BookView_book$ref = any;
 export type BookBrowsingView_bookBrowsing$ref = any;
 export type BookBrowsingView_bookBrowsing = {
     readonly sortedBooks: ReadonlyArray<{
-        readonly " $fragmentRefs": BookView_Book$ref;
+        readonly " $fragmentRefs": BookView_book$ref;
     }>;
     readonly " $refType": BookBrowsingView_bookBrowsing$ref;
 };
@@ -42,12 +42,12 @@ const node: ReaderFragment = {
       "selections": [
         {
           "kind": "FragmentSpread",
-          "name": "BookView_Book",
+          "name": "BookView_book",
           "args": null
         }
       ]
     }
   ]
 };
-(node as any).hash = '53f450f18ef328b25ea4d9812c2d9d63';
+(node as any).hash = '7a43941bee70d2da043e6f1f721de603';
 export default node;
