@@ -19,7 +19,7 @@ const App: React.FC = () => (
   <ThemeProvider theme={theme}>
     <Router>
       <Switch>
-        <Route exact={true} path="/" component={withNavbar(Home)} />
+        <Route exact={true} path="/" component={withNavbar(BookBrowsing)} />
         <Route exact={true} path="/login" component={withNavbar(Login)} />
         <ProtectedRoute
           exact={true}
@@ -32,7 +32,7 @@ const App: React.FC = () => (
           path="/book-details"
           component={withNavbar(BookDetails)}
         />
-      <ProtectedRoute exact={true} path="/" component={withNavbar(Book)} />
+        <ProtectedRoute exact={true} path="/" component={withNavbar(Book)} />
         <Route
           exact={true}
           path="/catalog"
@@ -51,6 +51,5 @@ const theme = createMuiTheme({
     primary: blue
   }
 });
-
 
 export default App;

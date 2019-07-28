@@ -26,10 +26,10 @@ const BookView: React.FC<Props> = (props: Props) => {
   const [saved, setSaved] = React.useState(false);
   const [openBookDetails, setOpenBookDetails] = React.useState(false);
 
-  const onBookDetails = () =>{
-   setOpenBookDetails(true);
+  const onBookDetails = () => {
+    setOpenBookDetails(true);
     // window.location.href= '/book-details'
-  }
+  };
 
   const onAddToShoppingCartSuccess = () => {
     setAdded(true);
@@ -77,16 +77,21 @@ const BookView: React.FC<Props> = (props: Props) => {
     );
   };
 
-  return openBookDetails ?  <Redirect to={{
-    pathname: '/book-details',
-    search: '',
-    state: { id: props.book.id}
-}}
-/> : (
+  return openBookDetails ? (
+    <Redirect
+      to={{
+        pathname: '/book-details',
+        state: { id: props.book.id }
+      }}
+    />
+  ) : (
     <Card className={classes.card}>
       <CardActionArea>
-        <CardMedia className={classes.media} image={props.book.cover}
-        onClick= {onBookDetails} />
+        <CardMedia
+          className={classes.media}
+          image={props.book.cover}
+          onClick={onBookDetails}
+        />
 
         <CardContent>
           <Typography gutterBottom variant="h5" component="h2">
