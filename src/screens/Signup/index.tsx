@@ -19,13 +19,24 @@ import { isLoggedIn } from '../../shared/auth';
 const Signup = () => {
   const classes = styles();
 
+  const [, forceUpdate] = React.useState(false);
   const [email, setEmail] = React.useState('');
+  const [username, setUsername] = React.useState('');
   const [firstName, setFirstName] = React.useState('');
   const [lastName, setLastName] = React.useState('');
   const [password, setPassword] = React.useState('');
+  const [addressLine1, setAddressLine1] = React.useState('');
+  const [addressLine2, setAddressLine2] = React.useState('');
+  const [addressLine3, setAddressLine3] = React.useState('');
+  const [city, setCity] = React.useState('');
+  const [region, setRegion] = React.useState('');
+  const [country, setCountry] = React.useState('');
+  const [postalCode, setPostalCode] = React.useState('');
 
-  const onSignUpSuccess = (response: SignUpMutationResponse) =>
+  const onSignUpSuccess = (response: SignUpMutationResponse) => {
     setToken(response.signUp);
+    forceUpdate(n => !n);
+  };
   const onSignUpFailure = (error: Error) => console.warn(error);
 
   const submit = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
@@ -33,9 +44,17 @@ const Signup = () => {
     commitSignUpMutation(
       {
         email,
+        username,
         first_name: firstName,
         last_name: lastName,
-        password
+        password,
+        address_line_1: addressLine1,
+        address_line_2: addressLine2.length > 0 ? addressLine2 : null,
+        address_line_3: addressLine3.length > 0 ? addressLine3 : null,
+        region: region.length > 0 ? region : null,
+        city,
+        country,
+        postal_code: postalCode
       },
       onSignUpSuccess,
       onSignUpFailure
@@ -74,6 +93,18 @@ const Signup = () => {
               margin="normal"
               required={true}
               fullWidth={true}
+              id="username"
+              label="Username"
+              name="username"
+              autoComplete="username"
+              onChange={e => handleTextChange(e, setUsername)}
+              autoFocus
+            />
+            <TextField
+              variant="outlined"
+              margin="normal"
+              required={true}
+              fullWidth={true}
               id="first-name"
               label="First Name"
               name="first-name"
@@ -89,6 +120,83 @@ const Signup = () => {
               label="Last Name"
               name="last-name"
               onChange={e => handleTextChange(e, setLastName)}
+              autoFocus
+            />
+            <TextField
+              variant="outlined"
+              margin="normal"
+              required={true}
+              fullWidth={true}
+              id="address-line-1"
+              label="Address Line 1"
+              name="address-line-1"
+              onChange={e => handleTextChange(e, setAddressLine1)}
+              autoFocus
+            />
+            <TextField
+              variant="outlined"
+              margin="normal"
+              required={true}
+              fullWidth={true}
+              id="address-line-2"
+              label="Address Line 2"
+              name="address-line-2"
+              onChange={e => handleTextChange(e, setAddressLine2)}
+              autoFocus
+            />
+            <TextField
+              variant="outlined"
+              margin="normal"
+              required={true}
+              fullWidth={true}
+              id="address-line-3"
+              label="Address Line 3"
+              name="address-line-3"
+              onChange={e => handleTextChange(e, setAddressLine3)}
+              autoFocus
+            />
+            <TextField
+              variant="outlined"
+              margin="normal"
+              required={true}
+              fullWidth={true}
+              id="city"
+              label="City"
+              name="city"
+              onChange={e => handleTextChange(e, setCity)}
+              autoFocus
+            />
+            <TextField
+              variant="outlined"
+              margin="normal"
+              required={true}
+              fullWidth={true}
+              id="region"
+              label="Region (State)"
+              name="region"
+              onChange={e => handleTextChange(e, setRegion)}
+              autoFocus
+            />
+            <TextField
+              variant="outlined"
+              margin="normal"
+              required={true}
+              fullWidth={true}
+              id="country"
+              label="County"
+              name="county"
+              onChange={e => handleTextChange(e, setCountry)}
+              autoFocus
+            />
+            <TextField
+              variant="outlined"
+              margin="normal"
+              required={true}
+              fullWidth={true}
+              id="postal-code"
+              label="Postal Code"
+              name="postal-code"
+              onChange={e => handleTextChange(e, setPostalCode)}
               autoFocus
             />
             <TextField
