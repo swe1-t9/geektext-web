@@ -2,12 +2,15 @@ import { createFragmentContainer } from 'react-relay';
 // @ts-ignore
 import graphql from 'babel-plugin-relay/macro';
 import { BookDetailsView_bookDetails } from './__generated__/BookDetailsView_bookDetails.graphql';
-import React from 'react';
+import React, { useState } from 'react';
 import { Card, CardActionArea, CardMedia, CardContent, Button, Typography, CardActions, Grid, Theme, IconButton, Collapse, Link } from '@material-ui/core';
 import { createStyles, makeStyles } from '@material-ui/core/styles';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import clsx from 'clsx';
 import { red } from '@material-ui/core/colors';
+import Commentbox from '../book-ratings/Components/CommentComponent';
+import Scoreboard from '../book-ratings/Components/BookInfoComponent';
+
 import { commit as commitAddToShoppingCartMutation } from '../../graphql/mutations/AddToShoppingCartMutation';
 import { commit as commitAddToSavedCartMutation } from '../../graphql/mutations/AddToSavedCartMutation';
 
@@ -20,6 +23,8 @@ const BookDetailsView: React.FC<Props> = (props: Props) => {
   const [expanded, setExpanded] = React.useState(false);
   const [added, setAdded] = React.useState(false);
   const [saved, setSaved] = React.useState(false);
+  const [imageIsExpanded, setImageIsExpanded] = React.useState(false);
+  const [, updateState] = React.useState();
 
   function handleExpandClick() {
     setExpanded(!expanded);
@@ -54,6 +59,10 @@ const BookDetailsView: React.FC<Props> = (props: Props) => {
     );
   };
 
+  const toggleImage = () => {
+    setImageIsExpanded(!imageIsExpanded);
+  };
+
   const addToSavedCart = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
     e.preventDefault();
     // TODO: add proper mechanism for getting amount of books to add
@@ -66,7 +75,6 @@ const BookDetailsView: React.FC<Props> = (props: Props) => {
       onAddToCartFailure
     );
   };
-  
   return (
     <Grid
       container
@@ -78,10 +86,10 @@ const BookDetailsView: React.FC<Props> = (props: Props) => {
     >
       <Card className={classes.card}>
         <CardActionArea>
-          <CardMedia
-            className={classes.media}
+          <CardMedia //Mui-expanded
+            className={imageIsExpanded ? classes.expandImage : classes.media}
             image={props.bookDetails.cover}
-            // onClick={expandImage}
+            onClick={toggleImage}
           />
           <CardContent>
             <Typography gutterBottom variant="h5" component="h2">
@@ -93,15 +101,15 @@ const BookDetailsView: React.FC<Props> = (props: Props) => {
           </CardContent>
         </CardActionArea>
         <CardActions>
-          <Button 
-            size="small" 
+          <Button
+            size="small"
             color="primary"
             onClick={addToShoppingCart}
           >
             {added ? 'In Cart' : 'Add to Shopping Cart'}
           </Button>
-          <Button 
-            size="small" 
+          <Button
+            size="small"
             color="primary"
             onClick={addToSavedCart}
           >
@@ -125,13 +133,15 @@ const BookDetailsView: React.FC<Props> = (props: Props) => {
           <CardContent>
             <Typography variant="h5" align="center"> About the Author </Typography>
             <Typography paragraph align="center">
-              <Link href={"https://www.amazon.com/s?k=jk+rowling&ref=nb_sb_noss_2"}>J.K. Rowling</Link>
+              <Link href={"https://www.amazon.com/s?k=jk+rowling&ref=nb_sb_noss_2"}>{props.bookDetails.author.first_name} {props.bookDetails.author.last_name}</Link>
             </Typography>
             <Typography paragraph>
-              J.K. Rowling is the creator of the 'Harry Potter' fantasy series, one of the most popular book and film franchises in history
+              {props.bookDetails.author.bio}
             </Typography>
             <Typography paragraph> Genre: {props.bookDetails.genre}</Typography>
             <Typography paragraph> Publish Year: {props.bookDetails.publish_year}</Typography>
+            <Commentbox />
+            <Scoreboard />
           </CardContent>
         </Collapse>
       </Card>
@@ -164,7 +174,7 @@ const useStyles = makeStyles((theme: Theme) =>
     },
     expandImage: {
       height: 700,
-      width: 900
+      width: 500
     },
     avatar: {
       backgroundColor: red[500]
@@ -176,8 +186,13 @@ export default createFragmentContainer(BookDetailsView, {
   bookDetails: graphql`
     fragment BookDetailsView_bookDetails on Book {
       id
-      author_id
       title
+      author{
+        id
+        first_name
+        last_name
+        bio
+      }
       isbn
       genre
       publish_year
@@ -188,3 +203,4 @@ export default createFragmentContainer(BookDetailsView, {
     }
   `
 });
+

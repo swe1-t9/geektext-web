@@ -10,6 +10,7 @@ import Grid from '@material-ui/core/Grid';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Checkbox from '@material-ui/core/Checkbox';
 import TextField from '@material-ui/core/TextField';
+import { Typography } from '@material-ui/core';
 
 const CommentComponent = (props:any) => {
 	const classes = useStyles();
@@ -24,6 +25,7 @@ const CommentComponent = (props:any) => {
 	const [bookPurchased,setBookPurchased] = React.useState(true);
 	const [alreadyRated, setAlreadyRated] = React.useState(false);
 	const [anonChecked,setAnonCheck]  = React.useState(false);
+	const [commentTitle,setCommentTitle] = React.useState("title");
 	var allComments: Object[];
 	allComments = [""];
 	const [max_words] = 				React.useState(1000);
@@ -51,6 +53,24 @@ const CommentComponent = (props:any) => {
 		);
 	  };
 
+		/*The actual comment box where the user can write*/
+		const TitleBox = () => {
+			return (
+			 
+				<TextField
+				  id="title_box"
+				  label="Review Title"
+				  multiline 
+				  rows="1"
+				  defaultValue=" "
+				  className={classes.textField}
+				  margin="normal"
+				  fullWidth
+				  onChange={event => setCommentTitle(event.target.value) }
+				/>
+			);
+		  };
+
 	  /*checkbox to remain anonymous or with nickname*/
 	  const CheckBox = () => {
   
@@ -66,12 +86,12 @@ const CommentComponent = (props:any) => {
 		  else
 		  {
 			setNickname("Anonymous");
-			setAva(<Anon />);
+			setAva(<Avatar initial={<Anon/>}/>);
 		  }
 		};
 	  
 		return ( 
-			<FormControlLabel
+			<FormControlLabel 
 			  control={
 				<Checkbox
 				  checked={state.checkedA}
@@ -80,7 +100,8 @@ const CommentComponent = (props:any) => {
 				  color="primary"
 				/>
 			  }
-			  label="Remain Anonymous"
+			  label={<Typography variant="body2">Remain Anonymous</Typography>}
+			  
 			/>
 		);
 	  };
@@ -104,7 +125,8 @@ const CommentComponent = (props:any) => {
 				setDate(formatdate);
 			
 				/*add the new comment to the array*/
-				allComments.push(<NewComment icon={ava} 
+				allComments.push(<NewComment icon={ava}
+					title={commentTitle} 
 					userName={nickname} 
 					date = {datePosted} 
 					ratingGiven = {userStars}
@@ -130,13 +152,11 @@ const CommentComponent = (props:any) => {
 	return (
 		<div className={classes.yourComment}>
 			<Grid container spacing={3}>
-				<Grid item xs>
-					{/* stores the rating the user gives the current book*/}
-					<Rater total={5} 
-						   onRate={ ({rating}) => {setStars(rating)} } />
-				</Grid>
-				<Grid item xs={3}>
+				<Grid item xs={4}>
 					{ava}
+				</Grid>
+				<Grid item xs>
+					{/*leave empty space for separating the initial and checkbox*/}
 				</Grid>
 				<Grid item xs={3}>
 					{CheckBox()}
@@ -145,6 +165,10 @@ const CommentComponent = (props:any) => {
 
 			<Grid container spacing={3}>
 				<Grid item xs={12}>
+				{/* stores the rating the user gives the current book*/}
+				<Rater total={5} 
+				onRate={ ({rating}) => {setStars(rating)} } />
+					{TitleBox()}
 					{CommentBox()}
 				</Grid>
 			</Grid>
@@ -167,8 +191,8 @@ const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     yourComment: {
 		marginTop: theme.spacing(15), //positions top for entire component
-		marginLeft: theme.spacing(35), //left for entire component
-		width: 600,
+        marginLeft: '9%',
+		width: 375,
 	},
 	container: {
 		display: 'flex',
