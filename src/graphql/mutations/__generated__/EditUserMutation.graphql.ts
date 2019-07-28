@@ -5,8 +5,11 @@ export type EditUserInput = {
     readonly email: any;
     readonly first_name: string;
     readonly last_name: string;
+<<<<<<< HEAD
     readonly selected_shipping_address_id: string;
     readonly username: string;
+=======
+>>>>>>> b31991a0c884ea9053fd518bd475f45e69d26493
 };
 export type EditUserMutationVariables = {
     readonly input: EditUserInput;

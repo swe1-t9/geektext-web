@@ -8,7 +8,7 @@ import { withNavbar } from './shared/Navbar';
 import ProtectedRoute from './shared/ProtectedRoute';
 import Home from './screens/Home';
 import Login from './screens/Login';
-import Cart from './screens/Cart';
+import ShoppingCart from './screens/ShoppingCart';
 import Book from './screens/Book';
 import BookDetails from './screens/BookDetails';
 import Signup from './screens/Signup';
@@ -24,8 +24,8 @@ const App: React.FC = () => (
           <Route exact={true} path="/login" component={withNavbar(Login)} />
           <ProtectedRoute
             exact={true}
-            path="/cart"
-            component={withNavbar(Cart)}
+            path="/shopping-cart"
+            component={withNavbar(ShoppingCart)}
           />
           <ProtectedRoute
             exact={true}

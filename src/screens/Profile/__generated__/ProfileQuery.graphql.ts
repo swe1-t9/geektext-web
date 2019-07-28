@@ -24,6 +24,7 @@ query ProfileQuery {
 }
 
 fragment ProfileView_user on User {
+<<<<<<< HEAD
   email
   username
   firstName: first_name
@@ -68,6 +69,15 @@ var v0 = {
   "storageKey": null
 };
 return {
+=======
+  firstName: first_name
+  lastName: last_name
+  email
+}
+*/
+
+const node: ConcreteRequest = {
+>>>>>>> b31991a0c884ea9053fd518bd475f45e69d26493
   "kind": "Request",
   "fragment": {
     "kind": "Fragment",
@@ -110,6 +120,7 @@ return {
         "selections": [
           {
             "kind": "ScalarField",
+<<<<<<< HEAD
             "alias": null,
             "name": "email",
             "args": null,
@@ -124,6 +135,8 @@ return {
           },
           {
             "kind": "ScalarField",
+=======
+>>>>>>> b31991a0c884ea9053fd518bd475f45e69d26493
             "alias": "firstName",
             "name": "first_name",
             "args": null,
@@ -137,6 +150,7 @@ return {
             "storageKey": null
           },
           {
+<<<<<<< HEAD
             "kind": "LinkedField",
             "alias": "shippingAddresses",
             "name": "shipping_addresses",
@@ -231,6 +245,21 @@ return {
             ]
           },
           (v0/*: any*/)
+=======
+            "kind": "ScalarField",
+            "alias": null,
+            "name": "email",
+            "args": null,
+            "storageKey": null
+          },
+          {
+            "kind": "ScalarField",
+            "alias": null,
+            "name": "id",
+            "args": null,
+            "storageKey": null
+          }
+>>>>>>> b31991a0c884ea9053fd518bd475f45e69d26493
         ]
       }
     ]
@@ -239,10 +268,17 @@ return {
     "operationKind": "query",
     "name": "ProfileQuery",
     "id": null,
+<<<<<<< HEAD
     "text": "query ProfileQuery {\n  viewer {\n    ...ProfileView_user\n    id\n  }\n}\n\nfragment ProfileView_user on User {\n  email\n  username\n  firstName: first_name\n  lastName: last_name\n  shippingAddresses: shipping_addresses {\n    id\n    isDefault: is_default\n  }\n  ...ShippingAddressesView_shippingAddresses\n  ...PaymentCredentialsView_paymentCredentials\n}\n\nfragment ShippingAddressesView_shippingAddresses on User {\n  shippingAddresses: shipping_addresses {\n    id\n    city\n    region\n    country\n    isDefault: is_default\n    addressLine1: address_line_1\n    addressLine2: address_line_2\n    addressLine3: address_line_3\n    postalCode: postal_code\n  }\n}\n\nfragment PaymentCredentialsView_paymentCredentials on User {\n  paymentCredentials: payment_credentials {\n    id\n    lastFourDigits: last_four_digits\n    cardAssociation: card_association\n  }\n}\n",
     "metadata": {}
   }
 };
 })();
+=======
+    "text": "query ProfileQuery {\n  viewer {\n    ...ProfileView_user\n    id\n  }\n}\n\nfragment ProfileView_user on User {\n  firstName: first_name\n  lastName: last_name\n  email\n}\n",
+    "metadata": {}
+  }
+};
+>>>>>>> b31991a0c884ea9053fd518bd475f45e69d26493
 (node as any).hash = '4b7e8ad111990dc7914e137d8b1dac5f';
 export default node;

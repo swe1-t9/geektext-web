@@ -14,7 +14,6 @@ import nullthrows from 'nullthrows';
 import React from 'react';
 
 import { ProfileView_user } from './__generated__/ProfileView_user.graphql';
-import { EditUserMutationResponse } from '../../graphql/mutations/__generated__/EditUserMutation.graphql';
 import { commit as commitEditUserMutation } from '../../graphql/mutations/EditUserMutation';
 import { handleTextChange } from '../../shared/text';
 import ShippingAddressesView from './ShippingAddressesView';
