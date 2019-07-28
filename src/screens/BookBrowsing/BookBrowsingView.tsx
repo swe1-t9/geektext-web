@@ -18,21 +18,16 @@ const BookBrowsingView: React.FC<Props> = (props: Props) => {
 
   function FormRow() {
     return (
-      <React.Fragment>
+      <React.Fragment >
         {props.bookBrowsing.sortedBooks.map(book => (
-          <Grid>
+          <Grid direction= "row">
             <BookView book={book} />
           </Grid>
         ))}
         <Grid item xs={4}>
           <Paper className={classes.paper} />
         </Grid>
-        <Grid item xs={4}>
-          <Paper className={classes.paper} />
-        </Grid>
-        <Grid item xs={4}>
-          <Paper className={classes.paper} />
-        </Grid>
+     
       </React.Fragment>
     );
   }
@@ -40,16 +35,9 @@ const BookBrowsingView: React.FC<Props> = (props: Props) => {
   return (
     <div className={classes.root}>
       <Grid container spacing={1}>
-        <Grid container item xs={4} spacing={3}>
+   
           <FormRow />
         </Grid>
-        <Grid container item xs={4} spacing={3}>
-          <FormRow />
-        </Grid>
-        <Grid container item xs={4} spacing={3}>
-          <FormRow />
-        </Grid>
-      </Grid>
     </div>
   );
 };
@@ -65,7 +53,8 @@ const useStyles = makeStyles((theme: Theme) =>
       color: theme.palette.text.secondary
     },
     control: {
-      padding: theme.spacing(2)
+      padding: theme.spacing(2),
+      horizontalAlign: 'center'
     }
   })
 );

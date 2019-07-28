@@ -14,6 +14,7 @@ import { BookView_book } from './__generated__/BookView_book.graphql';
 import { commit as commitAddToShoppingCartMutation } from '../../graphql/mutations/AddToShoppingCartMutation';
 import { commit as commitAddToSavedCartMutation } from '../../graphql/mutations/AddToSavedCartMutation';
 import Menu from './Menu';
+import { Redirect } from 'react-router';
 
 type Props = {
   book: BookView_book;
@@ -23,6 +24,12 @@ const BookView: React.FC<Props> = (props: Props) => {
   const classes = useStyles();
   const [added, setAdded] = React.useState(false);
   const [saved, setSaved] = React.useState(false);
+  const [openBookDetails, setOpenBookDetails] = React.useState(false);
+
+  const onBookDetails = () =>{
+   setOpenBookDetails(true);
+    // window.location.href= '/book-details'
+  }
 
   const onAddToShoppingCartSuccess = () => {
     setAdded(true);
@@ -70,14 +77,20 @@ const BookView: React.FC<Props> = (props: Props) => {
     );
   };
 
-  return (
+  return openBookDetails ?  <Redirect to={{
+    pathname: '/book-details',
+    search: '',
+    state: { id: props.book.id}
+}}
+/> : (
     <Card className={classes.card}>
       <CardActionArea>
-        <CardMedia className={classes.media} image={props.book.cover} />
+        <CardMedia className={classes.media} image={props.book.cover}
+        onClick= {onBookDetails} />
 
         <CardContent>
           <Typography gutterBottom variant="h5" component="h2">
-            Title: {props.book.title}
+            {props.book.title}
           </Typography>
           <Typography variant="body2" color="textSecondary" component="p">
             {props.book.description}

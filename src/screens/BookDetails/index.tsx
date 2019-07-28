@@ -16,11 +16,12 @@ const BookDetailsQuery = graphql`
   }
 `;
 
-const Book: React.FC = () => (
+const Book: React.FC = (props: any) => (
   <QueryRenderer
     environment={environment}
     query={BookDetailsQuery}
-    variables={{input: {id: '00000000-0000-0000-0000-000000000001'}}}
+    //@ts-ignore
+    variables={{input: {id: props.location.state.id || '00000000-0000-0000-0000-000000000001'}}}
     render={({ props, error }) => {
       if (error) return <div>{error.message}</div>;
       else if (props) {

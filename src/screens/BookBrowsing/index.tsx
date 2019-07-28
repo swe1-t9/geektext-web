@@ -5,6 +5,7 @@ import React from 'react';
 import { environment } from '../../graphql/relay';
 import BookBrowsingView from './BookBrowsingView';
 import {BookBrowsingQueryResponse} from './__generated__/BookBrowsingQuery.graphql';
+import Menu from './Menu';
 
 
 const BookBrowsingQuery = graphql`
@@ -24,6 +25,7 @@ const Catalog: React.FC = () => (
       else if (props) {
         console.log(props);
         return (
+         
           <BookBrowsingView bookBrowsing={(props as BookBrowsingQueryResponse)} />
         );
       } else return <div>loading</div>;
