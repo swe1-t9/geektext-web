@@ -8,7 +8,7 @@ import { makeStyles, createStyles } from '@material-ui/core/styles';
 
 
 import BookView from './BookView';
-import { relative } from 'path';
+
 
 
 type Props = {
@@ -37,12 +37,14 @@ const BookBrowsingView: React.FC<Props> = (props: Props) => {
        <MenuListComposition/><ContainedButtons/>
  
       <Grid container spacing={1}>
+        
         <FormRow />
        
       </Grid>
     </div>
   );
 }
+
 
 
 function MenuListComposition(){
@@ -73,8 +75,8 @@ const classes= useStyles();
       onClose={handleClose}
     >
       {/* TODO */}
-      {/* () => props.bookBrowsing.relay.refetch((var) => ({input: {"field_to_sort_by": "title", "sort_direction": "asc"}))} */}
-      <MenuItem onClick={handleClose}>Title</MenuItem>
+
+      <MenuItem onClick={() => props.relay.refetch(() => ({ field_to_sort_by: "title"}), {sort_direction: "asc"})}>Title</MenuItem>
       <MenuItem onClick={handleClose}>Author</MenuItem>
       <MenuItem onClick={handleClose}>Price</MenuItem>
       <MenuItem onClick={handleClose}>Rating</MenuItem>
