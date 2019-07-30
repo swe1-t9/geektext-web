@@ -77,7 +77,7 @@ const BookBrowsingView: React.FC<Props> = (props: Props) => {
           open={Boolean(anchorEl)}
           onClose={handleClose}
         >
-          {/* TODO */}
+        
 
           <MenuItem
             onClick={() =>
@@ -88,10 +88,22 @@ const BookBrowsingView: React.FC<Props> = (props: Props) => {
           >
             Title
           </MenuItem>
-          <MenuItem onClick={handleClose}>Author</MenuItem>
-          <MenuItem onClick={handleClose}>Price</MenuItem>
+          <MenuItem onClick={() =>
+              props.relay.refetch(() => ({ field_to_sort_by: 'first_name' }), {
+                sort_direction: 'asc'
+              })
+            }>Author</MenuItem>
+          <MenuItem onClick={() =>
+              props.relay.refetch(() => ({ field_to_sort_by: 'price' }), {
+                sort_direction: 'desc'
+              })
+            }>Price</MenuItem>
           <MenuItem onClick={handleClose}>Rating</MenuItem>
-          <MenuItem onClick={handleClose}>Date</MenuItem>
+          <MenuItem onClick={() =>
+              props.relay.refetch(() => ({ field_to_sort_by: 'publish_year' }), {
+                sort_direction: 'asc'
+              })
+            }>Date</MenuItem>
         </Menu>
       </div>
     );

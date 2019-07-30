@@ -13,7 +13,7 @@ import { createFragmentContainer } from 'react-relay';
 import { BookView_book } from './__generated__/BookView_book.graphql';
 import { commit as commitAddToShoppingCartMutation } from '../../graphql/mutations/AddToShoppingCartMutation';
 import { commit as commitAddToSavedCartMutation } from '../../graphql/mutations/AddToSavedCartMutation';
-import Menu from './Menu';
+
 import { Redirect } from 'react-router';
 
 type Props = {
@@ -151,6 +151,7 @@ export default createFragmentContainer(BookView, {
       price
       description
       cover
+     
     }
   `
 });
