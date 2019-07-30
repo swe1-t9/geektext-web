@@ -97,6 +97,12 @@ const BookView: React.FC<Props> = (props: Props) => {
           <Typography gutterBottom variant="h5" component="h2">
             {props.book.title}
           </Typography>
+          <Typography gutterBottom variant="subtitle1" component="h2">
+            {props.book.author.first_name}{' '}{props.book.author.last_name}
+          </Typography>
+          <Typography variant="overline" display="block" gutterBottom>
+            {'$'}{props.book.price}
+          </Typography>
           <Typography variant="body2" color="textSecondary" component="p">
             {props.book.description}
           </Typography>

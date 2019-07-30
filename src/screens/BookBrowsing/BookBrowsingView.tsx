@@ -1,13 +1,15 @@
-import { createFragmentContainer } from 'react-relay';
+import { createFragmentContainer, createRefetchContainer } from 'react-relay';
 // @ts-ignore
 import graphql from 'babel-plugin-relay/macro';
 import { BookBrowsingView_bookBrowsing } from './__generated__/BookBrowsingView_bookBrowsing.graphql';
 import React from 'react';
-import { Grid, Theme } from '@material-ui/core';
+import { Grid, Theme, MenuItem, Button, Menu,} from '@material-ui/core';
 import { makeStyles, createStyles } from '@material-ui/core/styles';
 
-import Paper from '@material-ui/core/Paper';
+
 import BookView from './BookView';
+import { relative } from 'path';
+
 
 type Props = {
   bookBrowsing: BookBrowsingView_bookBrowsing;
@@ -20,46 +22,123 @@ const BookBrowsingView: React.FC<Props> = (props: Props) => {
     return (
       <React.Fragment >
         {props.bookBrowsing.sortedBooks.map(book => (
-          <Grid direction= "row">
+          <Grid direction="row">
             <BookView book={book} />
           </Grid>
         ))}
-        <Grid item xs={4}>
-          <Paper className={classes.paper} />
-        </Grid>
-     
+      
       </React.Fragment>
     );
   }
 
+
   return (
     <div className={classes.root}>
+       <MenuListComposition/><ContainedButtons/>
+ 
       <Grid container spacing={1}>
-   
-          <FormRow />
-        </Grid>
+        <FormRow />
+       
+      </Grid>
     </div>
   );
-};
+}
+
+
+function MenuListComposition(){
+const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
+const classes= useStyles();
+
+  function handleClick(event: React.MouseEvent<HTMLButtonElement>) {
+    setAnchorEl(event.currentTarget);
+  }
+
+  function handleClose() {
+    setAnchorEl(null);
+  }
+
+  
+ 
+  return (
+    <div>
+    <Button aria-controls="simple-menu"  size= "medium" variant= "contained" color= 'default' aria-haspopup="true" onClick={handleClick} className={classes.button}>
+      Sort By:
+    </Button>
+    
+    <Menu
+      id="simple-menu"
+      anchorEl={anchorEl}
+      keepMounted
+      open={Boolean(anchorEl)}
+      onClose={handleClose}
+    >
+      {/* TODO */}
+      {/* () => props.bookBrowsing.relay.refetch((var) => ({input: {"field_to_sort_by": "title", "sort_direction": "asc"}))} */}
+      <MenuItem onClick={handleClose}>Title</MenuItem>
+      <MenuItem onClick={handleClose}>Author</MenuItem>
+      <MenuItem onClick={handleClose}>Price</MenuItem>
+      <MenuItem onClick={handleClose}>Rating</MenuItem>
+      <MenuItem onClick={handleClose}>Date</MenuItem>
+   
+    </Menu>
+  </div>
+)};
+
+ function ContainedButtons() {
+  const classes = useStyles();
+
+  return (
+    <div>
+      <Button variant="contained" className={classes.button} style={{display: 'flex'}}>
+        Best Sellers
+      </Button>
+</div>
+);
+ }
+
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     root: {
-      flexGrow: 1
+      flexGrow: 0
+  
     },
     paper: {
       padding: theme.spacing(1),
       textAlign: 'center',
-      color: theme.palette.text.secondary
+      color: theme.palette.text.secondary,
+      marginRight: theme.spacing(2)
     },
     control: {
       padding: theme.spacing(2),
       horizontalAlign: 'center'
+    },
+    button:{
+      margin: theme.spacing(1),
+      position: 'relative',
+      flexDirection: 'row',
+      width: 'auto',
+      height: 'auto',
+      display: 'flex',
+      flexWrap: 'nowrap',
+    
     }
   })
 );
 
-export default createFragmentContainer(BookBrowsingView, {
+// _sortByTitle(){
+ 
+//     // Increments the number of stories being rendered by 10.
+//     const refetchVariables = fragmentVariables => ({
+//       count: fragmentVariables.count + 10,
+//     });
+//     props.relay.refetch(refetchVariables);
+//   }
+// }
+
+
+
+export default createRefetchContainer(BookBrowsingView, {
   bookBrowsing: graphql`
     fragment BookBrowsingView_bookBrowsing on Query {
       sortedBooks: sorted_books(input: $input) {
@@ -67,4 +146,10 @@ export default createFragmentContainer(BookBrowsingView, {
       }
     }
   `
-});
+},
+graphql`
+query BookBrowsingViewQuery($input: SortedBooksInput!){
+    ...BookBrowsingView_bookBrowsing}
+  `,
+);
+
