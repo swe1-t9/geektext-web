@@ -1,0 +1,28 @@
+// {type:usecase}
+// {direction:leftToRight}
+// {generate:true}
+(note: Book Review Use Case Diagram{bg:yellow})
+[User]-(Choose star rating)
+[User]-(Writes title)
+[User]-(Writes comment body)
+
+[User]^[Anonymous]
+
+[Anonymous]-(Check box to remain anonymous)
+[Anonymous]-(Choose star rating)
+[Anonymous]-(Writes title)
+[Anonymous]-(Writes comment body)
+
+[Book Review] - (Add Comment)
+[Book Review] - (Add rating)
+[Book Review] - (Add Title)
+
+(Create Review)>(Add Comment)
+(Create Review)>(Add rating)
+(Create Review)>(Add Title)
+
+(Book Purchased)<(Writes title)
+(Book Purchased)<(Writes comment body)
+(Book Purchased)<(Choose star rating)
+
+(Create Review)<(Book Purchased)

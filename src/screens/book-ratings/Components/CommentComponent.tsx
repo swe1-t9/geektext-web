@@ -15,6 +15,7 @@ import { createFragmentContainer } from 'react-relay';
 // @ts-ignore
 import graphql from 'babel-plugin-relay/macro';
 import {CommentComponent_comments} from './__generated__/CommentComponent_comments.graphql'
+import { commit as commitCreateReviewMutation } from '../../../graphql/mutations/CreateReviewMutation';
 
 type Props = {
 	comments: CommentComponent_comments;
@@ -28,11 +29,6 @@ const CommentComponent:React.FC<Props> = (props) => {
 	const [ava, setAva] = 				React.useState(<Avatar initial={nickname.charAt(0)}/>);
 	const [userComment,setUserComment] = React.useState("");
 	const [userStars,setStars] =		React.useState(0);
-	const [postRating, setPR] =			React.useState(false);
-	const [datePosted, setDate] = 		React.useState("");
-	const [bookPurchased,setBookPurchased] = React.useState(true);
-	const [alreadyRated, setAlreadyRated] = React.useState(false);
-	const [anonChecked,setAnonCheck]  = React.useState(false);
 	const [commentTitle,setCommentTitle] = React.useState("title");
 	const [max_words] = 				React.useState(1000);
 	const [min_words] = 				React.useState(10);
@@ -112,44 +108,40 @@ const CommentComponent:React.FC<Props> = (props) => {
 		);
 	  };
 
+	  const onSuccess = () => window.location.reload();
+	  const onFailure = () => console.warn('error');
+
 	/*User can only comment if the following conditions are true:
 	 1. book has been purchased. 
 	 2. they haven't already commented before.
 	 */
 	const commentingAllowed = () => (event: React.ChangeEvent<HTMLInputElement>) => {
 		//fetch from database if book is purchased and has already been rated.
-		/*if(bookPurchased && !alreadyRated) 
-		{
-			
-			if(userComment.length >= min_words && userComment.length <= max_words) //check word amount of comment before posting
-			{
-			
-				var dateObj = new Date();
-				var month = dateObj.getUTCMonth() + 1; //months from 1-12
-				var day = dateObj.getUTCDate();
-				var year = dateObj.getUTCFullYear();
-				var formatdate = month + "/" + day + "/" + year;
-				setDate(formatdate);
 		
-				
-			 
-			
-				
-			}
-			else
-			{
-				let message = "Your comment must be more than " + min_words 
-								+ " and less than " + max_words;
-				alert(message);
-			}
-		}
-		else //do not post the rating and show alert
+		if(userComment.length >= min_words && userComment.length <= max_words) //check word amount of comment before posting
 		{
-			if(!bookPurchased)
-				alert("You have not bought this book, so you can't leave a review");
-			else
-				alert("You have already rated this book!");
-		}*/
+			
+			/*mutation to submit a rating*
+			commitCreateReviewMutation(
+				{
+					book_id: "00000000-0000-0000-0000-000000000001",
+					title: commentTitle,
+					body: userComment,
+					is_anonymous: state.checkedA,
+					rating: userStars,
+				},
+				onSuccess,
+				onFailure
+			  );*/
+			
+		}
+		else
+		{
+			let message = "Your comment must be more than " + min_words 
+							+ " and less than " + max_words;
+			alert(message);
+		}
+		
 	};
 
 	return (
@@ -170,7 +162,7 @@ const CommentComponent:React.FC<Props> = (props) => {
 				<Grid item xs={12}>
 				{/* stores the rating the user gives the current book*/}
 				<Rater total={5} 
-				onRate={ ({rating}) => {setStars(rating)} } />
+				onRate={ ({rating}) => {setStars(userStars)} } />
 					{TitleBox()}
 					{CommentBox()}
 				</Grid>

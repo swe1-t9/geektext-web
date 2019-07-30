@@ -26,6 +26,7 @@ const Review: React.FC<Props> = (props) => {
       <CardHeader
         avatar={<Avatar initial={props.review.is_anonymous ? <Anon /> : props.review.reviewer.first_name.charAt(0)} />}
         title={props.review.title}
+        subheader={props.review.is_anonymous ? "Anonymous": props.review.reviewer.first_name }
         action={<Rater total={5} rating={props.review.rating} interactive={false} />}
       />
       <CardContent>

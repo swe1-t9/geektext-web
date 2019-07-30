@@ -1,0 +1,18 @@
+// {type:class}
+// {direction:topDown}
+// {generate:true}
+[Book | book_id]^[Scoreboard]
+[Book]^[Comment Component]
+
+[Scoreboard] ^ [Individual Star ratings | 5 star | 4 star | 3 star | 2 star | 1 star]
+[Scoreboard] ^ [Average Rating | getAverageRating(Book.book_id) ]
+
+[Comment Component]^[New | InsertRatingToDb() ]
+[Comment Component]^[Existing | SelectRatingsFromDb() ]
+
+[Existing]^
+
+[New] ^ [Star Rating]
+[New] ^ [Comment Box]
+[New] ^ [Checkbox]
+[New] ^ [Create Rating Button]

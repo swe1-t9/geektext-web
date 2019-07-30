@@ -84,6 +84,7 @@ const BookDetailsView: React.FC<Props> = (props: Props) => {
       justify="center"
       style={{ minHeight: '100vh' }}
     >
+    
       <Card className={classes.card}>
         <CardActionArea>
           <CardMedia //Mui-expanded
@@ -140,8 +141,8 @@ const BookDetailsView: React.FC<Props> = (props: Props) => {
             </Typography>
             <Typography paragraph> Genre: {props.bookDetails.genre}</Typography>
             <Typography paragraph> Publish Year: {props.bookDetails.publish_year}</Typography>
-            <CommentComponent comments={props.bookDetails} />
             <Scoreboard />
+            <CommentComponent comments={props.bookDetails} />
           </CardContent>
         </Collapse>
       </Card>
