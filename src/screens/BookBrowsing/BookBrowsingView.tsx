@@ -12,11 +12,11 @@ import BookView from './BookView';
 
 
 type Props = {
-  
-  relay: { environtment: Environment,
-    refetch(), // See #refetch section
-  },
   bookBrowsing: BookBrowsingView_bookBrowsing;
+  relay: { environtment: Environment,
+   refetch(), // See #refetch section
+  },
+  
 }
 
 const BookBrowsingView: React.FC<Props> = (props: Props) => {
