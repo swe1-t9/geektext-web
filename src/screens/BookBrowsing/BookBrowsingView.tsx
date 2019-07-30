@@ -1,4 +1,4 @@
-import { createFragmentContainer, createRefetchContainer } from 'react-relay';
+import { createFragmentContainer, createRefetchContainer, Environment, RelayRefetchProp } from 'react-relay';
 // @ts-ignore
 import graphql from 'babel-plugin-relay/macro';
 import { BookBrowsingView_bookBrowsing } from './__generated__/BookBrowsingView_bookBrowsing.graphql';
@@ -12,8 +12,12 @@ import BookView from './BookView';
 
 
 type Props = {
+  
+  relay: { environtment: Environment,
+    refetch(), // See #refetch section
+  },
   bookBrowsing: BookBrowsingView_bookBrowsing;
-};
+}
 
 const BookBrowsingView: React.FC<Props> = (props: Props) => {
   const classes = useStyles();
@@ -43,7 +47,7 @@ const BookBrowsingView: React.FC<Props> = (props: Props) => {
       </Grid>
     </div>
   );
-}
+
 
 
 
@@ -85,6 +89,8 @@ const classes= useStyles();
     </Menu>
   </div>
 )};
+  }
+
 
  function ContainedButtons() {
   const classes = useStyles();
