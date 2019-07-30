@@ -1,9 +1,23 @@
+import { Redirect } from 'react-router';
 import { createFragmentContainer } from 'react-relay';
 // @ts-ignore
 import graphql from 'babel-plugin-relay/macro';
 import { BookDetailsView_bookDetails } from './__generated__/BookDetailsView_bookDetails.graphql';
 import React, { useState } from 'react';
-import { Card, CardActionArea, CardMedia, CardContent, Button, Typography, CardActions, Grid, Theme, IconButton, Collapse, Link } from '@material-ui/core';
+import {
+  Card,
+  CardActionArea,
+  CardMedia,
+  CardContent,
+  Button,
+  Typography,
+  CardActions,
+  Grid,
+  Theme,
+  IconButton,
+  Collapse,
+  Link
+} from '@material-ui/core';
 import { createStyles, makeStyles } from '@material-ui/core/styles';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import clsx from 'clsx';
@@ -20,6 +34,7 @@ type Props = {
 
 const BookDetailsView: React.FC<Props> = (props: Props) => {
   const classes = useStyles();
+  const [openAuthorBrowsing, setOpenAuthorBrowsing] = React.useState(false);
   const [expanded, setExpanded] = React.useState(false);
   const [added, setAdded] = React.useState(false);
   const [saved, setSaved] = React.useState(false);
@@ -46,7 +61,9 @@ const BookDetailsView: React.FC<Props> = (props: Props) => {
     window.location.href = '/shopping-cart';
   };
 
-  const addToShoppingCart = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+  const addToShoppingCart = (
+    e: React.MouseEvent<HTMLButtonElement, MouseEvent>
+  ) => {
     e.preventDefault();
     // TODO: add proper mechanism for getting amount of books to add
     commitAddToShoppingCartMutation(
@@ -63,7 +80,9 @@ const BookDetailsView: React.FC<Props> = (props: Props) => {
     setImageIsExpanded(!imageIsExpanded);
   };
 
-  const addToSavedCart = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+  const addToSavedCart = (
+    e: React.MouseEvent<HTMLButtonElement, MouseEvent>
+  ) => {
     e.preventDefault();
     // TODO: add proper mechanism for getting amount of books to add
     commitAddToSavedCartMutation(
@@ -75,7 +94,14 @@ const BookDetailsView: React.FC<Props> = (props: Props) => {
       onAddToCartFailure
     );
   };
-  return (
+  return openAuthorBrowsing ? (
+    <Redirect
+      to={{
+        pathname: '/author-browsing',
+        state: { id: props.bookDetails.author.id }
+      }}
+    />
+  ) : (
     <Grid
       container
       spacing={0}
@@ -98,21 +124,16 @@ const BookDetailsView: React.FC<Props> = (props: Props) => {
             <Typography variant="body2" color="textSecondary" component="p">
               {props.bookDetails.description}
             </Typography>
+            <Typography variant="body2" color="textSecondary" component="p">
+              Price: ${props.bookDetails.price}
+            </Typography>
           </CardContent>
         </CardActionArea>
         <CardActions>
-          <Button
-            size="small"
-            color="primary"
-            onClick={addToShoppingCart}
-          >
+          <Button size="small" color="primary" onClick={addToShoppingCart}>
             {added ? 'In Cart' : 'Add to Shopping Cart'}
           </Button>
-          <Button
-            size="small"
-            color="primary"
-            onClick={addToSavedCart}
-          >
+          <Button size="small" color="primary" onClick={addToSavedCart}>
             {saved ? 'Saved' : 'Save for Later'}
           </Button>
           {/* <Button size="small" color="primary">
@@ -120,7 +141,7 @@ const BookDetailsView: React.FC<Props> = (props: Props) => {
           </Button> */}
           <IconButton
             className={clsx(classes.expand, {
-              [classes.expandOpen]: expanded,
+              [classes.expandOpen]: expanded
             })}
             onClick={handleExpandClick}
             aria-expanded={expanded}
@@ -131,22 +152,29 @@ const BookDetailsView: React.FC<Props> = (props: Props) => {
         </CardActions>
         <Collapse in={expanded} timeout="auto" unmountOnExit>
           <CardContent>
-            <Typography variant="h5" align="center"> About the Author </Typography>
+            <Typography variant="h5" align="center">
+              {' '}
+              About the Author{' '}
+            </Typography>
             <Typography paragraph align="center">
-              <Link href={"https://www.amazon.com/s?k=jk+rowling&ref=nb_sb_noss_2"}>{props.bookDetails.author.first_name} {props.bookDetails.author.last_name}</Link>
+              <Link onClick={() => setOpenAuthorBrowsing(true)}>
+                {props.bookDetails.author.first_name}{' '}
+                {props.bookDetails.author.last_name}
+              </Link>
             </Typography>
-            <Typography paragraph>
-              {props.bookDetails.author.bio}
-            </Typography>
+            <Typography paragraph>{props.bookDetails.author.bio}</Typography>
             <Typography paragraph> Genre: {props.bookDetails.genre}</Typography>
-            <Typography paragraph> Publish Year: {props.bookDetails.publish_year}</Typography>
+            <Typography paragraph>
+              {' '}
+              Publish Year: {props.bookDetails.publish_year}
+            </Typography>
             <Commentbox />
             <Scoreboard />
           </CardContent>
         </Collapse>
       </Card>
     </Grid>
-  )
+  );
 };
 
 const useStyles = makeStyles((theme: Theme) =>
@@ -159,18 +187,17 @@ const useStyles = makeStyles((theme: Theme) =>
     },
     media: {
       height: 200,
-      paddingTop: '56.25%', // 16:9
-
+      paddingTop: '56.25%' // 16:9
     },
     expand: {
       transform: 'rotate(0deg)',
       marginLeft: 'auto',
       transition: theme.transitions.create('transform', {
-        duration: theme.transitions.duration.shortest,
-      }),
+        duration: theme.transitions.duration.shortest
+      })
     },
     expandOpen: {
-      transform: 'rotate(180deg)',
+      transform: 'rotate(180deg)'
     },
     expandImage: {
       height: 700,
@@ -187,7 +214,7 @@ export default createFragmentContainer(BookDetailsView, {
     fragment BookDetailsView_bookDetails on Book {
       id
       title
-      author{
+      author {
         id
         first_name
         last_name
@@ -203,4 +230,3 @@ export default createFragmentContainer(BookDetailsView, {
     }
   `
 });
-
