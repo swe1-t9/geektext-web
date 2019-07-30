@@ -1,0 +1,13 @@
+// Carolina Uribe
+// {type:state}
+(start)[Visit Website]->(User Browsing)
+(User Browsing)[Click Book]->(Book Details Expanded)
+(Book Details Expanded)[Click Cover]->(Cover Expanded)
+(Book Details Expanded)[Click Down Arrow]->(More Book Details)
+(Book Details Expanded)[Cart Button]->(Cart Page)
+(Cover Expanded)[Click Cover]->(Book Details Expanded)
+(More Book Details)[Click Authors Name]->(Books by Author)
+(More Book Details)[Rate Book]->(Add Comments)
+(Add Comments)[Create Customer Review]->(Review Created)
+(Cart Page)[Checkout button]->(Checkout page)
+(Cart Page)[Remove/update item]->(Cart page)

@@ -1,0 +1,9 @@
+// {type:sequence}
+
+[:Client]request book>[:GraphQL]
+[:GraphQL]display book details.>[:Client]
+[:GraphQL]query server for book details>[:Server]
+[:Server]return information from server.>[:GraphQL]
+[:Server]SQL Queries to database for books>[:Database]
+[:Database]Return contents of cart to backend>[:Server]
+

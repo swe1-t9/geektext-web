@@ -1,0 +1,14 @@
+// Carolina Uribe
+// {type:usecase}
+// {direction:leftToRight}
+
+[User]-(User Browsing)
+(User Browsing)<(Book Details Expanded)
+(Book Details Expanded)>(Cover Expanded)
+(Book Details Expanded)<(More Book Details)
+(Book Details Expanded)<(Add to Cart Page)
+(Cover Expanded)>(Book Details Expanded)
+(More Book Details)>(Books by Author)
+(More Book Details)<(Add Comments)
+(Add Comments)>(Review Created)
+(Add to Cart Page)>(Checkout Page)
