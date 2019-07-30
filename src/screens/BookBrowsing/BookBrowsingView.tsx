@@ -1,115 +1,123 @@
-import { createFragmentContainer, createRefetchContainer, Environment, RelayRefetchProp } from 'react-relay';
+import {
+  createFragmentContainer,
+  createRefetchContainer,
+  Environment,
+  RelayRefetchProp
+} from 'react-relay';
 // @ts-ignore
 import graphql from 'babel-plugin-relay/macro';
 import { BookBrowsingView_bookBrowsing } from './__generated__/BookBrowsingView_bookBrowsing.graphql';
 import React from 'react';
-import { Grid, Theme, MenuItem, Button, Menu,} from '@material-ui/core';
+import { Grid, Theme, MenuItem, Button, Menu } from '@material-ui/core';
 import { makeStyles, createStyles } from '@material-ui/core/styles';
-
 
 import BookView from './BookView';
 
-
-
 type Props = {
   bookBrowsing: BookBrowsingView_bookBrowsing;
-  relay: { environtment: Environment,
-   refetch(), // See #refetch section
-  },
-  
-}
+  relay: RelayRefetchProp;
+};
 
 const BookBrowsingView: React.FC<Props> = (props: Props) => {
   const classes = useStyles();
 
   function FormRow() {
     return (
-      <React.Fragment >
+      <React.Fragment>
         {props.bookBrowsing.sortedBooks.map(book => (
           <Grid direction="row">
             <BookView book={book} />
           </Grid>
         ))}
-      
       </React.Fragment>
     );
   }
 
-
   return (
     <div className={classes.root}>
-       <MenuListComposition/><ContainedButtons/>
- 
+      <MenuListComposition />
+      <ContainedButtons />
+
       <Grid container spacing={1}>
-        
         <FormRow />
-       
       </Grid>
     </div>
   );
 
+  function MenuListComposition() {
+    const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
+    const classes = useStyles();
 
+    function handleClick(event: React.MouseEvent<HTMLButtonElement>) {
+      setAnchorEl(event.currentTarget);
+    }
 
+    function handleClose() {
+      setAnchorEl(null);
+    }
 
-function MenuListComposition(){
-const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
-const classes= useStyles();
+    return (
+      <div>
+        <Button
+          aria-controls="simple-menu"
+          size="medium"
+          variant="contained"
+          color="default"
+          aria-haspopup="true"
+          onClick={handleClick}
+          className={classes.button}
+        >
+          Sort By:
+        </Button>
 
-  function handleClick(event: React.MouseEvent<HTMLButtonElement>) {
-    setAnchorEl(event.currentTarget);
+        <Menu
+          id="simple-menu"
+          anchorEl={anchorEl}
+          keepMounted
+          open={Boolean(anchorEl)}
+          onClose={handleClose}
+        >
+          {/* TODO */}
+
+          <MenuItem
+            onClick={() =>
+              props.relay.refetch(() => ({ field_to_sort_by: 'title' }), {
+                sort_direction: 'asc'
+              })
+            }
+          >
+            Title
+          </MenuItem>
+          <MenuItem onClick={handleClose}>Author</MenuItem>
+          <MenuItem onClick={handleClose}>Price</MenuItem>
+          <MenuItem onClick={handleClose}>Rating</MenuItem>
+          <MenuItem onClick={handleClose}>Date</MenuItem>
+        </Menu>
+      </div>
+    );
   }
+};
 
-  function handleClose() {
-    setAnchorEl(null);
-  }
-
-  
- 
-  return (
-    <div>
-    <Button aria-controls="simple-menu"  size= "medium" variant= "contained" color= 'default' aria-haspopup="true" onClick={handleClick} className={classes.button}>
-      Sort By:
-    </Button>
-    
-    <Menu
-      id="simple-menu"
-      anchorEl={anchorEl}
-      keepMounted
-      open={Boolean(anchorEl)}
-      onClose={handleClose}
-    >
-      {/* TODO */}
-
-      <MenuItem onClick={() => props.relay.refetch(() => ({ field_to_sort_by: "title"}), {sort_direction: "asc"})}>Title</MenuItem>
-      <MenuItem onClick={handleClose}>Author</MenuItem>
-      <MenuItem onClick={handleClose}>Price</MenuItem>
-      <MenuItem onClick={handleClose}>Rating</MenuItem>
-      <MenuItem onClick={handleClose}>Date</MenuItem>
-   
-    </Menu>
-  </div>
-)};
-  }
-
-
- function ContainedButtons() {
+function ContainedButtons() {
   const classes = useStyles();
 
   return (
     <div>
-      <Button variant="contained" className={classes.button} style={{display: 'flex'}}>
+      <Button
+        variant="contained"
+        className={classes.button}
+        style={{ display: 'flex' }}
+      >
         Best Sellers
       </Button>
-</div>
-);
- }
-
+    </div>
+  );
+}
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     root: {
       flexGrow: 0
-  
     },
     paper: {
       padding: theme.spacing(1),
@@ -121,21 +129,20 @@ const useStyles = makeStyles((theme: Theme) =>
       padding: theme.spacing(2),
       horizontalAlign: 'center'
     },
-    button:{
+    button: {
       margin: theme.spacing(1),
       position: 'relative',
       flexDirection: 'row',
       width: 'auto',
       height: 'auto',
       display: 'flex',
-      flexWrap: 'nowrap',
-    
+      flexWrap: 'nowrap'
     }
   })
 );
 
 // _sortByTitle(){
- 
+
 //     // Increments the number of stories being rendered by 10.
 //     const refetchVariables = fragmentVariables => ({
 //       count: fragmentVariables.count + 10,
@@ -144,20 +151,20 @@ const useStyles = makeStyles((theme: Theme) =>
 //   }
 // }
 
-
-
-export default createRefetchContainer(BookBrowsingView, {
-  bookBrowsing: graphql`
-    fragment BookBrowsingView_bookBrowsing on Query {
-      sortedBooks: sorted_books(input: $input) {
-        ...BookView_book
+export default createRefetchContainer(
+  BookBrowsingView,
+  {
+    bookBrowsing: graphql`
+      fragment BookBrowsingView_bookBrowsing on Query {
+        sortedBooks: sorted_books(input: $input) {
+          ...BookView_book
+        }
       }
+    `
+  },
+  graphql`
+    query BookBrowsingViewQuery($input: SortedBooksInput!) {
+      ...BookBrowsingView_bookBrowsing
     }
   `
-},
-graphql`
-query BookBrowsingViewQuery($input: SortedBooksInput!){
-    ...BookBrowsingView_bookBrowsing}
-  `,
 );
-
