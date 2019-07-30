@@ -98,10 +98,11 @@ const BookView: React.FC<Props> = (props: Props) => {
             {props.book.title}
           </Typography>
           <Typography gutterBottom variant="subtitle1" component="h2">
-            {props.book.author.first_name}{' '}{props.book.author.last_name}
+            {props.book.author.first_name} {props.book.author.last_name}
           </Typography>
           <Typography variant="overline" display="block" gutterBottom>
-            {'$'}{props.book.price}
+            {'$'}
+            {props.book.price}
           </Typography>
           <Typography variant="body2" color="textSecondary" component="p">
             {props.book.description}
@@ -151,7 +152,6 @@ export default createFragmentContainer(BookView, {
       price
       description
       cover
-     
     }
   `
 });

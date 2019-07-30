@@ -15,6 +15,7 @@ import Signup from './screens/Signup';
 import User from './screens/Profile';
 import BookBrowsing from './screens/BookBrowsing';
 import { StripeProvider } from 'react-stripe-elements';
+import AuthorBrowsing from './screens/BookDetails/AuthorBrowsing';
 
 const App: React.FC = () => (
   <StripeProvider apiKey="pk_test_hkm3zHTM0rvJVKoS2MOvQQKP00DLJJcidK">
@@ -46,6 +47,11 @@ const App: React.FC = () => (
           />
           <Route exact={true} path="/signup" component={withNavbar(Signup)} />
           <Route exact={true} path="/book" component={withNavbar(Book)} />
+          <Route
+            exact={true}
+            path="/author-browsing"
+            component={withNavbar(AuthorBrowsing)}
+          />
         </Switch>
       </Router>
     </ThemeProvider>
