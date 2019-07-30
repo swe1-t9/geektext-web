@@ -4,6 +4,7 @@ import { ConcreteRequest } from "relay-runtime";
 export type CreateReviewInput = {
     readonly body: string;
     readonly book_id: string;
+    readonly is_anonymous: boolean;
     readonly rating: number;
     readonly title: string;
 };
