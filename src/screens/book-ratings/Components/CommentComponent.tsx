@@ -121,7 +121,7 @@ const CommentComponent:React.FC<Props> = (props) => {
 		if(userComment.length >= min_words && userComment.length <= max_words) //check word amount of comment before posting
 		{
 			
-			/*mutation to submit a rating*
+			/*mutation to submit a rating
 			commitCreateReviewMutation(
 				{
 					book_id: "00000000-0000-0000-0000-000000000001",

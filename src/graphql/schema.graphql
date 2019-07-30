@@ -37,9 +37,14 @@ type Author {
   last_name: String!
 }
 
+input AverageRatingInput {
+  book_id: String!
+}
+
 """The details of a book."""
 type Book {
   author: Author!
+  average_rating: Float!
   cover: URL!
   description: String!
   genre: String!
@@ -55,9 +60,14 @@ input BookDetailsInput {
   id: ID!
 }
 
+input BooksSoldInput {
+  book_id: String!
+}
+
 input CreateReviewInput {
   body: String!
   book_id: String!
+  is_anonymous: Boolean!
   rating: Int!
   title: String!
 }
@@ -118,7 +128,9 @@ Spain, Denmark, Sweden, Belgium or India.
 scalar PostalCode
 
 type Query {
+  average_rating(input: AverageRatingInput!): Review!
   book_details(input: BookDetailsInput!): Book!
+  books_sold(input: BooksSoldInput!): [Review!]!
   hello_world: String!
   sorted_books(input: SortedBooksInput!): [Book!]!
   sorted_ratings(input: SortedRatingsInput!): [Review!]!
