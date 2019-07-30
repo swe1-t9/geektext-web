@@ -28,6 +28,11 @@ query BookBrowsingQuery(
 
 fragment BookBrowsingView_bookBrowsing on Query {
   sortedBooks: sorted_books(input: $input) {
+    title
+    author {
+      firstName: first_name
+      id
+    }
     ...BookView_book
     id
   }
@@ -102,7 +107,13 @@ return {
         "concreteType": "Book",
         "plural": true,
         "selections": [
-          (v1/*: any*/),
+          {
+            "kind": "ScalarField",
+            "alias": null,
+            "name": "title",
+            "args": null,
+            "storageKey": null
+          },
           {
             "kind": "LinkedField",
             "alias": null,
@@ -112,6 +123,13 @@ return {
             "concreteType": "Author",
             "plural": false,
             "selections": [
+              {
+                "kind": "ScalarField",
+                "alias": "firstName",
+                "name": "first_name",
+                "args": null,
+                "storageKey": null
+              },
               (v1/*: any*/),
               {
                 "kind": "ScalarField",
@@ -129,13 +147,7 @@ return {
               }
             ]
           },
-          {
-            "kind": "ScalarField",
-            "alias": null,
-            "name": "title",
-            "args": null,
-            "storageKey": null
-          },
+          (v1/*: any*/),
           {
             "kind": "ScalarField",
             "alias": null,
@@ -186,7 +198,7 @@ return {
     "operationKind": "query",
     "name": "BookBrowsingQuery",
     "id": null,
-    "text": "query BookBrowsingQuery(\n  $input: SortedBooksInput!\n) {\n  ...BookBrowsingView_bookBrowsing\n}\n\nfragment BookBrowsingView_bookBrowsing on Query {\n  sortedBooks: sorted_books(input: $input) {\n    ...BookView_book\n    id\n  }\n}\n\nfragment BookView_book on Book {\n  id\n  author {\n    id\n    first_name\n    last_name\n  }\n  title\n  isbn\n  genre\n  publish_year\n  price\n  description\n  cover\n}\n",
+    "text": "query BookBrowsingQuery(\n  $input: SortedBooksInput!\n) {\n  ...BookBrowsingView_bookBrowsing\n}\n\nfragment BookBrowsingView_bookBrowsing on Query {\n  sortedBooks: sorted_books(input: $input) {\n    title\n    author {\n      firstName: first_name\n      id\n    }\n    ...BookView_book\n    id\n  }\n}\n\nfragment BookView_book on Book {\n  id\n  author {\n    id\n    first_name\n    last_name\n  }\n  title\n  isbn\n  genre\n  publish_year\n  price\n  description\n  cover\n}\n",
     "metadata": {}
   }
 };

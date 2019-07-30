@@ -20,26 +20,29 @@ type Props = {
 
 const BookBrowsingView: React.FC<Props> = (props: Props) => {
   const classes = useStyles();
-
-  function FormRow() {
-    return (
-      <React.Fragment>
-        {props.bookBrowsing.sortedBooks.map(book => (
-          <Grid direction="row">
-            <BookView book={book} />
-          </Grid>
-        ))}
-      </React.Fragment>
-    );
-  }
-
+  const [sortByPrice, setSortByPrice] = React.useState(false);
+  const [sortByAuthor, setSortByAuthor] = React.useState(false);
+  const [sortByRating, setSortByRating] = React.useState(false);
   return (
     <div className={classes.root}>
       <MenuListComposition />
       <ContainedButtons />
-
       <Grid container spacing={1}>
-        <FormRow />
+        {props.bookBrowsing.sortedBooks
+          .map(book => book)
+          .sort((book1, book2) => {
+            if (sortByAuthor) {
+              return book1.author.firstName.localeCompare(
+                book2.author.firstName
+              );
+            }
+            return book1.title.localeCompare(book2.title);
+          })
+          .map(book => (
+            <Grid direction="row">
+              <BookView book={book} />
+            </Grid>
+          ))}
       </Grid>
     </div>
   );
@@ -87,19 +90,17 @@ const BookBrowsingView: React.FC<Props> = (props: Props) => {
           >
             Title
           </MenuItem>
-          {/* <MenuItem
-            onClick={() =>
-              props.relay.refetch()
-            }
-          > this doesn't actually work because author isnt a column of the books table.
-            Author
-          </MenuItem> */}
           <MenuItem
             onClick={() =>
-              props.relay.refetch({
-                field_to_sort_by: 'price',
-                sort_direction: 'asc'
-              })
+              props.relay.refetch(
+                {
+                  field_to_sort_by: 'price',
+                  sort_direction: 'asc'
+                },
+                null,
+                (error: Error | null | undefined) =>
+                  !!error && console.warn(error)
+              )
             }
           >
             Price
@@ -164,22 +165,16 @@ const useStyles = makeStyles((theme: Theme) =>
   })
 );
 
-// _sortByTitle(){
-
-//     // Increments the number of stories being rendered by 10.
-//     const refetchVariables = fragmentVariables => ({
-//       count: fragmentVariables.count + 10,
-//     });
-//     props.relay.refetch(refetchVariables);
-//   }
-// }
-
 export default createRefetchContainer(
   BookBrowsingView,
   {
     bookBrowsing: graphql`
       fragment BookBrowsingView_bookBrowsing on Query {
         sortedBooks: sorted_books(input: $input) {
+          title
+          author {
+            firstName: first_name
+          }
           ...BookView_book
         }
       }
