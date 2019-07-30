@@ -98,7 +98,10 @@ const BookBrowsingView: React.FC<Props> = (props: Props) => {
                 sort_direction: 'desc'
               })
             }>Price</MenuItem>
-          <MenuItem onClick={handleClose}>Rating</MenuItem>
+          <MenuItem onClick={() =>
+              props.relay.refetch(() => ({ field_to_sort_by: 'rating' }), {
+                sort_direction: 'asc'
+              })}>Rating</MenuItem>
           <MenuItem onClick={() =>
               props.relay.refetch(() => ({ field_to_sort_by: 'publish_year' }), {
                 sort_direction: 'asc'
