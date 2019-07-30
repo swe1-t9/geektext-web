@@ -77,33 +77,44 @@ const BookBrowsingView: React.FC<Props> = (props: Props) => {
           open={Boolean(anchorEl)}
           onClose={handleClose}
         >
-        
-
           <MenuItem
             onClick={() =>
-              props.relay.refetch(() => ({ field_to_sort_by: 'title' }), {
+              props.relay.refetch({
+                field_to_sort_by: 'title',
                 sort_direction: 'asc'
               })
             }
           >
             Title
           </MenuItem>
-          <MenuItem onClick={() =>
-              props.relay.refetch(() => ({ field_to_sort_by: 'first_name' }), {
+          {/* <MenuItem
+            onClick={() =>
+              props.relay.refetch()
+            }
+          > this doesn't actually work because author isnt a column of the books table.
+            Author
+          </MenuItem> */}
+          <MenuItem
+            onClick={() =>
+              props.relay.refetch({
+                field_to_sort_by: 'price',
                 sort_direction: 'asc'
               })
-            }>Author</MenuItem>
-          <MenuItem onClick={() =>
-              props.relay.refetch(() => ({ field_to_sort_by: 'price' }), {
-                sort_direction: 'desc'
-              })
-            }>Price</MenuItem>
+            }
+          >
+            Price
+          </MenuItem>
           <MenuItem onClick={handleClose}>Rating</MenuItem>
-          <MenuItem onClick={() =>
-              props.relay.refetch(() => ({ field_to_sort_by: 'publish_year' }), {
+          <MenuItem
+            onClick={() =>
+              props.relay.refetch({
+                field_to_sort_by: 'publish_year',
                 sort_direction: 'asc'
               })
-            }>Date</MenuItem>
+            }
+          >
+            Date
+          </MenuItem>
         </Menu>
       </div>
     );
