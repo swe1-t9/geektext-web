@@ -5,6 +5,10 @@ import 'react-rater/lib/react-rater.css';
 import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
 import Paper from '@material-ui/core/Paper';
+    
+import { createFragmentContainer } from 'react-relay';
+//import graphql from 'babel-plugin-relay/macro';
+//import { BookDetailsView_bookDetails } from './__generated__/BookDetailsView_bookDetails.graphql';
 
 
 const BookInfoComponent = (props:any) => {
@@ -99,5 +103,13 @@ const useStyles = makeStyles((theme: Theme) =>
     }
   }),
 );
+/*
+export default createFragmentContainer(BookDetailsView, {
+  bookDetails: graphql`
+    fragment BookDetailsView_bookDetails on Book {
+     id
+    }
+  `
+});*/
 
 export default BookInfoComponent;

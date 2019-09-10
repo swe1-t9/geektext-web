@@ -8,7 +8,7 @@ import { createStyles, makeStyles } from '@material-ui/core/styles';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import clsx from 'clsx';
 import { red } from '@material-ui/core/colors';
-import Commentbox from '../book-ratings/Components/CommentComponent';
+import CommentComponent from '../book-ratings/Components/CommentComponent';
 import Scoreboard from '../book-ratings/Components/BookInfoComponent';
 
 import { commit as commitAddToShoppingCartMutation } from '../../graphql/mutations/AddToShoppingCartMutation';
@@ -84,6 +84,7 @@ const BookDetailsView: React.FC<Props> = (props: Props) => {
       justify="center"
       style={{ minHeight: '100vh' }}
     >
+    
       <Card className={classes.card}>
         <CardActionArea>
           <CardMedia //Mui-expanded
@@ -143,8 +144,8 @@ const BookDetailsView: React.FC<Props> = (props: Props) => {
             </Typography>
             <Typography paragraph> Genre: {props.bookDetails.genre}</Typography>
             <Typography paragraph> Publish Year: {props.bookDetails.publish_year}</Typography>
-            <Commentbox />
             <Scoreboard />
+            <CommentComponent comments={props.bookDetails} />
           </CardContent>
         </Collapse>
       </Card>
@@ -203,6 +204,7 @@ export default createFragmentContainer(BookDetailsView, {
       title
       description
       cover
+      ...CommentComponent_comments
     }
   `
 });

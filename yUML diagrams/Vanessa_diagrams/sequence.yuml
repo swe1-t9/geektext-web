@@ -1,0 +1,19 @@
+// {type:sequence}
+// {generate:true}
+[Reviewer]select star rating>[Book Review]
+[Reviewer]writes a title>[Book Review]
+[Reviewer]writes a review body>[Book Review]
+
+[Reviewer]checks>[Checkbox]
+[Checkbox]user remains anonymous.>[Reviewer]
+[Reviewer]unchecks>[Checkbox]
+[Checkbox]user nickname displayed.>[Reviewer]
+
+[Reviewer]post review>[Book Review]
+[Reviewer]has not purchased>[Book]
+[Book Review]cannot post review.>[Reviewer]
+
+[Reviewer]post review>[Book Review]
+[Reviewer]has purchased>[Book]
+[Book Review]insert new review>[Database]
+[Database]display posted reviews>[Comment Page]
