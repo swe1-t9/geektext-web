@@ -228,6 +228,11 @@ input SortedBooksInput {
   sort_direction: String!
 }
 
+input SortedBooksInput {
+  field_to_sort_by: String!
+  sort_direction: String!
+}
+
 """
 A field whose value conforms to the standard URL format as specified in RFC3986: https://www.ietf.org/rfc/rfc3986.txt.
 """
